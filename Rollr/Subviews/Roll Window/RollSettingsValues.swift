@@ -24,9 +24,11 @@ struct RollSettingsValues: View {
     var scaledFont: Font {
         switch scale {
         case .regular:
-            .title3.weight(.semibold)
+            .title2
+            .weight(.heavy)
         case .small:
-            .caption2.bold()
+            .callout
+            .weight(.heavy)
         }
     }
     var singleHexagonSize: CGFloat {
@@ -35,6 +37,14 @@ struct RollSettingsValues: View {
             40
         case .small:
             26
+        }
+    }
+    var singleHexagonTextWidth: CGFloat {
+        switch scale {
+        case .regular:
+            35
+        case .small:
+            23
         }
     }
     
@@ -55,7 +65,10 @@ struct RollSettingsValues: View {
                     .font(.system(size: singleHexagonSize))
                 Text(numberOfSides, format: .number)
                     .font(scaledFont)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.7)
                     .foregroundStyle(.white)
+                    .frame(width: singleHexagonTextWidth)
             }
         }
     }
@@ -66,5 +79,5 @@ enum RollSettingsValuesScale {
 }
 
 #Preview {
-    RollSettingsValues(numberOfDice: .constant(3), numberOfSides: .constant(6), scale: .regular)
+    RollSettingsValues(numberOfDice: .constant(3), numberOfSides: .constant(100), scale: .regular)
 }

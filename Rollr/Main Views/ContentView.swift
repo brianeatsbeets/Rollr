@@ -5,15 +5,6 @@
 //  Created by Aguirre, Brian P. on 10/18/23.
 //
 
-// TODO: Add ability to customize each die
-// TODO: Add dice rolling animation
-// TODO: Sides row, number of each row, modifiers (manual number to add to each die value) row
-// TODO: Save individual roll configs
-// TODO: Add d20(2) with advantage or disadvantage
-// TODO: Emphasize/bold/color max/min role value
-// TODO: Emphasize individual roll values more and total value less
-
-
 import SwiftData
 import SwiftUI
 
