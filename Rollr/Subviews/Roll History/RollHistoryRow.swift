@@ -25,7 +25,7 @@ struct RollHistoryRow: View {
             Spacer()
             
             // Roll values
-            ForEach(roll.rollSettings.dice, id: \.id) { die in
+            ForEach(roll.rollSettings.dice) { die in
                 HStack(spacing: 0) {
                     VStack {
                         

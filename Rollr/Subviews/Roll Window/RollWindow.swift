@@ -31,8 +31,6 @@ struct RollWindow: View {
             RoundedRectangle(cornerRadius: 10)
                 .fill(.white)
             
-            
-            
             // Roll window content
             VStack {
                 

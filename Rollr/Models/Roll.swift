@@ -9,10 +9,10 @@ import Foundation
 //import SwiftData
 
 //@Model
-class Roll: Identifiable {
+struct Roll: Identifiable {
     let id = UUID()
     var total: Int
-    let rollSettings: RollSettings
+    var rollSettings: RollSettings
     let dateRolled = Date.now
     
     init(rollSettings: RollSettings) {

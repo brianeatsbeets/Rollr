@@ -9,7 +9,8 @@ import Foundation
 //import SwiftData
 
 //@Model
-class RollSettings {
+struct RollSettings {
+    let id = UUID()
     var dice: [Die]
     
     init(dice: [Die]) {

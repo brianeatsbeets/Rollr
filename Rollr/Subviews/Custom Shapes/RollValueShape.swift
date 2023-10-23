@@ -60,7 +60,6 @@ struct RollValueShape: View {
     }
     
     var body: some View {
-        //Circle()
         Image(systemName: backgroundSymbol)
             .resizable()
             .scaledToFit()
@@ -78,9 +77,9 @@ struct RollValueShape: View {
     }
 }
 
-#Preview {
-    HStack {
-        RollValueShape(showingResults: .constant(true), die: .constant(Die.maxRoll))
-    }
-    .frame(height: 40)
-}
+//#Preview {
+//    HStack {
+//        RollValueShape(showingResults: .constant(true), die: .constant(Die.maxRoll))
+//    }
+//    .frame(height: 40)
+//}

@@ -9,8 +9,8 @@ import Foundation
 //import SwiftData
 
 //@Model
-class Die: Identifiable {
-    let id = UUID()
+struct Die: Identifiable {
+    var id = UUID()
     let numberOfSides: NumberOfSides
     var modifier = 0
     var result = 0
@@ -36,12 +36,6 @@ class Die: Identifiable {
     
     init(numberOfSides: NumberOfSides) {
         self.numberOfSides = numberOfSides
-    }
-    
-    static var maxRoll: Die {
-        let die = Die(numberOfSides: .oneHundred)
-        die.result = 100
-        return die
     }
 }
 
