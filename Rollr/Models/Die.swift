@@ -39,6 +39,12 @@ class Die: Identifiable {
     init(numberOfSides: NumberOfSides) {
         self.numberOfSides = numberOfSides
     }
+    
+    static var maxRoll: Die {
+        let die = Die(numberOfSides: .oneHundred)
+        die.result = 100
+        return die
+    }
 }
 
 enum NumberOfSides: Int, Codable, CaseIterable {

@@ -31,31 +31,7 @@ struct RollWindow: View {
             RoundedRectangle(cornerRadius: 10)
                 .fill(.white)
             
-            // Row labels
-            if !dice.isEmpty {
-                HStack {
-                    VStack(alignment: .leading) {
-                        Text("Dice:")
-                            .frame(height: 40)
-                        
-                        Text("Modifier:")
-                            .frame(height: 40)
-                        
-                        Text("Roll:")
-                            .frame(height: 40)
-                        
-                        Text("Total:")
-                            .bold()
-                            .frame(height: 40)
-                        
-                        Spacer()
-                    }
-                    .font(.title3.weight(.medium))
-                    
-                    Spacer()
-                }
-                .padding([.top, .leading], 10)
-            }
+            
             
             // Roll window content
             VStack {
@@ -77,9 +53,34 @@ struct RollWindow: View {
                     // Dice and values
                     VStack {
                         HStack {
+                            
+                            // Row labels
+                            if !dice.isEmpty {
+                                VStack(alignment: .leading) {
+                                    Text("Dice:")
+                                        .frame(height: 40)
+                                    
+                                    Text("Modifier:")
+                                        .frame(height: 40)
+                                    
+                                    Text("Roll:")
+                                        .frame(height: 40)
+                                    
+                                    Text("Total:")
+                                        .bold()
+                                        .frame(height: 40)
+                                }
+                                .font(.title3.weight(.medium))
+                                .padding(.leading, 10)
+                                .layoutPriority(1)
+                            }
+                            
                             Spacer()
                             
                             ForEach($dice, id: \.id) { $die in
+                                
+                                Spacer()
+                                
                                 VStack {
                                     
                                     // Number of sides
@@ -100,18 +101,23 @@ struct RollWindow: View {
                                     .frame(height: 40)
                                     
                                     // Roll value
-                                    Text(showingResults ? die.result.description : "-")
-                                        .font(.title2)
-                                        .frame(height: 40)
+                                    Group {
+                                        RollValueShape(showingResults: $showingResults, die: $die)
+                                            .frame(height: 35)
+                                    }
+                                    .frame(height: 40)
                                     
                                     // Total value
                                     Text(showingResults ? die.total.description : "-")
-                                        .font(.title.bold())
+                                        .font(.title2.bold())
+                                        .minimumScaleFactor(0.5)
                                         .frame(height: 40)
                                 }
                                 .onChange(of: die.modifier, initial: true) {
                                     showingResults = false
                                 }
+                                
+                                Spacer()
                             }
                         }
                         .padding([.top, .trailing], 10)
