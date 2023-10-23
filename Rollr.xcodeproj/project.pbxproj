@@ -7,13 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E1054CC42AE695E10047DAE2 /* ModifierCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1054CC32AE695E10047DAE2 /* ModifierCircle.swift */; };
 		E12FFDD62AE17B5B00858535 /* RollSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E12FFDD52AE17B5B00858535 /* RollSettings.swift */; };
 		E151009C2AE194EF00C7EDC7 /* MultiHexagon.swift in Sources */ = {isa = PBXBuildFile; fileRef = E151009B2AE194EF00C7EDC7 /* MultiHexagon.swift */; };
-		E15100A02AE1C0EA00C7EDC7 /* RollSettingsValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = E151009F2AE1C0EA00C7EDC7 /* RollSettingsValues.swift */; };
+		E15100A02AE1C0EA00C7EDC7 /* SidesHexagon.swift in Sources */ = {isa = PBXBuildFile; fileRef = E151009F2AE1C0EA00C7EDC7 /* SidesHexagon.swift */; };
 		E15100A22AE1C56500C7EDC7 /* RollHistoryRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15100A12AE1C56500C7EDC7 /* RollHistoryRow.swift */; };
 		E15100A42AE1C5B200C7EDC7 /* RollSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15100A32AE1C5B200C7EDC7 /* RollSettingsView.swift */; };
 		E15100A82AE1CB3E00C7EDC7 /* RollWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15100A72AE1CB3E00C7EDC7 /* RollWindow.swift */; };
 		E15100AA2AE1CC3100C7EDC7 /* RollHistoryHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15100A92AE1CC3100C7EDC7 /* RollHistoryHeader.swift */; };
+		E15100B12AE3F5BF00C7EDC7 /* Die.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15100B02AE3F5BF00C7EDC7 /* Die.swift */; };
 		E1B567512AE06F3D00343FB9 /* RollrApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B567502AE06F3D00343FB9 /* RollrApp.swift */; };
 		E1B567532AE06F3D00343FB9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B567522AE06F3D00343FB9 /* ContentView.swift */; };
 		E1B567552AE06F3F00343FB9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1B567542AE06F3F00343FB9 /* Assets.xcassets */; };
@@ -22,13 +24,15 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E1054CC32AE695E10047DAE2 /* ModifierCircle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifierCircle.swift; sourceTree = "<group>"; };
 		E12FFDD52AE17B5B00858535 /* RollSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RollSettings.swift; sourceTree = "<group>"; };
 		E151009B2AE194EF00C7EDC7 /* MultiHexagon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiHexagon.swift; sourceTree = "<group>"; };
-		E151009F2AE1C0EA00C7EDC7 /* RollSettingsValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RollSettingsValues.swift; sourceTree = "<group>"; };
+		E151009F2AE1C0EA00C7EDC7 /* SidesHexagon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidesHexagon.swift; sourceTree = "<group>"; };
 		E15100A12AE1C56500C7EDC7 /* RollHistoryRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RollHistoryRow.swift; sourceTree = "<group>"; };
 		E15100A32AE1C5B200C7EDC7 /* RollSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RollSettingsView.swift; sourceTree = "<group>"; };
 		E15100A72AE1CB3E00C7EDC7 /* RollWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RollWindow.swift; sourceTree = "<group>"; };
 		E15100A92AE1CC3100C7EDC7 /* RollHistoryHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RollHistoryHeader.swift; sourceTree = "<group>"; };
+		E15100B02AE3F5BF00C7EDC7 /* Die.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Die.swift; sourceTree = "<group>"; };
 		E1B5674D2AE06F3D00343FB9 /* Rollr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Rollr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1B567502AE06F3D00343FB9 /* RollrApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RollrApp.swift; sourceTree = "<group>"; };
 		E1B567522AE06F3D00343FB9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -48,11 +52,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E1054CC52AE696160047DAE2 /* Custom Shapes */ = {
+			isa = PBXGroup;
+			children = (
+				E151009F2AE1C0EA00C7EDC7 /* SidesHexagon.swift */,
+				E1054CC32AE695E10047DAE2 /* ModifierCircle.swift */,
+				E151009B2AE194EF00C7EDC7 /* MultiHexagon.swift */,
+			);
+			path = "Custom Shapes";
+			sourceTree = "<group>";
+		};
 		E151009D2AE1C0CD00C7EDC7 /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				E1B5675E2AE0711200343FB9 /* Roll.swift */,
 				E12FFDD52AE17B5B00858535 /* RollSettings.swift */,
+				E15100B02AE3F5BF00C7EDC7 /* Die.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -62,7 +77,7 @@
 			children = (
 				E15100AB2AE1CD6300C7EDC7 /* Roll Window */,
 				E15100AC2AE1CD6B00C7EDC7 /* Roll History */,
-				E151009B2AE194EF00C7EDC7 /* MultiHexagon.swift */,
+				E1054CC52AE696160047DAE2 /* Custom Shapes */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
@@ -71,7 +86,6 @@
 			isa = PBXGroup;
 			children = (
 				E15100A72AE1CB3E00C7EDC7 /* RollWindow.swift */,
-				E151009F2AE1C0EA00C7EDC7 /* RollSettingsValues.swift */,
 			);
 			path = "Roll Window";
 			sourceTree = "<group>";
@@ -203,11 +217,13 @@
 			files = (
 				E15100A22AE1C56500C7EDC7 /* RollHistoryRow.swift in Sources */,
 				E151009C2AE194EF00C7EDC7 /* MultiHexagon.swift in Sources */,
+				E15100B12AE3F5BF00C7EDC7 /* Die.swift in Sources */,
 				E1B567532AE06F3D00343FB9 /* ContentView.swift in Sources */,
 				E1B567512AE06F3D00343FB9 /* RollrApp.swift in Sources */,
 				E15100AA2AE1CC3100C7EDC7 /* RollHistoryHeader.swift in Sources */,
-				E15100A02AE1C0EA00C7EDC7 /* RollSettingsValues.swift in Sources */,
+				E15100A02AE1C0EA00C7EDC7 /* SidesHexagon.swift in Sources */,
 				E15100A82AE1CB3E00C7EDC7 /* RollWindow.swift in Sources */,
+				E1054CC42AE695E10047DAE2 /* ModifierCircle.swift in Sources */,
 				E1B5675F2AE0711200343FB9 /* Roll.swift in Sources */,
 				E15100A42AE1C5B200C7EDC7 /* RollSettingsView.swift in Sources */,
 				E12FFDD62AE17B5B00858535 /* RollSettings.swift in Sources */,

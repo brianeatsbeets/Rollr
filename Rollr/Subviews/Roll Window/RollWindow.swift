@@ -10,13 +10,19 @@ import SwiftUI
 struct RollWindow: View {
     
     // Environment
-    @Environment(\.modelContext) var modelContext
+    //@Environment(\.modelContext) var modelContext
+    
+    @State var showingModifierView = false
+    @State var dieBeingModified: Die?
+    @State var selectedModifier = 0
+    @State var showingResults = false
     
     // Binding
-    @Binding var showingSettings: Bool
-    @Binding var numberOfDice: Int
-    @Binding var numberOfSides: Int
+    @Binding var rolls: [Roll]
+    @Binding var dice: [Die]
     @Binding var latestRoll: Roll?
+    
+    let modifierOptions = [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5]
     
     var body: some View {
         ZStack {
@@ -25,17 +31,17 @@ struct RollWindow: View {
             RoundedRectangle(cornerRadius: 10)
                 .fill(.white)
             
-            // Roll settings button
+            // Roll reset button
             VStack {
                 Spacer()
                 
                 HStack(spacing: 0) {
                     Spacer()
                     
-                    Button {
-                        showingSettings = true
+                    Button(role: .destructive) {
+                        dice.removeAll()
                     } label: {
-                        Image(systemName: "gear")
+                        Image(systemName: "trash")
                             .imageScale(.large)
                             .fontWeight(.semibold)
                     }
@@ -43,12 +49,55 @@ struct RollWindow: View {
                 }
             }
             
-            // Roll settings values
-            VStack {
-                RollSettingsValues(numberOfDice: $numberOfDice, numberOfSides: $numberOfSides, scale: .regular)
-                Spacer()
+            // Dice and values
+            if dice.isEmpty {
+                Text("Choose your dice!")
+                    .font(.title)
+                    .padding(.bottom)
+            } else {
+                VStack {
+                    HStack {
+                        ForEach($dice, id: \.id) { $die in
+                            VStack {
+                                
+                                // Number of sides
+                                SidesHexagon(numberOfSides: die.numberOfSides.rawValue)
+                                    .frame(height: 45)
+                                
+                                // Modifier
+                                Menu {
+                                    Picker("Modifier", selection: $die.modifier) {
+                                        ForEach(modifierOptions, id: \.self) { value in
+                                            Text(value.description)
+                                        }
+                                    }
+                                } label: {
+                                    ModifierCircle(die: $die)
+                                }
+                                .frame(height: 35)
+                                
+                                // Only display if roll was made
+                                if showingResults {
+                                    
+                                    // Roll value
+                                    Text(die.result.description)
+                                        .font(.title2)
+                                    
+                                    // Total value
+                                    Text(die.total.description)
+                                        .font(.title.bold())
+                                }
+                            }
+                            .onChange(of: die.modifier, initial: true) {
+                                showingResults = false
+                            }
+                        }
+                    }
+                    .padding(.top, 10)
+                    
+                    Spacer()
+                }
             }
-            .padding(.top, 10)
             
             // Roll button
             VStack {
@@ -56,8 +105,10 @@ struct RollWindow: View {
                 
                 Button {
                     rollDice()
+                    showingResults = true
                 } label: {
                     Text("Roll")
+                        .font(.headline)
                         .padding(.horizontal, 30)
                         .padding(.vertical, 5)
                         .foregroundStyle(.white)
@@ -67,33 +118,22 @@ struct RollWindow: View {
                         )
                 }
                 .padding(.bottom)
-            }
-            
-            // Roll info
-            VStack(spacing: 0) {
-                
-                // Roll total
-                Text(latestRoll?.total.description ?? "Awaiting roll...")
-                    .font(.system(size: latestRoll != nil ? 125 : 30))
-                    .padding(.vertical, latestRoll != nil ? -20 : 0)
-                
-                // Roll values
-                Text(latestRoll?.values.description ?? "")
-                    .font(.headline)
+                .disabled(dice.isEmpty)
             }
         }
     }
     
+    // Determine a result for each die
     func rollDice() {
-        var values = [Int]()
-        for _ in 1...numberOfDice {
-            values.append(Int.random(in: 1...numberOfSides))
+        dice.indices.forEach {
+            dice[$0].result = Int.random(in: 1...dice[$0].numberOfSides.rawValue)
         }
-        latestRoll = Roll(values: values, rollSettings: RollSettings(numberOfDice: numberOfDice, numberOfSides: numberOfSides))
-        modelContext.insert(latestRoll!)
+        
+        latestRoll = Roll(rollSettings: RollSettings(dice: dice))
+        rolls.append(latestRoll!)
     }
 }
 
 //#Preview {
-//    RollWindow()
+//    RollWindow(rolls: .constant([Roll] ()), dice: .constant([Die(numberOfSides: .eight)]), latestRoll: .constant(nil))
 //}

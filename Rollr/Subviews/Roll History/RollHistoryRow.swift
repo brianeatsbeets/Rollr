@@ -26,20 +26,28 @@ struct RollHistoryRow: View {
                 Spacer()
                 
                 // Roll total
-                Text(roll.total, format: .number)
-                    .font(.largeTitle.bold())
-                    .frame(width: 75, alignment: .center)
+                VStack(spacing: 0) {
+                    Text("Total")
+                    Text(roll.total, format: .number)
+                        .font(.largeTitle.bold())
+                        .frame(width: 75, alignment: .center)
+                }
             }
             
-            VStack {
-                
-                // Roll settings values
-                RollSettingsValues(numberOfDice: .constant(roll.rollSettings.numberOfDice), numberOfSides: .constant(roll.rollSettings.numberOfSides), scale: .small)
-                
-                // Roll values
-                Text(roll.values.description)
-                    .font(.subheadline)
-                    .lineLimit(1)
+            HStack {
+                ForEach(roll.rollSettings.dice, id: \.id) { die in
+                    VStack {
+                        
+                        // Roll settings values
+                        SidesHexagon(numberOfSides: die.numberOfSides.rawValue)
+                            .frame(height: 25)
+                        
+                        // Roll values
+                        Text(die.result.description)
+                            .font(.subheadline)
+                            .lineLimit(1)
+                    }
+                }
             }
         }
     }

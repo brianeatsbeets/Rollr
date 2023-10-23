@@ -5,62 +5,79 @@
 //  Created by Aguirre, Brian P. on 10/18/23.
 //
 
-import SwiftData
+//import SwiftData
 import SwiftUI
 
 struct ContentView: View {
     
-    // User defaults storage
-    @AppStorage("numberOfDice") private var numberOfDice = 1
-    @AppStorage("numberOfSides") private var numberOfSides = 6
-    
     // Environment
-    @Environment(\.modelContext) var modelContext
+    //@Environment(\.modelContext) var modelContext
     
     // Swift data query
-    @Query(sort: \Roll.dateRolled, order: .reverse, animation: .default) var rolls: [Roll]
-    
+    //@Query(sort: \Roll.dateRolled, order: .reverse, animation: .default) var rolls: [Roll]
+    @State var rolls = [Roll]()
     
     // State
+    @State private var dice = [Die]()
     @State private var latestRoll: Roll?
-    @State private var showingSettings = false
     
     var body: some View {
         NavigationStack {
             
-            // Main stack
-            VStack(spacing: 0) {
+            GeometryReader { geo in
                 
-                // Roll window
-                RollWindow(showingSettings: $showingSettings, numberOfDice: $numberOfDice, numberOfSides: $numberOfSides, latestRoll: $latestRoll)
-                    .padding(.horizontal)
-                    .padding(.bottom, 30)
-                
-                // Roll history header
-                RollHistoryHeader(latestRoll: $latestRoll)
-                    .padding(.bottom, 5)
-                
-                // Roll history list
-                List {
-                    ForEach(rolls) { roll in
-                        RollHistoryRow(roll: roll)
+                // Main stack
+                VStack {
+                    
+                    // Roll window
+                    RollWindow(rolls: $rolls, dice: $dice, latestRoll: $latestRoll)
+                        .padding(.horizontal)
+                        .frame(height: geo.size.height / 2.5)
+                    
+                    // Dice options
+                    HStack {
+                        ForEach(NumberOfSides.allCases, id: \.self) { sides in
+                            Button {
+                                dice.append(Die(numberOfSides: sides))
+                                
+                                // Reset each die result
+                                dice.indices.forEach {
+                                    dice[$0].result = 0
+                                }
+                                
+                            } label: {
+                                SidesHexagon(numberOfSides: sides.rawValue)
+                            }
+                            .disabled(dice.count >= 5)
+                        }
                     }
-                    .onDelete(perform: deleteRolls)
+                    .padding()
+                    
+                    // Roll history header
+                    RollHistoryHeader(latestRoll: $latestRoll, rolls: $rolls, dice: $dice)
+                        .padding(.bottom, 5)
+                    
+                    // Roll history list
+                    List {
+                        ForEach(rolls.sorted { $0.dateRolled > $1.dateRolled }) { roll in
+                            RollHistoryRow(roll: roll)
+                        }
+                        .onDelete(perform: deleteRolls)
+                    }
+                    .listStyle(.plain)
                 }
-                .listStyle(.plain)
-            }
-            .navigationTitle("Rollr")
-            .background(Color(uiColor: UIColor.systemGroupedBackground))
-            .sheet(isPresented: $showingSettings) {
-                RollSettingsView(numberOfDice: $numberOfDice, numberOfSides: $numberOfSides)
+                .navigationTitle("Rollr")
+                .navigationBarTitleDisplayMode(.inline)
+                .background(Color(uiColor: UIColor.systemGroupedBackground))
             }
         }
     }
     
     func deleteRolls(_ indexSet: IndexSet) {
         for index in indexSet {
-            let roll = rolls[index]
-            modelContext.delete(roll)
+//            let roll = rolls[index]
+//            modelContext.delete(roll)
+            rolls.remove(at: index)
         }
     }
 }

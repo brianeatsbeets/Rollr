@@ -6,15 +6,13 @@
 //
 
 import Foundation
-import SwiftData
+//import SwiftData
 
-@Model
+//@Model
 class RollSettings {
-    let numberOfDice: Int
-    let numberOfSides: Int
+    var dice: [Die]
     
-    init(numberOfDice: Int, numberOfSides: Int) {
-        self.numberOfDice = numberOfDice
-        self.numberOfSides = numberOfSides
+    init(dice: [Die]) {
+        self.dice = dice
     }
 }

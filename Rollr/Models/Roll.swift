@@ -6,22 +6,17 @@
 //
 
 import Foundation
-import SwiftData
+//import SwiftData
 
-@Model
-final class Roll: Identifiable {
+//@Model
+class Roll: Identifiable {
     let id = UUID()
-    let values: [Int]
-    let total: Int
+    var total: Int
     let rollSettings: RollSettings
-    let dateRolled: Date
+    let dateRolled = Date.now
     
-    init(values: [Int] = [Int.random(in: 1...6)], rollSettings: RollSettings) {
-        self.values = values
-        total = values.reduce(0) { $0 + $1 }
+    init(rollSettings: RollSettings) {
+        total = rollSettings.dice.reduce(into: 0, { $0 += $1.result })
         self.rollSettings = rollSettings
-        dateRolled = Date.now
     }
-    
-    static var maxRoll = Roll(values: [100, 100, 100, 100, 100], rollSettings: RollSettings(numberOfDice: 5, numberOfSides: 100))
 }

@@ -17,6 +17,8 @@ struct RollHistoryHeader: View {
     
     // Binding
     @Binding var latestRoll: Roll?
+    @Binding var rolls: [Roll]
+    @Binding var dice: [Die]
     
     var body: some View {
         HStack {
@@ -39,7 +41,9 @@ struct RollHistoryHeader: View {
                 Button("Cancel", role: .cancel) { }
                 Button("Clear History", role: .destructive) {
                     do {
-                        try modelContext.delete(model: Roll.self)
+                        //try modelContext.delete(model: Roll.self)
+                        dice.removeAll()
+                        rolls.removeAll()
                         latestRoll = nil
                     } catch {
                         print("Error: \(error.localizedDescription)")
