@@ -23,54 +23,50 @@ struct ContentView: View {
     
     var body: some View {
         NavigationStack {
-            
-            GeometryReader { geo in
                 
-                // Main stack
-                VStack {
-                    
-                    // Roll window
-                    RollWindow(rolls: $rolls, dice: $dice, latestRoll: $latestRoll)
-                        .padding(.horizontal)
-                        .frame(height: geo.size.height / 2.5)
-                    
-                    // Dice options
-                    HStack {
-                        ForEach(NumberOfSides.allCases, id: \.self) { sides in
-                            Button {
-                                dice.append(Die(numberOfSides: sides))
-                                
-                                // Reset each die result
-                                dice.indices.forEach {
-                                    dice[$0].result = 0
-                                }
-                                
-                            } label: {
-                                SidesHexagon(numberOfSides: sides.rawValue)
-                            }
-                            .disabled(dice.count >= 5)
-                        }
-                    }
+            // Main stack
+            VStack {
+                
+                // Roll window
+                RollWindow(rolls: $rolls, dice: $dice, latestRoll: $latestRoll)
                     .padding()
-                    
-                    // Roll history header
-                    RollHistoryHeader(latestRoll: $latestRoll, rolls: $rolls, dice: $dice)
-                        .padding(.bottom, 5)
-                    
-                    // Roll history list
-                    List {
-                        ForEach(rolls.sorted { $0.dateRolled > $1.dateRolled }) { roll in
-                            RollHistoryRow(roll: roll)
+                
+                // Dice options
+                HStack {
+                    ForEach(NumberOfSides.allCases, id: \.self) { sides in
+                        Button {
+                            dice.append(Die(numberOfSides: sides))
+                            
+                            // Reset each die result
+                            dice.indices.forEach {
+                                dice[$0].result = 0
+                            }
+                            
+                        } label: {
+                            SidesHexagon(numberOfSides: sides.rawValue)
                         }
-                        .onDelete(perform: deleteRolls)
+                        .disabled(dice.count >= 5)
                     }
-                    .listStyle(.plain)
                 }
-                .navigationTitle("Rollr")
-                .navigationBarTitleDisplayMode(.inline)
-                .background(Color(uiColor: UIColor.systemGroupedBackground))
+                .padding([.horizontal, .bottom])
+                
+                // Roll history header
+                RollHistoryHeader(latestRoll: $latestRoll, rolls: $rolls, dice: $dice)
+                    .padding(.bottom, 5)
+                
+                // Roll history list
+                List {
+                    ForEach(rolls.sorted { $0.dateRolled > $1.dateRolled }) { roll in
+                        RollHistoryRow(roll: roll)
+                    }
+                    .onDelete(perform: deleteRolls)
+                }
+                .listStyle(.plain)
             }
-        }
+            .navigationTitle("Rollr")
+            .navigationBarTitleDisplayMode(.inline)
+            .background(Color(uiColor: UIColor.systemGroupedBackground))
+    }
     }
     
     func deleteRolls(_ indexSet: IndexSet) {

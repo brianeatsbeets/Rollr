@@ -22,7 +22,7 @@ struct ModifierCircle: View {
                         .lineLimit(1)
                         .minimumScaleFactor(0.1)
                         .foregroundStyle(.white)
-                        .padding(.horizontal, 3)
+                        .padding(.horizontal, 4)
                         .position(x: geo.frame(in: .local).midX, y: geo.frame(in: .local).midY)
                 }
             )

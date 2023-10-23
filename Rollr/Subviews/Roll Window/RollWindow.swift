@@ -31,94 +31,130 @@ struct RollWindow: View {
             RoundedRectangle(cornerRadius: 10)
                 .fill(.white)
             
-            // Roll reset button
-            VStack {
-                Spacer()
-                
-                HStack(spacing: 0) {
-                    Spacer()
-                    
-                    Button(role: .destructive) {
-                        dice.removeAll()
-                    } label: {
-                        Image(systemName: "trash")
-                            .imageScale(.large)
-                            .fontWeight(.semibold)
+            // Row labels
+            if !dice.isEmpty {
+                HStack {
+                    VStack(alignment: .leading) {
+                        Text("Dice:")
+                            .frame(height: 40)
+                        
+                        Text("Modifier:")
+                            .frame(height: 40)
+                        
+                        Text("Roll:")
+                            .frame(height: 40)
+                        
+                        Text("Total:")
+                            .bold()
+                            .frame(height: 40)
+                        
+                        Spacer()
                     }
-                    .padding([.bottom, .trailing], 15)
+                    .font(.title3.weight(.medium))
+                    
+                    Spacer()
                 }
+                .padding([.top, .leading], 10)
             }
             
-            // Dice and values
-            if dice.isEmpty {
-                Text("Choose your dice!")
-                    .font(.title)
-                    .padding(.bottom)
-            } else {
-                VStack {
-                    HStack {
-                        ForEach($dice, id: \.id) { $die in
-                            VStack {
-                                
-                                // Number of sides
-                                SidesHexagon(numberOfSides: die.numberOfSides.rawValue)
-                                    .frame(height: 45)
-                                
-                                // Modifier
-                                Menu {
-                                    Picker("Modifier", selection: $die.modifier) {
-                                        ForEach(modifierOptions, id: \.self) { value in
-                                            Text(value.description)
+            // Roll window content
+            VStack {
+                
+                // Awaiting roll text
+                if dice.isEmpty {
+                    VStack {
+                        Spacer()
+                        Spacer()
+                        
+                        Text("Choose your dice!")
+                            .font(.title)
+                            .padding(.bottom)
+                        
+                        Spacer()
+                    }
+                } else {
+                    
+                    // Dice and values
+                    VStack {
+                        HStack {
+                            Spacer()
+                            
+                            ForEach($dice, id: \.id) { $die in
+                                VStack {
+                                    
+                                    // Number of sides
+                                    SidesHexagon(numberOfSides: die.numberOfSides.rawValue)
+                                        .frame(height: 40)
+                                    
+                                    // Modifier
+                                    Menu {
+                                        Picker("Modifier", selection: $die.modifier) {
+                                            ForEach(modifierOptions, id: \.self) { value in
+                                                Text(value.description)
+                                            }
                                         }
+                                    } label: {
+                                        ModifierCircle(die: $die)
+                                            .frame(height: 30)
                                     }
-                                } label: {
-                                    ModifierCircle(die: $die)
-                                }
-                                .frame(height: 35)
-                                
-                                // Only display if roll was made
-                                if showingResults {
+                                    .frame(height: 40)
                                     
                                     // Roll value
-                                    Text(die.result.description)
+                                    Text(showingResults ? die.result.description : "-")
                                         .font(.title2)
+                                        .frame(height: 40)
                                     
                                     // Total value
-                                    Text(die.total.description)
+                                    Text(showingResults ? die.total.description : "-")
                                         .font(.title.bold())
+                                        .frame(height: 40)
+                                }
+                                .onChange(of: die.modifier, initial: true) {
+                                    showingResults = false
                                 }
                             }
-                            .onChange(of: die.modifier, initial: true) {
-                                showingResults = false
-                            }
                         }
+                        .padding([.top, .trailing], 10)
+                        
+                        Spacer()
                     }
-                    .padding(.top, 10)
-                    
-                    Spacer()
                 }
-            }
-            
-            // Roll button
-            VStack {
-                Spacer()
                 
-                Button {
-                    rollDice()
-                    showingResults = true
-                } label: {
-                    Text("Roll")
-                        .font(.headline)
-                        .padding(.horizontal, 30)
-                        .padding(.vertical, 5)
-                        .foregroundStyle(.white)
-                        .background(
-                            RoundedRectangle(cornerRadius: 5)
-                                .fill(.tint)
-                        )
+                // Roll + reset buttons
+                ZStack {
+                    
+                    // Roll button
+                    Button {
+                        rollDice()
+                        showingResults = true
+                    } label: {
+                        Text("Roll")
+                            .font(.headline)
+                            .padding(.horizontal, 30)
+                            .padding(.vertical, 5)
+                            .foregroundStyle(.white)
+                            .background(
+                                RoundedRectangle(cornerRadius: 5)
+                                    .fill(.tint)
+                            )
+                    }
+                    .padding(.bottom)
+                    .disabled(dice.isEmpty)
+                    
+                    HStack {
+                        Spacer()
+                        
+                        // Roll reset button
+                        Button(role: .destructive) {
+                            dice.removeAll()
+                        } label: {
+                            Image(systemName: "trash")
+                                .imageScale(.large)
+                                .fontWeight(.semibold)
+                        }
+                        .padding([.bottom, .trailing], 15)
+                    }
                 }
-                .padding(.bottom)
-                .disabled(dice.isEmpty)
             }
         }
     }
