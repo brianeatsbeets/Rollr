@@ -93,8 +93,8 @@
 		E15100AC2AE1CD6B00C7EDC7 /* Roll History */ = {
 			isa = PBXGroup;
 			children = (
-				E15100A12AE1C56500C7EDC7 /* RollHistoryRow.swift */,
 				E15100A92AE1CC3100C7EDC7 /* RollHistoryHeader.swift */,
+				E15100A12AE1C56500C7EDC7 /* RollHistoryRow.swift */,
 			);
 			path = "Roll History";
 			sourceTree = "<group>";

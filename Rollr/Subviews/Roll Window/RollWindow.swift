@@ -90,7 +90,7 @@ struct RollWindow: View {
                                     Menu {
                                         Picker("Modifier", selection: $die.modifier) {
                                             ForEach(modifierOptions, id: \.self) { value in
-                                                Text(value.description)
+                                                Text(value > 0 ? "+\(value)" : String(value))
                                             }
                                         }
                                     } label: {

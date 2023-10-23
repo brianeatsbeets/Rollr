@@ -28,9 +28,11 @@ class Die: Identifiable {
     }
     var totalExpressionFormatted: String {
         if modifier > 0 {
-            return "\(result) + \(modifier)"
+            return "\(result)+\(modifier)"
+        } else if modifier < 0 {
+            return "\(result)-\(abs(modifier))"
         } else {
-            return "\(result) - \(abs(modifier))"
+            return "-"
         }
     }
     

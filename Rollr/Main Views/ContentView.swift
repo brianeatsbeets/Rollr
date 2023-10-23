@@ -25,11 +25,11 @@ struct ContentView: View {
         NavigationStack {
                 
             // Main stack
-            VStack {
+            VStack(spacing: 0) {
                 
                 // Roll window
                 RollWindow(rolls: $rolls, dice: $dice, latestRoll: $latestRoll)
-                    .padding()
+                    .padding([.horizontal, .bottom])
                 
                 // Dice options
                 HStack {
@@ -48,7 +48,10 @@ struct ContentView: View {
                         .disabled(dice.count >= 5)
                     }
                 }
-                .padding([.horizontal, .bottom])
+                .padding(.horizontal)
+                
+                Divider()
+                    .padding()
                 
                 // Roll history header
                 RollHistoryHeader(latestRoll: $latestRoll, rolls: $rolls, dice: $dice)

@@ -12,43 +12,45 @@ struct RollHistoryRow: View {
     var roll: Roll
     
     var body: some View {
-        ZStack {
-            HStack {
+        HStack {
                 
-                // Roll date and time
-                VStack(alignment: .leading) {
-                    Text(roll.dateRolled.formatted(date: .numeric, time: .omitted))
-                        .font(.caption)
-                    Text(roll.dateRolled.formatted(date: .omitted, time: .standard))
-                        .font(.subheadline.bold())
-                }
-                
-                Spacer()
-                
-                // Roll total
-                VStack(spacing: 0) {
-                    Text("Total")
-                    Text(roll.total, format: .number)
-                        .font(.largeTitle.bold())
-                        .frame(width: 75, alignment: .center)
-                }
+            // Roll date and time
+            VStack(alignment: .leading) {
+                Text(roll.dateRolled.formatted(date: .numeric, time: .omitted))
+                    .font(.caption)
+                Text(roll.dateRolled.formatted(date: .omitted, time: .standard))
+                    .font(.subheadline.bold())
             }
             
-            HStack {
-                ForEach(roll.rollSettings.dice, id: \.id) { die in
+            Spacer()
+            
+            // Roll values
+            ForEach(roll.rollSettings.dice, id: \.id) { die in
+                HStack(spacing: 0) {
                     VStack {
                         
-                        // Roll settings values
+                        // Number of sides
                         SidesHexagon(numberOfSides: die.numberOfSides.rawValue)
                             .frame(height: 25)
                         
-                        // Roll values
-                        Text(die.result.description)
-                            .font(.subheadline)
+                        // Roll value + modifier
+                        Text(die.totalExpressionFormatted)
+                            .font(.footnote)
+                            .lineLimit(1)
+                        
+                        // Roll total
+                        Text(die.total.description)
+                            .font(.footnote.bold())
                             .lineLimit(1)
                     }
                 }
+                
+                if die.id != roll.rollSettings.dice.last?.id {
+                    Divider()
+                }
             }
+            
+            Spacer()
         }
     }
 }
