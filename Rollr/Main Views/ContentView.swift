@@ -43,7 +43,7 @@ struct ContentView: View {
                             }
                             
                         } label: {
-                            SidesHexagon(numberOfSides: sides.rawValue)
+                            SidesHexagon(numberOfSides: sides.rawValue, type: .button)
                         }
                         .disabled(dice.count >= 5)
                     }

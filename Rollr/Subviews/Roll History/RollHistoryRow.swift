@@ -30,7 +30,7 @@ struct RollHistoryRow: View {
                     VStack {
                         
                         // Number of sides
-                        SidesHexagon(numberOfSides: die.numberOfSides.rawValue)
+                        SidesHexagon(numberOfSides: die.numberOfSides.rawValue, type: .rollHistoryRow, rollValue: die.result)
                             .frame(height: 25)
                         
                         // Roll value + modifier

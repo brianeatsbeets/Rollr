@@ -84,7 +84,7 @@ struct RollWindow: View {
                                 VStack {
                                     
                                     // Number of sides
-                                    SidesHexagon(numberOfSides: die.numberOfSides.rawValue)
+                                    SidesHexagon(numberOfSides: die.numberOfSides.rawValue, type: .rollWindow)
                                         .frame(height: 40)
                                     
                                     // Modifier
