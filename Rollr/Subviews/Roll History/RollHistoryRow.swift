@@ -9,6 +9,8 @@ import SwiftUI
 
 struct RollHistoryRow: View {
     
+    @Environment(\.colorScheme) var theme
+    
     var roll: Roll
     
     var body: some View {

@@ -9,14 +9,16 @@ import SwiftUI
 
 struct SidesHexagon: View {
     
+    @Environment(\.colorScheme) var theme
+    
     let numberOfSides: Int
     let type: SidesHexagonType
     let rollValue: Int
     
-    var foregroundColor: Color {
+    var imageForegroundColor: Color {
         switch type {
         case .rollWindow:
-            return .black
+            return theme == .light ? .black : Color(white: 0.3)
         case .button:
             return .accentColor
         case .rollHistoryRow:
@@ -26,6 +28,21 @@ struct SidesHexagon: View {
                 return .red
             case numberOfSides:
                 return .green
+            default:
+                return theme == .light ? .black : Color(white: 0.3)
+            }
+        }
+    }
+    var textForegroundColor: Color {
+        switch type {
+        case .rollWindow:
+            return theme == .light ? .white : .black
+        case .button:
+            return .white
+        case .rollHistoryRow:
+            switch rollValue {
+            case 1, numberOfSides:
+                return .white
             default:
                 return .black
             }
@@ -42,7 +59,7 @@ struct SidesHexagon: View {
         Image(systemName: "hexagon.fill")
             .resizable()
             .scaledToFit()
-            .foregroundStyle(foregroundColor)
+            .foregroundStyle(imageForegroundColor)
             .overlay(
                 GeometryReader { geo in
                     Text(numberOfSides, format: .number)

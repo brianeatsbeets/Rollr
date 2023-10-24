@@ -11,6 +11,7 @@ import SwiftUI
 struct ContentView: View {
     
     // Environment
+    @Environment(\.colorScheme) var theme
     //@Environment(\.modelContext) var modelContext
     
     // Swift data query
@@ -65,10 +66,12 @@ struct ContentView: View {
                     .onDelete(perform: deleteRolls)
                 }
                 .listStyle(.plain)
+                .background(Color(uiColor: .secondarySystemBackground))
+                .scrollContentBackground(theme == .dark ? .hidden : .automatic)
             }
             .navigationTitle("Rollr")
             .navigationBarTitleDisplayMode(.inline)
-            .background(Color(uiColor: UIColor.systemGroupedBackground))
+            .background(theme == .light ? Color(uiColor: .secondarySystemBackground) : Color(uiColor: UIColor.systemGroupedBackground))
     }
     }
     

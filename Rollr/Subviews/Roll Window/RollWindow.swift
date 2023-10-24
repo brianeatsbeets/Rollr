@@ -10,6 +10,7 @@ import SwiftUI
 struct RollWindow: View {
     
     // Environment
+    @Environment(\.colorScheme) var theme
     //@Environment(\.modelContext) var modelContext
     
     @State var showingModifierView = false
@@ -29,7 +30,7 @@ struct RollWindow: View {
             
             // Background
             RoundedRectangle(cornerRadius: 10)
-                .fill(.white)
+                .fill(theme == .light ? Color.white : Color(uiColor: .secondarySystemBackground))
             
             // Roll window content
             VStack {

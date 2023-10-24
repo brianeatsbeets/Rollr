@@ -44,7 +44,7 @@ struct RollValueShape: View {
         if showingResults && (die.result == 1 || die.result == die.numberOfSides.rawValue) {
             return .white
         } else {
-            return .black
+            return .primary
         }
     }
     var backgroundColor: Color {
