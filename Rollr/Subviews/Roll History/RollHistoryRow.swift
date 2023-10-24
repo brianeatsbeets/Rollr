@@ -23,6 +23,8 @@ struct RollHistoryRow: View {
                 Text(roll.dateRolled.formatted(date: .omitted, time: .standard))
                     .font(.subheadline.bold())
             }
+            .lineLimit(1)
+            .minimumScaleFactor(0.7)
             
             Spacer()
             
@@ -51,8 +53,6 @@ struct RollHistoryRow: View {
                     Divider()
                 }
             }
-            
-            Spacer()
         }
     }
 }
