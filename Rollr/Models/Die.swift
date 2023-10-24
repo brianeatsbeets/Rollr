@@ -12,13 +12,13 @@ import Foundation
 struct Die: Identifiable {
     var id = UUID()
     let numberOfSides: NumberOfSides
-    var modifier = 0
-    var result = 0
+    var modifier: Int
+    var result: Int
     var total: Int {
         result + modifier
     }
     var modifierFormatted: String {
-        if modifier > 0 {
+        if modifier >= 0 {
             return "+\(modifier)"
         } else {
             return String(modifier)
@@ -34,8 +34,10 @@ struct Die: Identifiable {
         }
     }
     
-    init(numberOfSides: NumberOfSides) {
+    init(numberOfSides: NumberOfSides, modifier: Int = 0, result: Int = 0) {
         self.numberOfSides = numberOfSides
+        self.modifier = modifier
+        self.result = result
     }
 }
 

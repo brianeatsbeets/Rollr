@@ -10,7 +10,7 @@ import SwiftUI
 struct RollHistoryHeader: View {
     
     // Environment
-    @Environment(\.modelContext) var modelContext
+    //@Environment(\.modelContext) var modelContext
     
     // State
     @State private var showingClearHistoryConfirmation = false

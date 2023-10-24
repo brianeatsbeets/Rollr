@@ -9,11 +9,13 @@ import Foundation
 //import SwiftData
 
 //@Model
-struct RollSettings {
+struct RollSettings: Identifiable {
     let id = UUID()
+    let name: String
     var dice: [Die]
     
-    init(dice: [Die]) {
+    init(name: String = "", dice: [Die]) {
+        self.name = name
         self.dice = dice
     }
 }

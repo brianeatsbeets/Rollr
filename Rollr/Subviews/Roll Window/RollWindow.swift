@@ -13,13 +13,17 @@ struct RollWindow: View {
     @Environment(\.colorScheme) var theme
     //@Environment(\.modelContext) var modelContext
     
-    @State var showingModifierView = false
-    @State var dieBeingModified: Die?
-    @State var selectedModifier = 0
-    @State var showingResults = false
+    @State private var showingModifierView = false
+    @State private var dieBeingModified: Die?
+    @State private var selectedModifier = 0
+    @State private var showingResults = false
+    @State private var showingPresets = false
+    @State private var showingPresetNameAlert = false
+    @State private var newPresetName = ""
     
     // Binding
     @Binding var rolls: [Roll]
+    @Binding var presets: [RollSettings]
     @Binding var dice: [Die]
     @Binding var latestRoll: Roll?
     
@@ -112,7 +116,7 @@ struct RollWindow: View {
                                         .minimumScaleFactor(0.5)
                                         .frame(height: 40)
                                 }
-                                .onChange(of: die.modifier, initial: true) {
+                                .onChange(of: die.modifier) { _ in
                                     showingResults = false
                                 }
                                 
@@ -147,6 +151,21 @@ struct RollWindow: View {
                     .disabled(dice.isEmpty)
                     
                     HStack {
+                        
+                        // Presets button
+                        Menu("Presets") {
+                            Button("Save as preset") {
+                                showingPresetNameAlert = true
+                                print(showingPresetNameAlert)
+                            }
+                            .disabled(dice.isEmpty)
+
+                            Button("Load preset") {
+                                showingPresets = true
+                            }
+                        }
+                        .padding([.bottom, .leading], 15)
+                        
                         Spacer()
                         
                         // Roll reset button
@@ -162,6 +181,37 @@ struct RollWindow: View {
                 }
             }
         }
+        .alert("Preset Name", isPresented: $showingPresetNameAlert) {
+            TextField("Preset Name", text: $newPresetName)
+            Button("OK", action: savePreset)
+            Button("Cancel", role: .cancel, action: {})
+        } message: {
+            Text("Enter a name for this preset.")
+        }
+        .sheet(isPresented: $showingPresets) {
+            NavigationView {
+                PresetsView(presets: $presets) { selectedPreset in
+                    dice = selectedPreset.dice
+                    showingResults = false
+                }
+            }
+        }
+    }
+    
+    // Save a new dice preset
+    func savePreset() {
+        
+        showingPresetNameAlert = true
+        
+        // Replicate the current dice settings and reset the result
+        var presetDice = dice
+        presetDice.indices.forEach {
+            presetDice[$0].result = 0
+        }
+        
+        presets.append(RollSettings(name: newPresetName, dice: presetDice))
+        
+        newPresetName = ""
     }
     
     // Determine a result for each die

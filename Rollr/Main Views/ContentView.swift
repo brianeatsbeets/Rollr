@@ -16,7 +16,8 @@ struct ContentView: View {
     
     // Swift data query
     //@Query(sort: \Roll.dateRolled, order: .reverse, animation: .default) var rolls: [Roll]
-    @State var rolls = [Roll]()
+    @State private var rolls = [Roll]()
+    @State private var presets = [RollSettings]()
     
     // State
     @State private var dice = [Die]()
@@ -29,7 +30,7 @@ struct ContentView: View {
             VStack(spacing: 0) {
                 
                 // Roll window
-                RollWindow(rolls: $rolls, dice: $dice, latestRoll: $latestRoll)
+                RollWindow(rolls: $rolls, presets: $presets, dice: $dice, latestRoll: $latestRoll)
                     .padding([.horizontal, .bottom])
                 
                 // Dice options

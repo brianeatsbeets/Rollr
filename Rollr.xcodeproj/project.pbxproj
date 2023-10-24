@@ -20,6 +20,7 @@
 		E1B567552AE06F3F00343FB9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1B567542AE06F3F00343FB9 /* Assets.xcassets */; };
 		E1B567582AE06F3F00343FB9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1B567572AE06F3F00343FB9 /* Preview Assets.xcassets */; };
 		E1B5675F2AE0711200343FB9 /* Roll.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B5675E2AE0711200343FB9 /* Roll.swift */; };
+		E1E1164D2AE817FE007BCCB9 /* PresetsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E1164C2AE817FE007BCCB9 /* PresetsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +38,7 @@
 		E1B567542AE06F3F00343FB9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E1B567572AE06F3F00343FB9 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		E1B5675E2AE0711200343FB9 /* Roll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Roll.swift; sourceTree = "<group>"; };
+		E1E1164C2AE817FE007BCCB9 /* PresetsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +95,7 @@
 			children = (
 				E15100A92AE1CC3100C7EDC7 /* RollHistoryHeader.swift */,
 				E15100A12AE1C56500C7EDC7 /* RollHistoryRow.swift */,
+				E1E1164C2AE817FE007BCCB9 /* PresetsView.swift */,
 			);
 			path = "Roll History";
 			sourceTree = "<group>";
@@ -213,6 +216,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E15100A22AE1C56500C7EDC7 /* RollHistoryRow.swift in Sources */,
+				E1E1164D2AE817FE007BCCB9 /* PresetsView.swift in Sources */,
 				E15100B12AE3F5BF00C7EDC7 /* Die.swift in Sources */,
 				E1B567532AE06F3D00343FB9 /* ContentView.swift in Sources */,
 				E1B567512AE06F3D00343FB9 /* RollrApp.swift in Sources */,
@@ -364,6 +368,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -393,6 +398,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
