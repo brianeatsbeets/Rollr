@@ -9,7 +9,7 @@ import Foundation
 //import SwiftData
 
 //@Model
-struct RollSettings: Identifiable, Equatable {
+struct RollSettings: Identifiable {
     let id = UUID()
     let name: String
     var dice: [Die]
@@ -17,9 +17,5 @@ struct RollSettings: Identifiable, Equatable {
     init(name: String = "", dice: [Die]) {
         self.name = name
         self.dice = dice
-    }
-    
-    static func == (lhs: RollSettings, rhs: RollSettings) -> Bool {
-        lhs.id == rhs.id
     }
 }

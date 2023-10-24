@@ -15,7 +15,6 @@ struct RollWindow: View {
     
     @State private var showingModifierView = false
     @State private var dieBeingModified: Die?
-    @State private var selectedModifier = 0
     @State private var showingPresets = false
     @State private var showingPresetNameAlert = false
     @State private var newPresetName = ""
@@ -118,7 +117,8 @@ struct RollWindow: View {
                                 .onChange(of: die.modifier) { _ in
                                     
                                     // Re-create the die (regenerating the id). This avoids triggering an edge case where loading a preset, changing the modifier, and then loading the same preset again would re-trigger the .onChange, resulting in a different RollSettings than the selected preset being loaded. This results in a preset name not being recorded in the roll history when it should be.
-                                    die = Die(numberOfSides: die.numberOfSides, modifier: die.modifier)
+                                    let newDie = Die(numberOfSides: die.numberOfSides, modifier: die.modifier)
+                                    die = newDie
                                     
                                     // Re-create the roll settings with the new die
                                     let newRollSettings = RollSettings(dice: currentRollSettings.dice)

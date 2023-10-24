@@ -67,11 +67,6 @@ struct PresetsView: View {
                 }
             }
         }
-        .onChange(of: presets) { presets in
-            if presets.isEmpty {
-                dismiss()
-            }
-        }
     }
     
     func deletePresets(_ indexSet: IndexSet) {
@@ -79,6 +74,10 @@ struct PresetsView: View {
 //            let roll = rolls[index]
 //            modelContext.delete(roll)
             presets.remove(at: index)
+        }
+        
+        if presets.isEmpty {
+            dismiss()
         }
     }
 }

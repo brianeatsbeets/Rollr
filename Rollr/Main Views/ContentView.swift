@@ -47,7 +47,8 @@ struct ContentView: View {
                             }
                             
                             // Re-create the roll settings with the existing die
-                            currentRollSettings = RollSettings(dice: currentRollSettings.dice)
+                            let newDice = currentRollSettings.dice
+                            currentRollSettings = RollSettings(dice: newDice)
                             
                         } label: {
                             SidesHexagon(numberOfSides: sides.rawValue, type: .button)
