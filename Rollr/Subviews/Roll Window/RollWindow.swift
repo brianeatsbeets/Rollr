@@ -54,12 +54,6 @@ struct RollWindow: View {
                     
                     // Dice and values
                     VStack {
-                        
-                        if !currentRollSettings.dice.isEmpty {
-                            Text(currentRollSettings.dice[0].id.uuidString)
-                                .font(.caption2)
-                        }
-                        
                         HStack {
                             
                             // Row labels
@@ -146,7 +140,6 @@ struct RollWindow: View {
                     // Roll button
                     Button {
                         rollDice()
-                        //showingResults = true
                     } label: {
                         Text("Roll")
                             .font(.headline)
@@ -165,9 +158,6 @@ struct RollWindow: View {
                         
                         VStack {
                             
-                            Text(currentRollSettings.id.uuidString)
-                                .font(.caption2)
-                            
                             // Presets button
                             Menu("Presets") {
                                 Button("Save as preset") {
@@ -178,6 +168,7 @@ struct RollWindow: View {
                                 Button("Load preset") {
                                     showingPresets = true
                                 }
+                                .disabled(presets.isEmpty)
                             }
                         }
                         .padding([.bottom, .leading], 15)
@@ -186,7 +177,6 @@ struct RollWindow: View {
                         
                         // Roll reset button
                         Button(role: .destructive) {
-                            //showingResults = false
                             currentRollSettings.dice.removeAll()
                         } label: {
                             Image(systemName: "trash")

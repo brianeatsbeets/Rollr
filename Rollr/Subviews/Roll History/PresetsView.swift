@@ -23,8 +23,6 @@ struct PresetsView: View {
                     dismiss()
                 } label: {
                     VStack {
-                        Text(preset.id.uuidString)
-                        
                         HStack {
                             Text(preset.name)
                                 .font(.title2.weight(.semibold))
@@ -67,6 +65,11 @@ struct PresetsView: View {
                 } label: {
                     Image(systemName: "xmark")
                 }
+            }
+        }
+        .onChange(of: presets) { presets in
+            if presets.isEmpty {
+                dismiss()
             }
         }
     }
