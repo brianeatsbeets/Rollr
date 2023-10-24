@@ -22,32 +22,37 @@ struct PresetsView: View {
                     completion(preset)
                     dismiss()
                 } label: {
-                    HStack {
-                        Text(preset.name)
-                            .font(.title2.weight(.semibold))
+                    VStack {
+                        Text(preset.id.uuidString)
                         
-                        Spacer()
-                        
-                        // Dice settings
-                        ForEach(preset.dice) { die in
-                            HStack(spacing: 0) {
-                                VStack {
-                                    
-                                    // Number of sides
-                                    SidesHexagon(numberOfSides: die.numberOfSides.rawValue, type: .rollHistoryRow, rollValue: die.result)
-                                        .frame(height: 25)
-                                    
-                                    // Roll value + modifier
-                                    Text(die.modifierFormatted)
-                                        .font(.footnote)
-                                        .lineLimit(1)
+                        HStack {
+                            Text(preset.name)
+                                .font(.title2.weight(.semibold))
+                            
+                            Spacer()
+                            
+                            // Dice settings
+                            ForEach(preset.dice) { die in
+                                HStack(spacing: 0) {
+                                    VStack {
+                                        
+                                        // Number of sides
+                                        SidesHexagon(numberOfSides: die.numberOfSides.rawValue, type: .rollHistoryRow, rollValue: die.result)
+                                            .frame(height: 25)
+                                        
+                                        // Roll value + modifier
+                                        Text(die.modifierFormatted)
+                                            .font(.footnote)
+                                            .lineLimit(1)
+                                    }
                                 }
                             }
+                            
+                            Spacer()
                         }
-                        
-                        Spacer()
                     }
                 }
+                .foregroundStyle(.primary)
             }
             .onDelete(perform: deletePresets)
         }

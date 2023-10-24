@@ -20,7 +20,7 @@ struct ContentView: View {
     @State private var presets = [RollSettings]()
     
     // State
-    @State private var dice = [Die]()
+    @State private var currentRollSettings = RollSettings(dice: [Die]())
     @State private var latestRoll: Roll?
     
     var body: some View {
@@ -30,24 +30,29 @@ struct ContentView: View {
             VStack(spacing: 0) {
                 
                 // Roll window
-                RollWindow(rolls: $rolls, presets: $presets, dice: $dice, latestRoll: $latestRoll)
+                RollWindow(rolls: $rolls, presets: $presets, currentRollSettings: $currentRollSettings, latestRoll: $latestRoll)
                     .padding([.horizontal, .bottom])
                 
                 // Dice options
                 HStack {
                     ForEach(NumberOfSides.allCases, id: \.self) { sides in
                         Button {
-                            dice.append(Die(numberOfSides: sides))
+                            
+                            // Append the selected die to the dice array
+                            currentRollSettings.dice.append(Die(numberOfSides: sides))
                             
                             // Reset each die result
-                            dice.indices.forEach {
-                                dice[$0].result = 0
+                            currentRollSettings.dice.indices.forEach {
+                                currentRollSettings.dice[$0].result = 0
                             }
+                            
+                            // Re-create the roll settings with the existing die
+                            currentRollSettings = RollSettings(dice: currentRollSettings.dice)
                             
                         } label: {
                             SidesHexagon(numberOfSides: sides.rawValue, type: .button)
                         }
-                        .disabled(dice.count >= 5)
+                        .disabled(currentRollSettings.dice.count >= 5)
                     }
                 }
                 .padding(.horizontal)
@@ -56,7 +61,7 @@ struct ContentView: View {
                     .padding()
                 
                 // Roll history header
-                RollHistoryHeader(latestRoll: $latestRoll, rolls: $rolls, dice: $dice)
+                RollHistoryHeader(latestRoll: $latestRoll, rolls: $rolls, currentRollSettings: $currentRollSettings)
                     .padding(.bottom, 5)
                 
                 // Roll history list

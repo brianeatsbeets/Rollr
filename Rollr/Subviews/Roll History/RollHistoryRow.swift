@@ -22,6 +22,10 @@ struct RollHistoryRow: View {
                     .font(.caption)
                 Text(roll.dateRolled.formatted(date: .omitted, time: .standard))
                     .font(.subheadline.bold())
+                if !roll.rollSettings.name.isEmpty {
+                    Text(roll.rollSettings.name)
+                        .font(.subheadline.bold())
+                }
             }
             .lineLimit(1)
             .minimumScaleFactor(0.7)

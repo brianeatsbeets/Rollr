@@ -9,51 +9,46 @@ import SwiftUI
 
 struct RollValueShape: View {
     
-    @Binding var showingResults: Bool
     @Binding var die: Die
     
     var rollResult: String {
-        showingResults ? die.result.description : "-"
+        die.result > 0 ? die.result.description : "-"
     }
     var backgroundSymbol: String {
-        if showingResults {
-            if die.result == 1 {
-                return "square.fill"
-            } else if die.result == die.numberOfSides.rawValue {
-                return "burst.fill"
-            }
+        if die.result == 1 {
+            return "square.fill"
+        } else if die.result == die.numberOfSides.rawValue {
+            return "burst.fill"
         }
         
         return "triangle.fill"
     }
     var scaleEffect: CGFloat {
-        if showingResults && die.result == die.numberOfSides.rawValue {
+        if die.result == die.numberOfSides.rawValue {
             return 1.25
         } else {
             return 0.85
         }
     }
     var fontWeight: Font.Weight {
-        if showingResults && (die.result == 1 || die.result == die.numberOfSides.rawValue) {
+        if die.result == 1 || die.result == die.numberOfSides.rawValue {
             return .semibold
         } else {
             return .regular
         }
     }
     var fontColor: Color {
-        if showingResults && (die.result == 1 || die.result == die.numberOfSides.rawValue) {
+        if die.result == 1 || die.result == die.numberOfSides.rawValue {
             return .white
         } else {
             return .primary
         }
     }
     var backgroundColor: Color {
-        if showingResults {
-            if die.result == 1 {
-                return .red
-            } else if die.result == die.numberOfSides.rawValue {
-                return .green
-            }
+        if die.result == 1 {
+            return .red
+        } else if die.result == die.numberOfSides.rawValue {
+            return .green
         }
         
         return .clear
