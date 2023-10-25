@@ -19,6 +19,7 @@
 		E1B567552AE06F3F00343FB9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1B567542AE06F3F00343FB9 /* Assets.xcassets */; };
 		E1B567582AE06F3F00343FB9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1B567572AE06F3F00343FB9 /* Preview Assets.xcassets */; };
 		E1B5675F2AE0711200343FB9 /* Roll.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B5675E2AE0711200343FB9 /* Roll.swift */; };
+		E1C373082AE9ABCD00C4C05D /* View+ConditionalHidden.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C373072AE9ABCD00C4C05D /* View+ConditionalHidden.swift */; };
 		E1E1164D2AE817FE007BCCB9 /* PresetsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E1164C2AE817FE007BCCB9 /* PresetsView.swift */; };
 /* End PBXBuildFile section */
 
@@ -36,6 +37,7 @@
 		E1B567542AE06F3F00343FB9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E1B567572AE06F3F00343FB9 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		E1B5675E2AE0711200343FB9 /* Roll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Roll.swift; sourceTree = "<group>"; };
+		E1C373072AE9ABCD00C4C05D /* View+ConditionalHidden.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+ConditionalHidden.swift"; sourceTree = "<group>"; };
 		E1E1164C2AE817FE007BCCB9 /* PresetsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -124,6 +126,7 @@
 		E1B5674F2AE06F3D00343FB9 /* Rollr */ = {
 			isa = PBXGroup;
 			children = (
+				E1C373062AE9ABA700C4C05D /* Extensions */,
 				E1B567502AE06F3D00343FB9 /* RollrApp.swift */,
 				E15100AD2AE1CD8300C7EDC7 /* Main Views */,
 				E151009D2AE1C0CD00C7EDC7 /* Models */,
@@ -140,6 +143,14 @@
 				E1B567572AE06F3F00343FB9 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		E1C373062AE9ABA700C4C05D /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				E1C373072AE9ABCD00C4C05D /* View+ConditionalHidden.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -217,6 +228,7 @@
 				E15100B12AE3F5BF00C7EDC7 /* Die.swift in Sources */,
 				E1B567532AE06F3D00343FB9 /* ContentView.swift in Sources */,
 				E1B567512AE06F3D00343FB9 /* RollrApp.swift in Sources */,
+				E1C373082AE9ABCD00C4C05D /* View+ConditionalHidden.swift in Sources */,
 				E15100AA2AE1CC3100C7EDC7 /* RollHistoryHeader.swift in Sources */,
 				E15100A02AE1C0EA00C7EDC7 /* SidesHexagon.swift in Sources */,
 				E15100A82AE1CB3E00C7EDC7 /* RollWindow.swift in Sources */,

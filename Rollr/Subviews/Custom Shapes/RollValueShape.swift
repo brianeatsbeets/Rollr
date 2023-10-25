@@ -44,7 +44,7 @@ struct RollValueShape: View {
             return .primary
         }
     }
-    var backgroundColor: Color {
+    var shapeColor: Color {
         if die.result == 1 {
             return .red
         } else if die.result == die.numberOfSides.rawValue {
@@ -55,11 +55,12 @@ struct RollValueShape: View {
     }
     
     var body: some View {
+        
         Image(systemName: backgroundSymbol)
             .resizable()
             .scaledToFit()
             .scaleEffect(scaleEffect)
-            .foregroundStyle(backgroundColor)
+            .foregroundStyle(shapeColor)
             .overlay(
                 Text(rollResult)
                     .font(.title3)
