@@ -239,7 +239,7 @@ struct RollWindow: View {
         newRoll.randomizeDiceResults()
         
         // Append the new roll to the rolls array
-        rolls.append(currentRoll)
+        rolls.append(newRoll)
         
         // Set the new role as the current roll
         currentRoll = newRoll
