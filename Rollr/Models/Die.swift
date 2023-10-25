@@ -10,7 +10,7 @@ import Foundation
 
 //@Model
 struct Die: Identifiable {
-    var id = UUID()
+    let id = UUID()
     let numberOfSides: NumberOfSides
     var modifier: Int
     var result: Int

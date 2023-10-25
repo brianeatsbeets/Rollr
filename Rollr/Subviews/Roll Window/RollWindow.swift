@@ -21,12 +21,11 @@ struct RollWindow: View {
     
     // Binding
     @Binding var rolls: [Roll]
-    //@Binding var presets: [RollSettings]
     @Binding var presets: [Roll]
     @Binding var currentRoll: Roll
-    @Binding var latestRoll: Roll?
     
     let modifierOptions = [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5]
+    let frameHeight: CGFloat = 35
     
     var body: some View {
         ZStack {
@@ -39,7 +38,6 @@ struct RollWindow: View {
             VStack {
                 
                 // Awaiting roll text
-                //if currentRoll.rollSettings.dice.isEmpty {
                 if currentRoll.dice.isEmpty {
                     VStack {
                         Spacer()
@@ -56,31 +54,28 @@ struct RollWindow: View {
                         HStack {
                             
                             // Row labels
-                            //if !currentRoll.rollSettings.dice.isEmpty {
                             if !currentRoll.dice.isEmpty {
                                 VStack(alignment: .leading) {
                                     Text("Dice:")
-                                        .frame(height: 40)
+                                        .frame(height: frameHeight)
                                     
                                     Text("Modifier:")
-                                        .frame(height: 40)
+                                        .frame(height: frameHeight)
                                     
                                     Text("Roll:")
-                                        .frame(height: 40)
+                                        .frame(height: frameHeight)
                                     
                                     Text("Total:")
                                         .bold()
-                                        .frame(height: 40)
+                                        .frame(height: frameHeight)
                                 }
                                 .font(.title3.weight(.medium))
                                 .padding(.leading, 10)
                                 .layoutPriority(1)
-                                .background(.purple)
                             }
                             
                             Spacer()
                             
-                            //ForEach($currentRoll.rollSettings.dice, id: \.id) { $die in
                             ForEach($currentRoll.dice, id: \.id) { $die in
                                 
                                 Spacer()
@@ -89,7 +84,7 @@ struct RollWindow: View {
                                     
                                     // Number of sides
                                     SidesHexagon(numberOfSides: die.numberOfSides.rawValue, type: .rollWindow)
-                                        .frame(height: 40)
+                                        .frame(height: frameHeight)
                                     
                                     // Modifier
                                     Menu {
@@ -100,62 +95,54 @@ struct RollWindow: View {
                                         }
                                     } label: {
                                         ModifierCircle(die: $die)
-                                            .frame(height: 30)
+                                            .frame(height: frameHeight - 10)
                                     }
-                                    .frame(height: 40)
+                                    .frame(height: frameHeight)
                                     
                                     // Roll value
                                     Group {
                                         RollValueShape(die: $die)
-                                            .frame(height: 35)
+                                            .frame(height: frameHeight - 5)
                                     }
-                                    .frame(height: 40)
+                                    .frame(height: frameHeight)
                                     
                                     // Total value
                                     Text(die.result > 0 ? die.total.description : "-")
                                         .font(.title2.bold())
                                         .minimumScaleFactor(0.5)
-                                        .frame(height: 40)
+                                        .frame(height: frameHeight)
                                 }
                                 .onChange(of: die.modifier) { _ in
                                     
-                                    // Re-create the die (regenerating the id). This avoids triggering an edge case where loading a preset, changing the modifier, and then loading the same preset again would re-trigger the .onChange, resulting in a different RollSettings than the selected preset being loaded. This results in a preset name not being recorded in the roll history when it should be.
-                                    let newDie = Die(numberOfSides: die.numberOfSides, modifier: die.modifier)
-                                    die = newDie
-                                    
-                                    // Re-create the roll settings with the new die
-                                    //let newRollSettings = RollSettings(dice: currentRoll.rollSettings.dice)
-                                    //currentRoll = Roll(rollSettings: newRollSettings)
-                                    let newRoll = Roll(dice: currentRoll.dice)
-                                    currentRoll = newRoll
+                                    // Remove the current preset name
+                                    currentRoll.presetName = ""
                                 }
                                 
                                 Spacer()
                             }
-                            .background(.green)
                         }
                         .padding([.top, .trailing], 10)
-                        .background(.yellow.opacity(0.4))
                         
                         // Grand total
                         HStack {
                             
-                            Text("Grand total:")
-                                .bold()
-                                .frame(height: 40)
-                            
                             Spacer()
                             
+                            // Label
+                            Text("Grand total:")
+                                .font(.title3.weight(.medium))
+                                .padding(.leading, 10)
+                            
+                            // Value
                             Text(currentRoll.grandTotal != 0 ? currentRoll.grandTotal.description : "-")
                                 .font(.title2.bold())
                                 .minimumScaleFactor(0.5)
-                                .frame(height: 40)
                             
                             Spacer()
                         }
+                        .frame(height: frameHeight)
                         
                         Spacer()
-                            .background(.red.opacity(0.4))
                     }
                 }
                 
@@ -167,7 +154,6 @@ struct RollWindow: View {
                         Button("Save as preset") {
                             showingPresetNameAlert = true
                         }
-                        //.disabled(currentRoll.rollSettings.dice.isEmpty)
                         .disabled(currentRoll.dice.isEmpty)
                         
                         Button("Load preset") {
@@ -178,7 +164,6 @@ struct RollWindow: View {
                         Image(systemName: "list.dash")
                             .imageScale(.large)
                     }
-                    .buttonStyle(BorderedProminentButtonStyle())
                     .padding([.bottom, .leading])
                     
                     Spacer()
@@ -191,29 +176,23 @@ struct RollWindow: View {
                             .font(.headline)
                             .padding(.horizontal, 20)
                     }
-                    //.disabled(currentRoll.rollSettings.dice.isEmpty)
                     .disabled(currentRoll.dice.isEmpty)
-                    .buttonStyle(BorderedProminentButtonStyle())
                     .padding(.bottom)
                     
                     Spacer()
                     
                     // Roll reset button
                     Button {
-                        //currentRoll.rollSettings.dice.removeAll()
                         currentRoll.dice.removeAll()
                     } label: {
                         Text("Clear")
                             .font(.headline)
                     }
-                    //.disabled(currentRoll.rollSettings.dice.isEmpty)
                     .disabled(currentRoll.dice.isEmpty)
-                    .buttonStyle(BorderedProminentButtonStyle())
                     .padding([.bottom, .trailing])
                 }
-                .background(.red.opacity(0.4))
+                .buttonStyle(BorderedProminentButtonStyle())
             }
-            .background(.green.opacity(0.4))
         }
         .alert("Preset Name", isPresented: $showingPresetNameAlert) {
             TextField("Preset Name", text: $newPresetName)
@@ -225,8 +204,9 @@ struct RollWindow: View {
         .sheet(isPresented: $showingPresets) {
             NavigationView {
                 PresetsView(presets: $presets) { selectedPreset in
-                    //currentRoll.rollSettings = selectedPreset
-                    currentRoll = selectedPreset
+                    
+                    // Set the current roll to a new roll with the selected preset values
+                    currentRoll = Roll(dice: selectedPreset.dice, presetName: selectedPreset.presetName)
                 }
             }
         }
@@ -235,52 +215,38 @@ struct RollWindow: View {
     // Save a new dice preset
     func savePreset() {
         
+        // Create a new preset and reset the dice results
+        var newPreset = Roll(dice: currentRoll.dice)
+        newPreset.resetDiceResults()
+        
         // Prompt to enter a preset name
         showingPresetNameAlert = true
         
-        // Clone the current dice without the result (each die will have a new id)
-        var presetDice = [Die]()
-        //for die in currentRoll.rollSettings.dice {
-        for die in currentRoll.dice {
-            presetDice.append(Die(numberOfSides: die.numberOfSides, modifier: die.modifier))
-        }
+        // Set preset name
+        newPreset.presetName = newPresetName
         
-        // Create a new preset with the new dice
-        //let newPreset = RollSettings(name: newPresetName, dice: presetDice)
-        let newPreset = Roll(dice: presetDice, presetName: newPresetName)
+        // Reset the new preset name property to clear the text field when a new preset is created
+        newPresetName = ""
         
         // Add the new preset to the presets list
         presets.append(newPreset)
         
-        // Set the new preset as the current roll settings
-        //currentRoll.rollSettings = newPreset
+        // Set the new preset as the current roll
         currentRoll = newPreset
-        
-        // Reset the new preset name property to clear the text field when a new preset is created
-        newPresetName = ""
     }
     
     // Determine a result for each die
     func rollDice() {
-//        currentRoll.rollSettings.dice.indices.forEach {
-//            currentRoll.rollSettings.dice[$0].result = Int.random(in: 1...currentRoll.rollSettings.dice[$0].numberOfSides.rawValue)
-//        }
-//        
-//        latestRoll = Roll(rollSettings: RollSettings(name: currentRoll.rollSettings.name, dice: currentRoll.rollSettings.dice))
-//        rolls.append(latestRoll!)
         
-        currentRoll.dice.indices.forEach {
-            currentRoll.dice[$0].result = Int.random(in: 1...currentRoll.dice[$0].numberOfSides.rawValue)
-        }
+        // Create a new Roll and randomize the dice results
+        var newRoll = Roll(dice: currentRoll.dice, presetName: currentRoll.presetName)
+        newRoll.randomizeDiceResults()
         
-        latestRoll = Roll(dice: currentRoll.dice, presetName: currentRoll.presetName)
-        rolls.append(latestRoll!)
+        // Append the new roll to the rolls array
+        rolls.append(currentRoll)
         
-        print(currentRoll.rollTotal)
-        print(currentRoll.grandTotal)
-        print(currentRoll.dateRolled)
-        print(currentRoll.dice)
-        print()
+        // Set the new role as the current roll
+        currentRoll = newRoll
     }
 }
 

@@ -18,13 +18,17 @@ struct RollHistoryRow: View {
                 
             // Roll date and time
             VStack(alignment: .leading) {
+                
+                // Date
                 Text(roll.dateRolled.formatted(date: .numeric, time: .omitted))
                     .font(.caption)
+                
+                // Time
                 Text(roll.dateRolled.formatted(date: .omitted, time: .standard))
                     .font(.subheadline.bold())
-                //if !roll.rollSettings.name.isEmpty {
+                
+                // Preset name (if applicable)
                 if !roll.presetName.isEmpty {
-                    //Text(roll.rollSettings.name)
                     Text(roll.presetName)
                         .font(.subheadline.bold())
                 }
@@ -35,7 +39,6 @@ struct RollHistoryRow: View {
             Spacer()
             
             // Roll values
-            //ForEach(roll.rollSettings.dice) { die in
             ForEach(roll.dice) { die in
                 HStack(spacing: 0) {
                     VStack {
@@ -56,7 +59,7 @@ struct RollHistoryRow: View {
                     }
                 }
                 
-                //if die.id != roll.rollSettings.dice.last?.id {
+                // Add a divider unless we're on the last die
                 if die.id != roll.dice.last?.id {
                     Divider()
                 }

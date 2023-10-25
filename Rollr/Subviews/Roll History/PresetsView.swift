@@ -11,8 +11,6 @@ struct PresetsView: View {
     
     @Environment(\.dismiss) var dismiss
     
-//    @Binding var presets: [RollSettings]
-//    let completion: (RollSettings) -> Void
     @Binding var presets: [Roll]
     let completion: (Roll) -> Void
     
@@ -26,7 +24,6 @@ struct PresetsView: View {
                 } label: {
                     VStack {
                         HStack {
-                            //Text(preset.name)
                             Text(preset.presetName)
                                 .font(.title2.weight(.semibold))
                             

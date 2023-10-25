@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		E1054CC42AE695E10047DAE2 /* ModifierCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1054CC32AE695E10047DAE2 /* ModifierCircle.swift */; };
 		E1054CC72AE6F3AC0047DAE2 /* RollValueShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1054CC62AE6F3AC0047DAE2 /* RollValueShape.swift */; };
-		E12FFDD62AE17B5B00858535 /* RollSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E12FFDD52AE17B5B00858535 /* RollSettings.swift */; };
 		E15100A02AE1C0EA00C7EDC7 /* SidesHexagon.swift in Sources */ = {isa = PBXBuildFile; fileRef = E151009F2AE1C0EA00C7EDC7 /* SidesHexagon.swift */; };
 		E15100A22AE1C56500C7EDC7 /* RollHistoryRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15100A12AE1C56500C7EDC7 /* RollHistoryRow.swift */; };
 		E15100A82AE1CB3E00C7EDC7 /* RollWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15100A72AE1CB3E00C7EDC7 /* RollWindow.swift */; };
@@ -26,7 +25,6 @@
 /* Begin PBXFileReference section */
 		E1054CC32AE695E10047DAE2 /* ModifierCircle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifierCircle.swift; sourceTree = "<group>"; };
 		E1054CC62AE6F3AC0047DAE2 /* RollValueShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RollValueShape.swift; sourceTree = "<group>"; };
-		E12FFDD52AE17B5B00858535 /* RollSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RollSettings.swift; sourceTree = "<group>"; };
 		E151009F2AE1C0EA00C7EDC7 /* SidesHexagon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidesHexagon.swift; sourceTree = "<group>"; };
 		E15100A12AE1C56500C7EDC7 /* RollHistoryRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RollHistoryRow.swift; sourceTree = "<group>"; };
 		E15100A72AE1CB3E00C7EDC7 /* RollWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RollWindow.swift; sourceTree = "<group>"; };
@@ -66,7 +64,6 @@
 			isa = PBXGroup;
 			children = (
 				E1B5675E2AE0711200343FB9 /* Roll.swift */,
-				E12FFDD52AE17B5B00858535 /* RollSettings.swift */,
 				E15100B02AE3F5BF00C7EDC7 /* Die.swift */,
 			);
 			path = Models;
@@ -226,7 +223,6 @@
 				E1054CC42AE695E10047DAE2 /* ModifierCircle.swift in Sources */,
 				E1B5675F2AE0711200343FB9 /* Roll.swift in Sources */,
 				E1054CC72AE6F3AC0047DAE2 /* RollValueShape.swift in Sources */,
-				E12FFDD62AE17B5B00858535 /* RollSettings.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

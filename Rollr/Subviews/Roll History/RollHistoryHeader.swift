@@ -16,7 +16,6 @@ struct RollHistoryHeader: View {
     @State private var showingClearHistoryConfirmation = false
     
     // Binding
-    @Binding var latestRoll: Roll?
     @Binding var rolls: [Roll]
     @Binding var currentRoll: Roll
     
@@ -42,10 +41,12 @@ struct RollHistoryHeader: View {
                 Button("Clear History", role: .destructive) {
                     do {
                         //try modelContext.delete(model: Roll.self)
-                        //currentRoll.rollSettings.dice.removeAll()
-                        currentRoll.dice.removeAll()
+                        
+                        // Clear the roll history
                         rolls.removeAll()
-                        latestRoll = nil
+                        
+                        // Reset the current roll
+                        currentRoll = Roll()
                     } catch {
                         print("Error: \(error.localizedDescription)")
                     }
