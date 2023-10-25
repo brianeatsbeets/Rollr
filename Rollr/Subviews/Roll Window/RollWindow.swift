@@ -41,11 +41,9 @@ struct RollWindow: View {
                 if currentRollSettings.dice.isEmpty {
                     VStack {
                         Spacer()
-                        Spacer()
                         
                         Text("Choose your dice!")
                             .font(.title)
-                            .padding(.bottom)
                         
                         Spacer()
                     }
@@ -129,13 +127,35 @@ struct RollWindow: View {
                             }
                         }
                         .padding([.top, .trailing], 10)
+                        .background(.yellow.opacity(0.4))
                         
                         Spacer()
+                            .background(.red.opacity(0.4))
                     }
                 }
                 
-                // Roll + reset buttons
-                ZStack {
+                // Bottom row buttons
+                HStack {
+                    
+                    // Presets button
+                    Menu {
+                        Button("Save as preset") {
+                            showingPresetNameAlert = true
+                        }
+                        .disabled(currentRollSettings.dice.isEmpty)
+                        
+                        Button("Load preset") {
+                            showingPresets = true
+                        }
+                        .disabled(presets.isEmpty)
+                    } label: {
+                        Image(systemName: "list.dash")
+                            .imageScale(.large)
+                    }
+                    .buttonStyle(BorderedProminentButtonStyle())
+                    .padding([.bottom, .leading])
+                    
+                    Spacer()
                     
                     // Roll button
                     Button {
@@ -143,50 +163,28 @@ struct RollWindow: View {
                     } label: {
                         Text("Roll")
                             .font(.headline)
-                            .padding(.horizontal, 30)
-                            .padding(.vertical, 5)
-                            .foregroundStyle(.white)
-                            .background(
-                                RoundedRectangle(cornerRadius: 5)
-                                    .fill(.tint)
-                            )
+                            .padding(.horizontal, 20)
                     }
-                    .padding(.bottom)
                     .disabled(currentRollSettings.dice.isEmpty)
+                    .buttonStyle(BorderedProminentButtonStyle())
+                    .padding(.bottom)
                     
-                    HStack {
-                        
-                        VStack {
-                            
-                            // Presets button
-                            Menu("Presets") {
-                                Button("Save as preset") {
-                                    showingPresetNameAlert = true
-                                }
-                                .disabled(currentRollSettings.dice.isEmpty)
-                                
-                                Button("Load preset") {
-                                    showingPresets = true
-                                }
-                                .disabled(presets.isEmpty)
-                            }
-                        }
-                        .padding([.bottom, .leading], 15)
-                        
-                        Spacer()
-                        
-                        // Roll reset button
-                        Button(role: .destructive) {
-                            currentRollSettings.dice.removeAll()
-                        } label: {
-                            Image(systemName: "trash")
-                                .imageScale(.large)
-                                .fontWeight(.semibold)
-                        }
-                        .padding([.bottom, .trailing], 15)
+                    Spacer()
+                    
+                    // Roll reset button
+                    Button {
+                        currentRollSettings.dice.removeAll()
+                    } label: {
+                        Text("Clear")
+                            .font(.headline)
                     }
+                    .disabled(currentRollSettings.dice.isEmpty)
+                    .buttonStyle(BorderedProminentButtonStyle())
+                    .padding([.bottom, .trailing])
                 }
+                .background(.red.opacity(0.4))
             }
+            .background(.green.opacity(0.4))
         }
         .alert("Preset Name", isPresented: $showingPresetNameAlert) {
             TextField("Preset Name", text: $newPresetName)
