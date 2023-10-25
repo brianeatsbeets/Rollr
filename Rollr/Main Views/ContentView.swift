@@ -17,10 +17,11 @@ struct ContentView: View {
     // Swift data query
     //@Query(sort: \Roll.dateRolled, order: .reverse, animation: .default) var rolls: [Roll]
     @State private var rolls = [Roll]()
-    @State private var presets = [RollSettings]()
+//    @State private var presets = [RollSettings]()
+    @State private var presets = [Roll]()
     
     // State
-    @State private var currentRollSettings = RollSettings(dice: [Die]())
+    @State private var currentRoll = Roll(dice: [Die]()) //Roll(rollSettings: RollSettings(dice: [Die]()))
     @State private var latestRoll: Roll?
     
     var body: some View {
@@ -30,7 +31,7 @@ struct ContentView: View {
             VStack(spacing: 0) {
                 
                 // Roll window
-                RollWindow(rolls: $rolls, presets: $presets, currentRollSettings: $currentRollSettings, latestRoll: $latestRoll)
+                RollWindow(rolls: $rolls, presets: $presets, currentRoll: $currentRoll, latestRoll: $latestRoll)
                     .padding([.horizontal, .bottom])
                 
                 // Dice options
@@ -39,21 +40,28 @@ struct ContentView: View {
                         Button {
                             
                             // Append the selected die to the dice array
-                            currentRollSettings.dice.append(Die(numberOfSides: sides))
+                            //currentRoll.rollSettings.dice.append(Die(numberOfSides: sides))
+                            currentRoll.dice.append(Die(numberOfSides: sides))
                             
                             // Reset each die result
-                            currentRollSettings.dice.indices.forEach {
-                                currentRollSettings.dice[$0].result = 0
+//                            currentRoll.rollSettings.dice.indices.forEach {
+//                                currentRoll.rollSettings.dice[$0].result = 0
+//                            }
+                            currentRoll.dice.indices.forEach {
+                                currentRoll.dice[$0].result = 0
                             }
                             
                             // Re-create the roll settings with the existing die
-                            let newDice = currentRollSettings.dice
-                            currentRollSettings = RollSettings(dice: newDice)
+//                            let newDice = currentRoll.rollSettings.dice
+//                            currentRoll.rollSettings = RollSettings(dice: newDice)
+                            let newDice = currentRoll.dice
+                            currentRoll = Roll(dice: newDice)
                             
                         } label: {
                             SidesHexagon(numberOfSides: sides.rawValue, type: .button)
                         }
-                        .disabled(currentRollSettings.dice.count >= 5)
+                        //.disabled(currentRoll.rollSettings.dice.count >= 5)
+                        .disabled(currentRoll.dice.count >= 5)
                     }
                 }
                 .padding(.horizontal)
@@ -62,7 +70,7 @@ struct ContentView: View {
                     .padding()
                 
                 // Roll history header
-                RollHistoryHeader(latestRoll: $latestRoll, rolls: $rolls, currentRollSettings: $currentRollSettings)
+                RollHistoryHeader(latestRoll: $latestRoll, rolls: $rolls, currentRoll: $currentRoll)
                     .padding(.bottom, 5)
                 
                 // Roll history list

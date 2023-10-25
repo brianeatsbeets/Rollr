@@ -11,8 +11,10 @@ struct PresetsView: View {
     
     @Environment(\.dismiss) var dismiss
     
-    @Binding var presets: [RollSettings]
-    let completion: (RollSettings) -> Void
+//    @Binding var presets: [RollSettings]
+//    let completion: (RollSettings) -> Void
+    @Binding var presets: [Roll]
+    let completion: (Roll) -> Void
     
     var body: some View {
         
@@ -24,7 +26,8 @@ struct PresetsView: View {
                 } label: {
                     VStack {
                         HStack {
-                            Text(preset.name)
+                            //Text(preset.name)
+                            Text(preset.presetName)
                                 .font(.title2.weight(.semibold))
                             
                             Spacer()
@@ -84,6 +87,6 @@ struct PresetsView: View {
 
 #Preview {
     NavigationView {
-        PresetsView(presets: .constant([RollSettings(name: "Thor", dice: [Die(numberOfSides: .six, modifier: 3, result: 0), Die(numberOfSides: .twenty, modifier: 0, result: 0), Die(numberOfSides: .twenty, modifier: 0, result: 0)])]), completion: {_ in })
+        PresetsView(presets: .constant([Roll(dice: [Die(numberOfSides: .six, modifier: 3, result: 0), Die(numberOfSides: .twenty, modifier: 0, result: 0), Die(numberOfSides: .twenty, modifier: 0, result: 0)], presetName: "Thor")]), completion: {_ in })
     }
 }

@@ -18,7 +18,7 @@ struct RollHistoryHeader: View {
     // Binding
     @Binding var latestRoll: Roll?
     @Binding var rolls: [Roll]
-    @Binding var currentRollSettings: RollSettings
+    @Binding var currentRoll: Roll
     
     var body: some View {
         HStack {
@@ -42,7 +42,8 @@ struct RollHistoryHeader: View {
                 Button("Clear History", role: .destructive) {
                     do {
                         //try modelContext.delete(model: Roll.self)
-                        currentRollSettings.dice.removeAll()
+                        //currentRoll.rollSettings.dice.removeAll()
+                        currentRoll.dice.removeAll()
                         rolls.removeAll()
                         latestRoll = nil
                     } catch {
