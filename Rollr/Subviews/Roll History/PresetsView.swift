@@ -45,8 +45,6 @@ struct PresetsView: View {
                                     }
                                 }
                             }
-                            
-                            Spacer()
                         }
                     }
                 }
