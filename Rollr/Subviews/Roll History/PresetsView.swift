@@ -11,6 +11,9 @@ struct PresetsView: View {
     
     @Environment(\.dismiss) var dismiss
     
+    @State private var editMode: EditMode = .inactive
+    @State private var showingConfirmationAlert = false
+    
     @Binding var presets: [Roll]
     let completion: (Roll) -> Void
     
@@ -53,9 +56,28 @@ struct PresetsView: View {
             .onDelete(perform: deletePresets)
         }
         .navigationTitle("Load Preset")
+        .navigationBarTitleDisplayMode(.inline)
+        .confirmationDialog("Remove All Presets", isPresented: $showingConfirmationAlert, actions: {
+            Button("Remove", role: .destructive) {
+                presets.removeAll()
+                editMode = .inactive
+            }
+            Button("Cancel", role: .cancel) {}
+        }, message: {
+            Text("All presets will be permenantly deleted.")
+        })
         .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
+            ToolbarItemGroup(placement: .topBarLeading) {
                 EditButton()
+                
+                if editMode == .active {
+                    Button("Remove all", role: .destructive) {
+                        showingConfirmationAlert = true
+                    }
+                    .buttonStyle(BorderedProminentButtonStyle())
+                    
+                    Spacer()
+                }
             }
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
@@ -65,6 +87,7 @@ struct PresetsView: View {
                 }
             }
         }
+        .environment(\.editMode, $editMode)
     }
     
     func deletePresets(_ indexSet: IndexSet) {
