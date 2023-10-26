@@ -24,7 +24,7 @@ struct ContentView: View {
     
     var body: some View {
         NavigationStack {
-                
+            
             // Main stack
             VStack(spacing: 0) {
                 
@@ -78,7 +78,10 @@ struct ContentView: View {
             .navigationTitle("Rollr")
             .navigationBarTitleDisplayMode(.inline)
             .background(theme == .light ? Color(uiColor: .secondarySystemBackground) : Color(uiColor: UIColor.systemGroupedBackground))
-    }
+            
+            // Prevents layout from squishing when entering a new preset name
+            .ignoresSafeArea(.keyboard)
+        }
     }
     
     func deleteRolls(_ indexSet: IndexSet) {

@@ -15,6 +15,8 @@ struct PresetsView: View {
     @State private var showingConfirmationAlert = false
     
     @Binding var presets: [Roll]
+    @Binding var currentRoll: Roll
+    
     let completion: (Roll) -> Void
     
     var body: some View {
@@ -94,6 +96,12 @@ struct PresetsView: View {
         for index in indexSet {
 //            let roll = rolls[index]
 //            modelContext.delete(roll)
+            
+            // Remove the active preset if it is deleted
+            if presets[index].presetName == currentRoll.presetName {
+                currentRoll = Roll()
+            }
+            
             presets.remove(at: index)
         }
         
@@ -103,8 +111,8 @@ struct PresetsView: View {
     }
 }
 
-#Preview {
-    NavigationView {
-        PresetsView(presets: .constant([Roll(dice: [Die(numberOfSides: .six, modifier: 3, result: 0), Die(numberOfSides: .twenty, modifier: 0, result: 0), Die(numberOfSides: .twenty, modifier: 0, result: 0)], presetName: "Thor")]), completion: {_ in })
-    }
-}
+//#Preview {
+//    NavigationView {
+//        PresetsView(presets: .constant([Roll(dice: [Die(numberOfSides: .six, modifier: 3, result: 0), Die(numberOfSides: .twenty, modifier: 0, result: 0), Die(numberOfSides: .twenty, modifier: 0, result: 0)], presetName: "Thor")]), completion: {_ in })
+//    }
+//}

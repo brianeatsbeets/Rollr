@@ -115,6 +115,9 @@ struct RollWindow: View {
                                             
                                             // Remove the current preset name
                                             currentRoll.presetName = ""
+                                            
+                                            // Reset the roll results
+                                            currentRoll.resetDiceResults()
                                         }
                                     }
                                 }
@@ -132,7 +135,7 @@ struct RollWindow: View {
                                     .padding(.leading, 10)
                                 
                                 // Value
-                                Text(currentRoll.grandTotal != 0 ? currentRoll.grandTotal.description : "-")
+                                Text(currentRoll.rollTotal != 0 ? currentRoll.grandTotal.description : "-")
                                     .font(.title2.bold())
                                     .minimumScaleFactor(0.5)
                             }
@@ -198,7 +201,7 @@ struct RollWindow: View {
                 }
                 .sheet(isPresented: $showingPresets) {
                     NavigationView {
-                        PresetsView(presets: $presets) { selectedPreset in
+                        PresetsView(presets: $presets, currentRoll: $currentRoll) { selectedPreset in
                             
                             // Set the current roll to a new roll with the selected preset values
                             currentRoll = Roll(dice: selectedPreset.dice, presetName: selectedPreset.presetName)
