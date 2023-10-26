@@ -58,5 +58,5 @@ struct Roll: Identifiable {
         }
     }
     
-    static var maxRoll = Roll(dice: [Die(numberOfSides: .oneHundred, modifier: 4, result: 100), Die(numberOfSides: .oneHundred, modifier: 4, result: 100), Die(numberOfSides: .oneHundred, modifier: 4, result: 100), Die(numberOfSides: .oneHundred, modifier: 4, result: 100), Die(numberOfSides: .oneHundred, modifier: 4, result: 100)], presetName: "Max Roll")
+    static var maxRoll = Roll(dice: [Die(numberOfSides: .oneHundred, modifier: 4, result: 100), Die(numberOfSides: .oneHundred, modifier: 4, result: 100), Die(numberOfSides: .oneHundred, modifier: 4, result: 100), Die(numberOfSides: .oneHundred, modifier: 4, result: 100), Die(numberOfSides: .oneHundred, modifier: 4, result: 100)], presetName: "Catastrophic Planetary Devastation")
 }

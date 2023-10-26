@@ -30,7 +30,9 @@ struct RollHistoryRow: View {
                 // Preset name (if applicable)
                 if !roll.presetName.isEmpty {
                     Text(roll.presetName)
-                        .font(.footnote.bold())
+                        .font(.footnote.bold().leading(.tight))
+                        .lineSpacing(-1)
+                        .lineLimit(3)
                 }
                 
                 // Grand total
@@ -38,8 +40,7 @@ struct RollHistoryRow: View {
                     .font(.footnote.bold())
             }
             .lineLimit(1)
-            //.minimumScaleFactor(0.5)
-            .layoutPriority(1)
+            .minimumScaleFactor(0.7)
             
             Spacer()
             

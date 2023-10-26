@@ -163,6 +163,7 @@ struct RollWindow: View {
                             Image(systemName: "list.dash")
                                 .imageScale(.large)
                         }
+                        .buttonStyle(BorderedProminentButtonStyle())
                         .padding([.bottom, .leading])
                         
                         Spacer()
@@ -171,9 +172,18 @@ struct RollWindow: View {
                         Button {
                             rollDice()
                         } label: {
-                            Text("Roll")
-                                .font(.headline)
+                            Text(currentRoll.presetName.isEmpty ? "Roll" : currentRoll.presetName)
+                                .font(.headline.leading(.tight))
+                                .foregroundStyle(.white)
+                                .minimumScaleFactor(0.7)
+                                .lineLimit(2)
+                                .lineSpacing(-1)
+                                .frame(height: 33)
                                 .padding(.horizontal, 20)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 5)
+                                        .fill(.tint)
+                                )
                         }
                         .disabled(currentRoll.dice.isEmpty)
                         .padding(.bottom)
@@ -187,10 +197,10 @@ struct RollWindow: View {
                             Text("Clear")
                                 .font(.headline)
                         }
+                        .buttonStyle(BorderedProminentButtonStyle())
                         .disabled(currentRoll.dice.isEmpty)
                         .padding([.bottom, .trailing])
                     }
-                    .buttonStyle(BorderedProminentButtonStyle())
                 }
                 .alert("Preset Name", isPresented: $showingPresetNameAlert) {
                     TextField("Preset Name", text: $newPresetName)

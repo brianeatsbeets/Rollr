@@ -31,6 +31,8 @@ struct PresetsView: View {
                         HStack {
                             Text(preset.presetName)
                                 .font(.title2.weight(.semibold))
+                                .lineLimit(2)
+                                .minimumScaleFactor(0.3)
                             
                             Spacer()
                             
