@@ -192,7 +192,7 @@ struct RollWindow: View {
                         
                         // Roll reset button
                         Button {
-                            currentRoll.dice.removeAll()
+                            currentRoll = Roll()
                         } label: {
                             Text("Clear")
                                 .font(.headline)
