@@ -42,47 +42,14 @@ struct ContentView: View {
                     .padding([.horizontal, .bottom])
                 
                 // Dice options
-                HStack {
-                    ForEach(NumberOfSides.allCases, id: \.self) { sides in
-                        Button {
-                            
-                            // Append the selected die to the dice array
-                            currentRoll.dice.append(Die(numberOfSides: sides))
-                            
-                            // Reset each die result
-                            currentRoll.dice.indices.forEach {
-                                currentRoll.dice[$0].result = 0
-                            }
-                            
-                            // Re-create the roll settings with the existing die
-                            let newDice = currentRoll.dice
-                            currentRoll = Roll(dice: newDice)
-                            
-                        } label: {
-                            NumberOfSidesHexagon(numberOfSides: sides.rawValue, type: .button)
-                        }
-                        .disabled(currentRoll.dice.count >= 5)
-                    }
-                }
-                .padding(.horizontal)
+                DiceOptions(currentRoll: $currentRoll)
+                    .padding(.horizontal)
                 
                 Divider()
                     .padding()
                 
-                // Roll history header
-                RollHistoryHeader(rolls: $rolls, currentRoll: $currentRoll)
-                    .padding(.bottom, 5)
-                
                 // Roll history list
-                List {
-                    ForEach(rolls.sorted { $0.dateRolled > $1.dateRolled }) { roll in
-                        RollHistoryRow(roll: roll)
-                    }
-                    .onDelete(perform: deleteRolls)
-                }
-                .listStyle(.plain)
-                .background(Color(uiColor: .secondarySystemBackground))
-                .scrollContentBackground(theme == .dark ? .hidden : .automatic)
+                RollHistoryList(rolls: $rolls, currentRoll: $currentRoll)
             }
             .navigationTitle("Rollr")
             .navigationBarTitleDisplayMode(.inline)
@@ -90,15 +57,6 @@ struct ContentView: View {
             
             // Prevents layout from squishing when entering a new preset name
             .ignoresSafeArea(.keyboard)
-        }
-    }
-    
-    // Delete the specifed rolls
-    func deleteRolls(_ indexSet: IndexSet) {
-        for index in indexSet {
-//            let roll = rolls[index]
-//            modelContext.delete(roll)
-            rolls.remove(at: index)
         }
     }
 }

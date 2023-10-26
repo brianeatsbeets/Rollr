@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E100E23C2AEACA9100E11932 /* PresetRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E100E23B2AEACA9100E11932 /* PresetRow.swift */; };
 		E1054CC42AE695E10047DAE2 /* ModifierCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1054CC32AE695E10047DAE2 /* ModifierCircle.swift */; };
 		E1054CC72AE6F3AC0047DAE2 /* RollValueShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1054CC62AE6F3AC0047DAE2 /* RollValueShape.swift */; };
 		E15100A02AE1C0EA00C7EDC7 /* NumberOfSidesHexagon.swift in Sources */ = {isa = PBXBuildFile; fileRef = E151009F2AE1C0EA00C7EDC7 /* NumberOfSidesHexagon.swift */; };
@@ -19,11 +20,16 @@
 		E1B567552AE06F3F00343FB9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1B567542AE06F3F00343FB9 /* Assets.xcassets */; };
 		E1B567582AE06F3F00343FB9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1B567572AE06F3F00343FB9 /* Preview Assets.xcassets */; };
 		E1B5675F2AE0711200343FB9 /* Roll.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B5675E2AE0711200343FB9 /* Roll.swift */; };
+		E1BC3F892AEAC402002EF023 /* DiceOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1BC3F882AEAC402002EF023 /* DiceOptions.swift */; };
+		E1BC3F8B2AEAC4E3002EF023 /* RollHistoryList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1BC3F8A2AEAC4E3002EF023 /* RollHistoryList.swift */; };
+		E1BC3F8D2AEAC6C6002EF023 /* RollWindowDiceValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1BC3F8C2AEAC6C6002EF023 /* RollWindowDiceValues.swift */; };
+		E1BC3F8F2AEAC84B002EF023 /* RollWindowButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1BC3F8E2AEAC84B002EF023 /* RollWindowButtons.swift */; };
 		E1C373082AE9ABCD00C4C05D /* View+ConditionalHidden.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C373072AE9ABCD00C4C05D /* View+ConditionalHidden.swift */; };
-		E1E1164D2AE817FE007BCCB9 /* PresetsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E1164C2AE817FE007BCCB9 /* PresetsView.swift */; };
+		E1E1164D2AE817FE007BCCB9 /* PresetsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E1164C2AE817FE007BCCB9 /* PresetsList.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E100E23B2AEACA9100E11932 /* PresetRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetRow.swift; sourceTree = "<group>"; };
 		E1054CC32AE695E10047DAE2 /* ModifierCircle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifierCircle.swift; sourceTree = "<group>"; };
 		E1054CC62AE6F3AC0047DAE2 /* RollValueShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RollValueShape.swift; sourceTree = "<group>"; };
 		E151009F2AE1C0EA00C7EDC7 /* NumberOfSidesHexagon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberOfSidesHexagon.swift; sourceTree = "<group>"; };
@@ -37,8 +43,12 @@
 		E1B567542AE06F3F00343FB9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E1B567572AE06F3F00343FB9 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		E1B5675E2AE0711200343FB9 /* Roll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Roll.swift; sourceTree = "<group>"; };
+		E1BC3F882AEAC402002EF023 /* DiceOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiceOptions.swift; sourceTree = "<group>"; };
+		E1BC3F8A2AEAC4E3002EF023 /* RollHistoryList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RollHistoryList.swift; sourceTree = "<group>"; };
+		E1BC3F8C2AEAC6C6002EF023 /* RollWindowDiceValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RollWindowDiceValues.swift; sourceTree = "<group>"; };
+		E1BC3F8E2AEAC84B002EF023 /* RollWindowButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RollWindowButtons.swift; sourceTree = "<group>"; };
 		E1C373072AE9ABCD00C4C05D /* View+ConditionalHidden.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+ConditionalHidden.swift"; sourceTree = "<group>"; };
-		E1E1164C2AE817FE007BCCB9 /* PresetsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetsView.swift; sourceTree = "<group>"; };
+		E1E1164C2AE817FE007BCCB9 /* PresetsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetsList.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +62,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E100E23D2AEACB1600E11932 /* Presets */ = {
+			isa = PBXGroup;
+			children = (
+				E1E1164C2AE817FE007BCCB9 /* PresetsList.swift */,
+				E100E23B2AEACA9100E11932 /* PresetRow.swift */,
+			);
+			path = Presets;
+			sourceTree = "<group>";
+		};
 		E1054CC52AE696160047DAE2 /* Custom Shapes */ = {
 			isa = PBXGroup;
 			children = (
@@ -75,6 +94,7 @@
 			isa = PBXGroup;
 			children = (
 				E15100AB2AE1CD6300C7EDC7 /* Roll Window */,
+				E1BC3F872AEAC3EB002EF023 /* Dice Options */,
 				E15100AC2AE1CD6B00C7EDC7 /* Roll History */,
 				E1054CC52AE696160047DAE2 /* Custom Shapes */,
 			);
@@ -85,6 +105,9 @@
 			isa = PBXGroup;
 			children = (
 				E15100A72AE1CB3E00C7EDC7 /* RollWindow.swift */,
+				E1BC3F8C2AEAC6C6002EF023 /* RollWindowDiceValues.swift */,
+				E1BC3F8E2AEAC84B002EF023 /* RollWindowButtons.swift */,
+				E100E23D2AEACB1600E11932 /* Presets */,
 			);
 			path = "Roll Window";
 			sourceTree = "<group>";
@@ -92,9 +115,9 @@
 		E15100AC2AE1CD6B00C7EDC7 /* Roll History */ = {
 			isa = PBXGroup;
 			children = (
+				E1BC3F8A2AEAC4E3002EF023 /* RollHistoryList.swift */,
 				E15100A92AE1CC3100C7EDC7 /* RollHistoryHeader.swift */,
 				E15100A12AE1C56500C7EDC7 /* RollHistoryRow.swift */,
-				E1E1164C2AE817FE007BCCB9 /* PresetsView.swift */,
 			);
 			path = "Roll History";
 			sourceTree = "<group>";
@@ -143,6 +166,14 @@
 				E1B567572AE06F3F00343FB9 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		E1BC3F872AEAC3EB002EF023 /* Dice Options */ = {
+			isa = PBXGroup;
+			children = (
+				E1BC3F882AEAC402002EF023 /* DiceOptions.swift */,
+			);
+			path = "Dice Options";
 			sourceTree = "<group>";
 		};
 		E1C373062AE9ABA700C4C05D /* Extensions */ = {
@@ -224,17 +255,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				E15100A22AE1C56500C7EDC7 /* RollHistoryRow.swift in Sources */,
-				E1E1164D2AE817FE007BCCB9 /* PresetsView.swift in Sources */,
+				E1E1164D2AE817FE007BCCB9 /* PresetsList.swift in Sources */,
+				E1BC3F8F2AEAC84B002EF023 /* RollWindowButtons.swift in Sources */,
+				E1BC3F8D2AEAC6C6002EF023 /* RollWindowDiceValues.swift in Sources */,
 				E15100B12AE3F5BF00C7EDC7 /* Die.swift in Sources */,
 				E1B567532AE06F3D00343FB9 /* ContentView.swift in Sources */,
 				E1B567512AE06F3D00343FB9 /* RollrApp.swift in Sources */,
+				E100E23C2AEACA9100E11932 /* PresetRow.swift in Sources */,
 				E1C373082AE9ABCD00C4C05D /* View+ConditionalHidden.swift in Sources */,
 				E15100AA2AE1CC3100C7EDC7 /* RollHistoryHeader.swift in Sources */,
 				E15100A02AE1C0EA00C7EDC7 /* NumberOfSidesHexagon.swift in Sources */,
 				E15100A82AE1CB3E00C7EDC7 /* RollWindow.swift in Sources */,
 				E1054CC42AE695E10047DAE2 /* ModifierCircle.swift in Sources */,
 				E1B5675F2AE0711200343FB9 /* Roll.swift in Sources */,
+				E1BC3F8B2AEAC4E3002EF023 /* RollHistoryList.swift in Sources */,
 				E1054CC72AE6F3AC0047DAE2 /* RollValueShape.swift in Sources */,
+				E1BC3F892AEAC402002EF023 /* DiceOptions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

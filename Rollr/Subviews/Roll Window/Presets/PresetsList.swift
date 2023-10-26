@@ -1,5 +1,5 @@
 //
-//  PresetsView.swift
+//  PresetsList.swift
 //  Rollr
 //
 //  Created by Aguirre, Brian P. on 10/24/23.
@@ -12,7 +12,7 @@ import SwiftUI
 // MARK: - Main struct
 
 // This struct provides a view that displays a list of created roll presets
-struct PresetsView: View {
+struct PresetsList: View {
     
     // MARK: - Properties
     
@@ -47,33 +47,7 @@ struct PresetsView: View {
                     completion(preset)
                     dismiss()
                 } label: {
-                    HStack {
-                        
-                        // Name
-                        Text(preset.presetName)
-                            .font(.title2.weight(.semibold))
-                            .lineLimit(2)
-                            .minimumScaleFactor(0.3)
-                        
-                        Spacer()
-                        
-                        // Dice settings
-                        ForEach(preset.dice) { die in
-                            HStack(spacing: 0) {
-                                VStack {
-                                    
-                                    // Number of sides
-                                    NumberOfSidesHexagon(numberOfSides: die.numberOfSides.rawValue, type: .rollHistoryRow, rollValue: die.result)
-                                        .frame(height: 25)
-                                    
-                                    // Roll value + modifier
-                                    Text(die.modifierFormatted)
-                                        .font(.footnote)
-                                        .lineLimit(1)
-                                }
-                            }
-                        }
-                    }
+                    PresetRow(preset: preset)
                 }
                 .foregroundStyle(.primary)
             }
@@ -85,8 +59,19 @@ struct PresetsView: View {
         // Confirmation for removing all presets
         .confirmationDialog("Remove All Presets", isPresented: $showingConfirmationAlert, actions: {
             Button("Remove", role: .destructive) {
-                presets.removeAll()
+                
+                // Set edit mode to inactive
                 editMode = .inactive
+                
+                // Remove all presets
+                presets.removeAll()
+                
+                // Reset the current roll if a preset is active
+                if !currentRoll.presetName.isEmpty {
+                    currentRoll = Roll()
+                }
+                
+                // Dismiss the view
                 dismiss()
             }
             Button("Cancel", role: .cancel) {}
@@ -141,6 +126,6 @@ struct PresetsView: View {
 
 //#Preview {
 //    NavigationView {
-//        PresetsView(presets: .constant([Roll(dice: [Die(numberOfSides: .six, modifier: 3, result: 0), Die(numberOfSides: .twenty, modifier: 0, result: 0), Die(numberOfSides: .twenty, modifier: 0, result: 0)], presetName: "Thor")]), completion: {_ in })
+//        PresetsList(presets: .constant([Roll(dice: [Die(numberOfSides: .six, modifier: 3, result: 0), Die(numberOfSides: .twenty, modifier: 0, result: 0), Die(numberOfSides: .twenty, modifier: 0, result: 0)], presetName: "Thor")]), completion: {_ in })
 //    }
 //}
