@@ -57,4 +57,6 @@ struct Roll: Identifiable {
             dice[$0].result = Int.random(in: 1...dice[$0].numberOfSides.rawValue)
         }
     }
+    
+    static var maxRoll = Roll(dice: [Die(numberOfSides: .oneHundred, modifier: 4, result: 100), Die(numberOfSides: .oneHundred, modifier: 4, result: 100), Die(numberOfSides: .oneHundred, modifier: 4, result: 100), Die(numberOfSides: .oneHundred, modifier: 4, result: 100), Die(numberOfSides: .oneHundred, modifier: 4, result: 100)], presetName: "Max Roll")
 }

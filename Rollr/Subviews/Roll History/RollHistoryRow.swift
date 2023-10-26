@@ -25,16 +25,21 @@ struct RollHistoryRow: View {
                 
                 // Time
                 Text(roll.dateRolled.formatted(date: .omitted, time: .standard))
-                    .font(.subheadline.bold())
+                    .font(.caption.bold())
                 
                 // Preset name (if applicable)
                 if !roll.presetName.isEmpty {
                     Text(roll.presetName)
-                        .font(.subheadline.bold())
+                        .font(.footnote.bold())
                 }
+                
+                // Grand total
+                Text("GTotal: \(roll.grandTotal)")
+                    .font(.footnote.bold())
             }
             .lineLimit(1)
-            .minimumScaleFactor(0.7)
+            //.minimumScaleFactor(0.5)
+            .layoutPriority(1)
             
             Spacer()
             
@@ -51,6 +56,7 @@ struct RollHistoryRow: View {
                         Text(die.totalExpressionFormatted)
                             .font(.footnote)
                             .lineLimit(1)
+                            .minimumScaleFactor(0.5)
                         
                         // Roll total
                         Text(die.total.description)
@@ -68,6 +74,9 @@ struct RollHistoryRow: View {
     }
 }
 
-//#Preview {
-//    RollHistoryRow()
-//}
+#Preview {
+    List {
+        RollHistoryRow(roll: Roll.maxRoll)
+        RollHistoryRow(roll: Roll(dice: [Die(numberOfSides: .six, result: 3), Die(numberOfSides: .six, result: 1), Die(numberOfSides: .six, modifier: 3, result: 6)]))
+    }
+}
