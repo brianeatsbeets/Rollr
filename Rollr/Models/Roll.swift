@@ -5,14 +5,20 @@
 //  Created by Aguirre, Brian P. on 10/18/23.
 //
 
-import Foundation
-//import SwiftData
+// MARK: - Imported libraries
 
-//@Model
+import Foundation
+
+// MARK: - Main struct
+
+// This struct defines the Roll model
 struct Roll: Identifiable {
+    
+    // MARK: - Properties
+    
     let id = UUID()
-    var dice: [Die]
     let dateRolled = Date.now
+    var dice: [Die]
     var presetName: String
     
     var rollTotal: Int {
@@ -25,11 +31,15 @@ struct Roll: Identifiable {
         rollTotal + modifierTotal
     }
     
+    // MARK: - Initializers
+    
+    // Empty roll
     init() {
         self.dice = [Die]()
         self.presetName = ""
     }
     
+    // Roll with specified dice and optional preset name
     init(dice: [Die], presetName: String = "") {
         self.dice = dice
         self.presetName = presetName
@@ -46,17 +56,20 @@ struct Roll: Identifiable {
         }
     }
     
+    // Set each die roll result to zero
     mutating func resetDiceResults() {
         dice.indices.forEach {
             dice[$0].result = 0
         }
     }
     
+    // Simulate a roll for each die
     mutating func randomizeDiceResults() {
         dice.indices.forEach {
             dice[$0].result = Int.random(in: 1...dice[$0].numberOfSides.rawValue)
         }
     }
     
+    // Example roll
     static var maxRoll = Roll(dice: [Die(numberOfSides: .oneHundred, modifier: 4, result: 100), Die(numberOfSides: .oneHundred, modifier: 4, result: 100), Die(numberOfSides: .oneHundred, modifier: 4, result: 100), Die(numberOfSides: .oneHundred, modifier: 4, result: 100), Die(numberOfSides: .oneHundred, modifier: 4, result: 100)], presetName: "Catastrophic Planetary Devastation")
 }

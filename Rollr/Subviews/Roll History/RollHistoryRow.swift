@@ -5,18 +5,33 @@
 //  Created by Aguirre, Brian P. on 10/19/23.
 //
 
+// MARK: - Imported libraries
+
 import SwiftUI
 
+// MARK: - Main struct
+
+// This struct provides a view that displays historic roll data in a list row
 struct RollHistoryRow: View {
+    
+    // MARK: - Properties
+    
+    // Environment
     
     @Environment(\.colorScheme) var theme
     
+    // Basic
+    
     var roll: Roll
     
+    // MARK: - Body view
+    
     var body: some View {
+        
+        // Main stack
         HStack {
                 
-            // Roll date and time
+            // Roll properties
             VStack(alignment: .leading) {
                 
                 // Date
@@ -50,7 +65,7 @@ struct RollHistoryRow: View {
                     VStack {
                         
                         // Number of sides
-                        SidesHexagon(numberOfSides: die.numberOfSides.rawValue, type: .rollHistoryRow, rollValue: die.result)
+                        NumberOfSidesHexagon(numberOfSides: die.numberOfSides.rawValue, type: .rollHistoryRow, rollValue: die.result)
                             .frame(height: 25)
                         
                         // Roll value + modifier

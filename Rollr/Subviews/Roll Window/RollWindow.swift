@@ -5,13 +5,23 @@
 //  Created by Aguirre, Brian P. on 10/19/23.
 //
 
+// MARK: - Imported libraries
+
 import SwiftUI
 
+// MARK: - Main struct
+
+// This struct provides a view that displays the current roll information
 struct RollWindow: View {
     
+    // MARK: - Properties
+    
     // Environment
+    
     @Environment(\.colorScheme) var theme
     //@Environment(\.modelContext) var modelContext
+    
+    // State
     
     @State private var showingModifierView = false
     @State private var dieBeingModified: Die?
@@ -20,11 +30,16 @@ struct RollWindow: View {
     @State private var newPresetName = ""
     
     // Binding
+    
     @Binding var rolls: [Roll]
     @Binding var presets: [Roll]
     @Binding var currentRoll: Roll
     
+    // Basic
+    
     let modifierOptions = [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5]
+    
+    // MARK: - Body view
     
     var body: some View {
             
@@ -48,7 +63,7 @@ struct RollWindow: View {
                         }
                         .conditionalHidden(!currentRoll.dice.isEmpty)
                             
-                        // Dice and values
+                        // Dice info and labels
                         VStack {
                             HStack {
                                 
@@ -75,14 +90,15 @@ struct RollWindow: View {
                                 
                                 Spacer()
                                 
-                                // Dice
+                                // Dice and values
                                 HStack {
                                     ForEach($currentRoll.dice, id: \.id) { $die in
                                         
+                                        // Individual die and values
                                         VStack {
                                             
                                             // Number of sides
-                                            SidesHexagon(numberOfSides: die.numberOfSides.rawValue, type: .rollWindow)
+                                            NumberOfSidesHexagon(numberOfSides: die.numberOfSides.rawValue, type: .rollWindow)
                                                 .frame(maxHeight: .infinity)
                                             
                                             // Modifier
@@ -104,13 +120,15 @@ struct RollWindow: View {
                                             }
                                             .frame(maxHeight: .infinity)
                                             
-                                            // Total value
+                                            // Total (roll + modifier) value
                                             Text(die.result > 0 ? die.total.description : "-")
                                                 .font(.title3.bold())
                                                 .minimumScaleFactor(0.5)
                                                 .frame(maxHeight: .infinity)
                                         }
                                         .frame(maxWidth: .infinity)
+                                        
+                                        // When a die's modifier changes...
                                         .onChange(of: die.modifier) { _ in
                                             
                                             // Remove the current preset name
@@ -150,11 +168,14 @@ struct RollWindow: View {
                         
                         // Presets button
                         Menu {
+                            
+                            // Create a new preset
                             Button("Save as preset") {
                                 showingPresetNameAlert = true
                             }
                             .disabled(currentRoll.dice.isEmpty)
                             
+                            // Load an existing preset
                             Button("Load preset") {
                                 showingPresets = true
                             }
@@ -202,6 +223,8 @@ struct RollWindow: View {
                         .padding([.bottom, .trailing])
                     }
                 }
+                
+                // New preset name alert with textfield
                 .alert("Preset Name", isPresented: $showingPresetNameAlert) {
                     TextField("Preset Name", text: $newPresetName)
                     Button("OK", action: savePreset)
@@ -209,6 +232,8 @@ struct RollWindow: View {
                 } message: {
                     Text("Enter a name for this preset.")
                 }
+                
+                // Existing presets list
                 .sheet(isPresented: $showingPresets) {
                     NavigationView {
                         PresetsView(presets: $presets, currentRoll: $currentRoll) { selectedPreset in

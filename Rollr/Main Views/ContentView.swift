@@ -5,22 +5,31 @@
 //  Created by Aguirre, Brian P. on 10/18/23.
 //
 
+// MARK: - Imported libraries
+
 //import SwiftData
 import SwiftUI
 
+// MARK: - Main struct
+
+// This struct provides a view that serves as the base container for the app
 struct ContentView: View {
     
+    // MARK: - Properties
+    
     // Environment
+    
     @Environment(\.colorScheme) var theme
     //@Environment(\.modelContext) var modelContext
     
-    // Swift data query
+    // State
+    
     //@Query(sort: \Roll.dateRolled, order: .reverse, animation: .default) var rolls: [Roll]
     @State private var rolls = [Roll]()
     @State private var presets = [Roll]()
-    
-    // State
     @State private var currentRoll = Roll()
+    
+    // MARK: - Body view
     
     var body: some View {
         NavigationStack {
@@ -50,7 +59,7 @@ struct ContentView: View {
                             currentRoll = Roll(dice: newDice)
                             
                         } label: {
-                            SidesHexagon(numberOfSides: sides.rawValue, type: .button)
+                            NumberOfSidesHexagon(numberOfSides: sides.rawValue, type: .button)
                         }
                         .disabled(currentRoll.dice.count >= 5)
                     }
@@ -84,6 +93,7 @@ struct ContentView: View {
         }
     }
     
+    // Delete the specifed rolls
     func deleteRolls(_ indexSet: IndexSet) {
         for index in indexSet {
 //            let roll = rolls[index]

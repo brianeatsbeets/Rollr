@@ -5,15 +5,22 @@
 //  Created by Aguirre, Brian P. on 10/21/23.
 //
 
-import Foundation
-//import SwiftData
+// MARK: - Imported libraries
 
-//@Model
+import Foundation
+
+// MARK: - Main struct
+
+// This struct defines the Die model
 struct Die: Identifiable {
+    
+    // MARK: - Properties
+    
     let id = UUID()
     let numberOfSides: NumberOfSides
     var modifier: Int
     var result: Int
+    
     var total: Int {
         result + modifier
     }
@@ -34,6 +41,8 @@ struct Die: Identifiable {
         }
     }
     
+    // MARK: - Initializers
+    
     init(numberOfSides: NumberOfSides, modifier: Int = 0, result: Int = 0) {
         self.numberOfSides = numberOfSides
         self.modifier = modifier
@@ -41,7 +50,10 @@ struct Die: Identifiable {
     }
 }
 
-enum NumberOfSides: Int, Codable, CaseIterable {
+// MARK: - Enums
+
+// This enum provides options for the number of sides on a die
+enum NumberOfSides: Int, CaseIterable {
     case four = 4
     case six = 6
     case eight = 8

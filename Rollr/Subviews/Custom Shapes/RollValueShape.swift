@@ -5,11 +5,22 @@
 //  Created by Aguirre, Brian P. on 10/23/23.
 //
 
+// MARK: - Imported libraries
+
 import SwiftUI
 
+// MARK: - Main struct
+
+// This struct provides a view that displays the the roll value of a given die
 struct RollValueShape: View {
     
+    // MARK: - Properties
+    
+    // Binding
+    
     @Binding var die: Die
+    
+    // Basic
     
     var rollResult: String {
         die.result > 0 ? die.result.description : "-"
@@ -54,14 +65,19 @@ struct RollValueShape: View {
         return .clear
     }
     
+    // MARK: - Body view
+    
     var body: some View {
         
+        // Shape image
         Image(systemName: backgroundSymbol)
             .resizable()
             .scaledToFit()
             .scaleEffect(scaleEffect)
             .foregroundStyle(shapeColor)
             .overlay(
+                
+                // Roll value
                 Text(rollResult)
                     .font(.title3)
                     .fontWeight(fontWeight)

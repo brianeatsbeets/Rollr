@@ -1,15 +1,26 @@
 //
-//  SidesHexagon.swift
+//  NumberOfSidesHexagon.swift
 //  Rollr
 //
 //  Created by Aguirre, Brian P. on 10/19/23.
 //
 
+// MARK: - Imported libraries
+
 import SwiftUI
 
-struct SidesHexagon: View {
+// MARK: - Main struct
+
+// This struct provides a view that displays the number of sides of a given die
+struct NumberOfSidesHexagon: View {
+    
+    // MARK: - Properties
+    
+    // Environment
     
     @Environment(\.colorScheme) var theme
+    
+    // Basic
     
     let numberOfSides: Int
     let type: SidesHexagonType
@@ -23,6 +34,7 @@ struct SidesHexagon: View {
             return .accentColor
         case .rollHistoryRow:
             
+            // Set the color based on the roll value
             switch rollValue {
             case 1:
                 return .red
@@ -40,6 +52,8 @@ struct SidesHexagon: View {
         case .button:
             return .white
         case .rollHistoryRow:
+            
+            // Set the color based on the roll value
             switch rollValue {
             case 1, numberOfSides:
                 return .white
@@ -49,19 +63,27 @@ struct SidesHexagon: View {
         }
     }
     
+    // MARK: - Initializers
+    
     init(numberOfSides: Int, type: SidesHexagonType, rollValue: Int = 0) {
         self.numberOfSides = numberOfSides
         self.type = type
         self.rollValue = rollValue
     }
     
+    // MARK: - Body view
+    
     var body: some View {
+        
+        // Hexagon image
         Image(systemName: "hexagon.fill")
             .resizable()
             .scaledToFit()
             .foregroundStyle(imageForegroundColor)
             .overlay(
                 GeometryReader { geo in
+                    
+                    // Number of sides
                     Text(numberOfSides, format: .number)
                         .font(.system(size: min(geo.size.height, geo.size.width) * 0.6))
                         .fontWeight(.bold)
@@ -75,15 +97,18 @@ struct SidesHexagon: View {
     }
 }
 
+// MARK: - Enums
+
+// This enum provides options for the context in which the view is displayed
 enum SidesHexagonType {
     case rollWindow, button, rollHistoryRow
 }
 
 #Preview {
     HStack {
-        SidesHexagon(numberOfSides: 20, type: .rollWindow)
-        SidesHexagon(numberOfSides: 20, type: .rollWindow)
-        SidesHexagon(numberOfSides: 20, type: .rollWindow)
-        SidesHexagon(numberOfSides: 20, type: .rollWindow)
+        NumberOfSidesHexagon(numberOfSides: 20, type: .rollWindow)
+        NumberOfSidesHexagon(numberOfSides: 20, type: .rollWindow)
+        NumberOfSidesHexagon(numberOfSides: 20, type: .rollWindow)
+        NumberOfSidesHexagon(numberOfSides: 20, type: .rollWindow)
     }
 }

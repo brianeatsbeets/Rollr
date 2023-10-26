@@ -5,19 +5,23 @@
 //  Created by Aguirre, Brian P. on 10/18/23.
 //
 
-import SwiftData
+// MARK: - Imported libraries
+
 import SwiftUI
+
+// MARK: - Main struct
 
 @main
 struct RollrApp: App {
     
-    var rolls = [Roll]()
+    // MARK: - Body view
     
     var body: some Scene {
         WindowGroup {
             ContentView()
+            
+                // Set font design
                 .fontDesign(.rounded)
         }
-        //.modelContainer(for: Roll.self)
     }
 }
