@@ -19,6 +19,7 @@ extension Die {
     @NSManaged public var modifier: Int16
     @NSManaged public var result: Int16
     @NSManaged private var numberOfSidesInt: Int16
+    @NSManaged public var dateCreated: Date?
     
     var numberOfSides: NumberOfSides {
         get {
@@ -27,6 +28,10 @@ extension Die {
         set {
             self.numberOfSidesInt = Int16(newValue.rawValue)
         }
+    }
+    
+    public var wrappedDateCreated: Date {
+        dateCreated ?? Date.now
     }
     
     var total: Int {

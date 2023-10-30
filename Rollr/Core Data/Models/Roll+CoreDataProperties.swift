@@ -41,7 +41,7 @@ extension Roll {
         get {
             let set = dice as? Set<Die> ?? []
             return set.sorted {
-                $0.numberOfSides.rawValue < $1.numberOfSides.rawValue
+                $0.wrappedDateCreated < $1.wrappedDateCreated
             }
         }
         

@@ -85,7 +85,8 @@ struct LocalRoll: Identifiable {
         var newDice = [Die]()
         
         for die in dice {
-            var newDie = Die(context: context)
+            let newDie = Die(context: context)
+            newDie.dateCreated = die.dateCreated
             newDie.numberOfSides = die.numberOfSides
             newDie.modifier = Int16(die.modifier)
             newDie.result = Int16(die.result)

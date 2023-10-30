@@ -17,6 +17,7 @@ struct LocalDie: Identifiable {
     // MARK: - Properties
 
     let id = UUID()
+    let dateCreated = Date.now
     let numberOfSides: NumberOfSides
     var modifier: Int
     var result: Int
