@@ -38,7 +38,7 @@ struct RollHistoryList: View {
         VStack(spacing: 5) {
             
             // List header
-            RollHistoryHeader(/*rolls: $rolls, */currentRoll: $currentRoll)
+            RollHistoryHeader(currentRoll: $currentRoll)
             
             // Main list
             List {
@@ -60,7 +60,6 @@ struct RollHistoryList: View {
         for index in indexSet {
             let roll = rolls[index]
             moc.delete(roll)
-            //rolls.remove(at: index)
         }
     }
 }

@@ -27,8 +27,6 @@ struct RollWindow: View {
     
     // Binding
     
-    //@Binding var rolls: [Roll]
-    //@Binding var presets: [Roll]
     @Binding var currentRoll: LocalRoll
     
     // MARK: - Body view
@@ -109,7 +107,7 @@ struct RollWindow: View {
                     Spacer()
                     
                     // Bottom row buttons
-                    RollWindowButtons(/*rolls: $rolls, */currentRoll: $currentRoll/*, presets: $presets*/)
+                    RollWindowButtons(currentRoll: $currentRoll)
                 }
             )
     }

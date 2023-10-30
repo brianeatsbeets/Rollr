@@ -36,21 +36,13 @@ struct DiceOptions: View {
                 Button {
                     
                     // Append the selected die to the dice array
-                    //let newDie = Die(context: moc)
-                    //newDie.numberOfSides = sides
-                    //currentRoll.wrappedDice.append(newDie)
                     var newDie = LocalDie(numberOfSides: sides)
                     currentRoll.dice.append(newDie)
                     
                     // Reset each die result
-//                    currentRoll.dice.indices.forEach {
-//                        currentRoll.dice[$0].result = 0
-//                    }
                     currentRoll.resetDiceResults()
                     
                     // Re-create the roll settings with the existing die
-                    //let newRoll = Roll(context: moc)
-                    //newRoll.wrappedDice = currentRoll.dieEntityDice(context: moc)
                     var newRoll = LocalRoll(dice: currentRoll.dice)
                     currentRoll = newRoll
                     

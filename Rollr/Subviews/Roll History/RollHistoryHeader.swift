@@ -19,7 +19,6 @@ struct RollHistoryHeader: View {
     
     // Environment
     
-    //@Environment(\.modelContext) var modelContext
     @Environment(\.managedObjectContext) var moc
     
     // State
@@ -28,7 +27,6 @@ struct RollHistoryHeader: View {
     
     // Binding
     
-    //@Binding var rolls: [Roll]
     @Binding var currentRoll: LocalRoll
     
     // MARK: - Body view
@@ -63,18 +61,6 @@ struct RollHistoryHeader: View {
                     
                     // Reset the current roll
                     currentRoll = LocalRoll()
-                    
-//                    do {
-//                        try moc.delete(model: Roll.self)
-//                        
-//                        // Clear the roll history
-//                        //rolls.removeAll()
-//                        
-//                        // Reset the current roll
-//                        currentRoll = Roll()
-//                    } catch {
-//                        print("Error: \(error.localizedDescription)")
-//                    }
                 }
             }, message: {
                 Text("All roll history will be permenantly deleted.")

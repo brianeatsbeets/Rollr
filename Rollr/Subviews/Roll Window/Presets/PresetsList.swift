@@ -29,7 +29,6 @@ struct PresetsList: View {
     
     // Binding
     
-    //@Binding var presets: [Roll]
     @Binding var currentRoll: LocalRoll
     
     // Basic
@@ -65,9 +64,6 @@ struct PresetsList: View {
                 
                 // Set edit mode to inactive
                 editMode = .inactive
-                
-                // Remove all presets
-                //presets.removeAll()
                 
                 // Remove all presets
                 deleteAllPresets()

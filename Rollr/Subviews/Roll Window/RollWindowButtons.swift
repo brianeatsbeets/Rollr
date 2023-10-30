@@ -32,9 +32,7 @@ struct RollWindowButtons: View {
     
     // Binding
     
-    //@Binding var rolls: [Roll]
     @Binding var currentRoll: LocalRoll
-    //@Binding var presets: [Roll]
     
     // MARK: - Body view
     
@@ -115,7 +113,6 @@ struct RollWindowButtons: View {
                 PresetsList(currentRoll: $currentRoll, presets: presets) { selectedPreset in
                     
                     // Set the current roll to a new roll with the selected preset values
-                    //currentRoll = Roll(dice: selectedPreset.dice, presetName: selectedPreset.presetName)
                     currentRoll = LocalRoll(rollEntity: selectedPreset)
                 }
             }
@@ -126,14 +123,12 @@ struct RollWindowButtons: View {
     func savePreset() {
         
         // Create a new preset and reset the dice results
-//        var newPreset = Roll(dice: currentRoll.dice)
         let newPreset = Roll(context: moc)
         newPreset.dateRolled = Date.now
         newPreset.isPreset = true
         newPreset.wrappedDice = currentRoll.dieEntityDice(context: moc)
         newPreset.resetDiceResults()
 
-        
         // Prompt to enter a preset name
         showingPresetNameAlert = true
         
@@ -144,8 +139,7 @@ struct RollWindowButtons: View {
         newPresetName = ""
         
         // Add the new preset to the presets list
-        //presets.append(newPreset)
-        try! moc.save()
+        try? moc.save()
         
         // Set the new preset as the current roll
         currentRoll = LocalRoll(rollEntity: newPreset)
@@ -155,7 +149,6 @@ struct RollWindowButtons: View {
     func rollDice() {
         
         // Create a new Roll and randomize the dice results
-        //var newRoll = Roll(dice: currentRoll.dice, presetName: currentRoll.presetName)
         let newRoll = Roll(context: moc)
         newRoll.dateRolled = Date.now
         newRoll.isPreset = false
@@ -164,8 +157,7 @@ struct RollWindowButtons: View {
         newRoll.randomizeDiceResults()
         
         // Append the new roll to the rolls array
-        //rolls.append(newRoll)
-        try! moc.save()
+        try? moc.save()
         
         // Set the new role as the current roll
         currentRoll = LocalRoll(rollEntity: newRoll)

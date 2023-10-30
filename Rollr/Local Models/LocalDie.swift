@@ -56,16 +56,3 @@ struct LocalDie: Identifiable {
         self.result = Int(dieEntity.result)
     }
 }
-
-//// MARK: - Enums
-//
-//// This enum provides options for the number of sides on a die
-//enum NumberOfSides: Int, CaseIterable {
-//    case four = 4
-//    case six = 6
-//    case eight = 8
-//    case ten = 10
-//    case twelve = 12
-//    case twenty = 20
-//    case oneHundred = 100
-//}
