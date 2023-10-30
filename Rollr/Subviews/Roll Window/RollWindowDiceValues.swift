@@ -18,7 +18,7 @@ struct RollWindowDiceValues: View {
     
     // Binding
     
-    @Binding var currentRoll: Roll
+    @Binding var currentRoll: LocalRoll
     
     // Basic
     

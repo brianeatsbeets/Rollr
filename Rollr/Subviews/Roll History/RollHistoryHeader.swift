@@ -7,6 +7,7 @@
 
 // MARK: - Imported libraries
 
+import CoreData
 import SwiftUI
 
 // MARK: - Main struct
@@ -19,6 +20,7 @@ struct RollHistoryHeader: View {
     // Environment
     
     //@Environment(\.modelContext) var modelContext
+    @Environment(\.managedObjectContext) var moc
     
     // State
     
@@ -26,8 +28,8 @@ struct RollHistoryHeader: View {
     
     // Binding
     
-    @Binding var rolls: [Roll]
-    @Binding var currentRoll: Roll
+    //@Binding var rolls: [Roll]
+    @Binding var currentRoll: LocalRoll
     
     // MARK: - Body view
     
@@ -55,17 +57,31 @@ struct RollHistoryHeader: View {
             .confirmationDialog("Clear Roll History", isPresented: $showingClearHistoryConfirmation, actions: {
                 Button("Cancel", role: .cancel) { }
                 Button("Clear History", role: .destructive) {
+                    
+                    // Create fetch request
+                    let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Roll")
+
+                    // Create batch delete request
+                    let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+
                     do {
-                        //try modelContext.delete(model: Roll.self)
-                        
-                        // Clear the roll history
-                        rolls.removeAll()
-                        
-                        // Reset the current roll
-                        currentRoll = Roll()
+                        try moc.execute(batchDeleteRequest)
+
                     } catch {
-                        print("Error: \(error.localizedDescription)")
+                        print("Error removing roll history: \(error.localizedDescription)")
                     }
+                    
+//                    do {
+//                        try moc.delete(model: Roll.self)
+//                        
+//                        // Clear the roll history
+//                        //rolls.removeAll()
+//                        
+//                        // Reset the current roll
+//                        currentRoll = Roll()
+//                    } catch {
+//                        print("Error: \(error.localizedDescription)")
+//                    }
                 }
             }, message: {
                 Text("All roll history will be permenantly deleted.")

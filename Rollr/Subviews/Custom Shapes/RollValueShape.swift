@@ -18,7 +18,7 @@ struct RollValueShape: View {
     
     // Binding
     
-    @Binding var die: Die
+    @Binding var die: LocalDie
     
     // Basic
     

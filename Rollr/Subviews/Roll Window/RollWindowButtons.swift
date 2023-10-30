@@ -16,6 +16,14 @@ struct RollWindowButtons: View {
     
     // MARK: - Properties
     
+    // Environment
+    
+    @Environment(\.managedObjectContext) var moc
+    
+    // Fetch request
+    
+    @FetchRequest(sortDescriptors: [], predicate: NSPredicate(format: "NOT presetName == ''")) var presets: FetchedResults<Roll>
+    
     // State
     
     @State var showingPresetNameAlert = false
@@ -24,9 +32,9 @@ struct RollWindowButtons: View {
     
     // Binding
     
-    @Binding var rolls: [Roll]
-    @Binding var currentRoll: Roll
-    @Binding var presets: [Roll]
+    //@Binding var rolls: [Roll]
+    @Binding var currentRoll: LocalRoll
+    //@Binding var presets: [Roll]
     
     // MARK: - Body view
     
@@ -82,7 +90,7 @@ struct RollWindowButtons: View {
             
             // Roll reset button
             Button {
-                currentRoll = Roll()
+                currentRoll = LocalRoll()
             } label: {
                 Text("Clear")
                     .font(.headline)
@@ -104,10 +112,11 @@ struct RollWindowButtons: View {
         // Existing presets list
         .sheet(isPresented: $showingPresets) {
             NavigationView {
-                PresetsList(presets: $presets, currentRoll: $currentRoll) { selectedPreset in
+                PresetsList(currentRoll: $currentRoll, presets: presets) { selectedPreset in
                     
                     // Set the current roll to a new roll with the selected preset values
-                    currentRoll = Roll(dice: selectedPreset.dice, presetName: selectedPreset.presetName)
+                    //currentRoll = Roll(dice: selectedPreset.dice, presetName: selectedPreset.presetName)
+                    currentRoll = LocalRoll(rollEntity: selectedPreset)
                 }
             }
         }
@@ -117,7 +126,9 @@ struct RollWindowButtons: View {
     func savePreset() {
         
         // Create a new preset and reset the dice results
-        var newPreset = Roll(dice: currentRoll.dice)
+//        var newPreset = Roll(dice: currentRoll.dice)
+        let newPreset = Roll(context: moc)
+        newPreset.wrappedDice = currentRoll.dieEntityDice(context: moc)
         newPreset.resetDiceResults()
         
         // Prompt to enter a preset name
@@ -130,24 +141,29 @@ struct RollWindowButtons: View {
         newPresetName = ""
         
         // Add the new preset to the presets list
-        presets.append(newPreset)
+        //presets.append(newPreset)
+        try! moc.save()
         
         // Set the new preset as the current roll
-        currentRoll = newPreset
+        currentRoll = LocalRoll(rollEntity: newPreset)
     }
     
     // Determine a result for each die
     func rollDice() {
         
         // Create a new Roll and randomize the dice results
-        var newRoll = Roll(dice: currentRoll.dice, presetName: currentRoll.presetName)
+        //var newRoll = Roll(dice: currentRoll.dice, presetName: currentRoll.presetName)
+        let newRoll = Roll(context: moc)
+        newRoll.wrappedDice = currentRoll.dieEntityDice(context: moc)
+        newRoll.presetName = currentRoll.presetName
         newRoll.randomizeDiceResults()
         
         // Append the new roll to the rolls array
-        rolls.append(newRoll)
+        //rolls.append(newRoll)
+        try! moc.save()
         
         // Set the new role as the current roll
-        currentRoll = newRoll
+        currentRoll = LocalRoll(rollEntity: newRoll)
     }
 }
 

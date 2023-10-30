@@ -18,7 +18,7 @@ struct ModifierCircle: View {
     
     // Binding
     
-    @Binding var die: Die
+    @Binding var die: LocalDie
     
     // MARK: - Body view
     
@@ -44,8 +44,8 @@ struct ModifierCircle: View {
     }
 }
 
-#Preview {
-    HStack {
-        ModifierCircle(die: .constant(Die(numberOfSides: .six)))
-    }
-}
+//#Preview {
+//    HStack {
+//        ModifierCircle(die: .constant(Die(numberOfSides: .six)))
+//    }
+//}

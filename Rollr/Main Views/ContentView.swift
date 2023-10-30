@@ -8,6 +8,7 @@
 // MARK: - Imported libraries
 
 //import SwiftData
+import CoreData
 import SwiftUI
 
 // MARK: - Main struct
@@ -20,14 +21,23 @@ struct ContentView: View {
     // Environment
     
     @Environment(\.colorScheme) var theme
-    //@Environment(\.modelContext) var modelContext
+    @Environment(\.managedObjectContext) var moc
+    
+    // Fetch request
+    
+    //@FetchRequest(sortDescriptors: [], predicate: NSPredicate(format: "NOT presetName == ''")) var presets: FetchedResults<Roll>
     
     // State
     
     //@Query(sort: \Roll.dateRolled, order: .reverse, animation: .default) var rolls: [Roll]
-    @State private var rolls = [Roll]()
-    @State private var presets = [Roll]()
-    @State private var currentRoll = Roll()
+    //@State private var rolls = [Roll]()
+    //@State private var presets = [Roll]()
+    @State var currentRoll = LocalRoll()
+    
+//    init() {
+//        //guard let entityDescription = NSEntityDescription.entity(forEntityName: "Roll", in: childContext) else { fatalError("Failed to create entity description") }
+////        _currentRoll = State(initialValue: Roll(context: childContext))
+//    }
     
     // MARK: - Body view
     
@@ -38,7 +48,7 @@ struct ContentView: View {
             VStack(spacing: 0) {
                 
                 // Roll window
-                RollWindow(rolls: $rolls, presets: $presets, currentRoll: $currentRoll)
+                RollWindow(/*rolls: rolls, *//*presets: $presets, */currentRoll: $currentRoll)
                     .padding([.horizontal, .bottom])
                 
                 // Dice options
@@ -49,7 +59,7 @@ struct ContentView: View {
                     .padding()
                 
                 // Roll history list
-                RollHistoryList(rolls: $rolls, currentRoll: $currentRoll)
+                RollHistoryList(/*rolls: $rolls, */currentRoll: $currentRoll)
             }
             .navigationTitle("Rollr")
             .navigationBarTitleDisplayMode(.inline)
@@ -57,6 +67,10 @@ struct ContentView: View {
             
             // Prevents layout from squishing when entering a new preset name
             .ignoresSafeArea(.keyboard)
+            
+//            .onAppear {
+//                currentRoll = Roll(context: childContext)
+//            }
         }
     }
 }

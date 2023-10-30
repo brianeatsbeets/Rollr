@@ -19,11 +19,16 @@ struct RollHistoryList: View {
     // Environment
     
     @Environment(\.colorScheme) var theme
+    @Environment(\.managedObjectContext) var moc
+    
+    // Fetch request
+    
+    @FetchRequest(sortDescriptors: []) var rolls: FetchedResults<Roll>
     
     // Binding
     
-    @Binding var rolls: [Roll]
-    @Binding var currentRoll: Roll
+    //@Binding var rolls: [Roll]
+    @Binding var currentRoll: LocalRoll
     
     // MARK: - Body view
     
@@ -33,11 +38,11 @@ struct RollHistoryList: View {
         VStack(spacing: 5) {
             
             // List header
-            RollHistoryHeader(rolls: $rolls, currentRoll: $currentRoll)
+            RollHistoryHeader(/*rolls: $rolls, */currentRoll: $currentRoll)
             
             // Main list
             List {
-                ForEach(rolls.sorted { $0.dateRolled > $1.dateRolled }) { roll in
+                ForEach(rolls.sorted { $0.wrappedDateRolled > $1.wrappedDateRolled }) { roll in
                     
                     // Individual row
                     RollHistoryRow(roll: roll)
@@ -53,9 +58,9 @@ struct RollHistoryList: View {
     // Delete the specifed rolls
     func deleteRolls(_ indexSet: IndexSet) {
         for index in indexSet {
-//            let roll = rolls[index]
-//            modelContext.delete(roll)
-            rolls.remove(at: index)
+            let roll = rolls[index]
+            moc.delete(roll)
+            //rolls.remove(at: index)
         }
     }
 }

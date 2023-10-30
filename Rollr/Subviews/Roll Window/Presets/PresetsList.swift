@@ -7,6 +7,7 @@
 
 // MARK: - Imported libraries
 
+import CoreData
 import SwiftUI
 
 // MARK: - Main struct
@@ -19,6 +20,7 @@ struct PresetsList: View {
     // Environment
     
     @Environment(\.dismiss) var dismiss
+    @Environment(\.managedObjectContext) var moc
     
     // State
     
@@ -27,11 +29,12 @@ struct PresetsList: View {
     
     // Binding
     
-    @Binding var presets: [Roll]
-    @Binding var currentRoll: Roll
+    //@Binding var presets: [Roll]
+    @Binding var currentRoll: LocalRoll
     
     // Basic
     
+    var presets: FetchedResults<Roll>
     let completion: (Roll) -> Void
     
     // MARK: - Body view
@@ -64,11 +67,26 @@ struct PresetsList: View {
                 editMode = .inactive
                 
                 // Remove all presets
-                presets.removeAll()
+                //presets.removeAll()
+                
+                // Create fetch request for presets
+                let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Roll")
+                let predicate = NSPredicate(format: "NOT presetName == ''")
+                fetchRequest.predicate = predicate
+
+                // Create batch delete request
+                let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+
+                do {
+                    try moc.execute(batchDeleteRequest)
+
+                } catch {
+                    print("Error removing presets: \(error.localizedDescription)")
+                }
                 
                 // Reset the current roll if a preset is active
                 if !currentRoll.presetName.isEmpty {
-                    currentRoll = Roll()
+                    currentRoll = LocalRoll()
                 }
                 
                 // Dismiss the view
@@ -106,15 +124,15 @@ struct PresetsList: View {
     // Delete the specified presets
     func deletePresets(_ indexSet: IndexSet) {
         for index in indexSet {
-//            let roll = rolls[index]
-//            modelContext.delete(roll)
             
             // Remove the active preset if it is deleted
             if presets[index].presetName == currentRoll.presetName {
-                currentRoll = Roll()
+                currentRoll = LocalRoll()
             }
             
-            presets.remove(at: index)
+            //presets.remove(at: index)
+            let preset = presets[index]
+            moc.delete(preset)
         }
         
         // Dismiss if there are no presets left

@@ -35,16 +35,16 @@ struct RollHistoryRow: View {
             VStack(alignment: .leading) {
                 
                 // Date
-                Text(roll.dateRolled.formatted(date: .numeric, time: .omitted))
+                Text(roll.wrappedDateRolled.formatted(date: .numeric, time: .omitted))
                     .font(.caption)
                 
                 // Time
-                Text(roll.dateRolled.formatted(date: .omitted, time: .standard))
+                Text(roll.wrappedDateRolled.formatted(date: .omitted, time: .standard))
                     .font(.caption.bold())
                 
                 // Preset name (if applicable)
-                if !roll.presetName.isEmpty {
-                    Text(roll.presetName)
+                if !roll.wrappedPresetName.isEmpty {
+                    Text(roll.wrappedPresetName)
                         .font(.footnote.bold().leading(.tight))
                         .lineSpacing(-1)
                         .lineLimit(3)
@@ -60,12 +60,12 @@ struct RollHistoryRow: View {
             Spacer()
             
             // Roll values
-            ForEach(roll.dice) { die in
+            ForEach(roll.wrappedDice) { die in
                 HStack(spacing: 0) {
                     VStack {
                         
                         // Number of sides
-                        NumberOfSidesHexagon(numberOfSides: die.numberOfSides.rawValue, type: .rollHistoryRow, rollValue: die.result)
+                        NumberOfSidesHexagon(numberOfSides: die.numberOfSides.rawValue, type: .rollHistoryRow, rollValue: Int(die.result))
                             .frame(height: 25)
                         
                         // Roll value + modifier
@@ -82,7 +82,7 @@ struct RollHistoryRow: View {
                 }
                 
                 // Add a divider unless we're on the last die
-                if die.id != roll.dice.last?.id {
+                if die.id != roll.wrappedDice.last?.id {
                     Divider()
                 }
             }
@@ -90,9 +90,9 @@ struct RollHistoryRow: View {
     }
 }
 
-#Preview {
-    List {
-        RollHistoryRow(roll: Roll.maxRoll)
-        RollHistoryRow(roll: Roll(dice: [Die(numberOfSides: .six, result: 3), Die(numberOfSides: .six, result: 1), Die(numberOfSides: .six, modifier: 3, result: 6)]))
-    }
-}
+//#Preview {
+//    List {
+//        RollHistoryRow(roll: Roll.maxRoll)
+//        RollHistoryRow(roll: Roll(dice: [Die(numberOfSides: .six, result: 3), Die(numberOfSides: .six, result: 1), Die(numberOfSides: .six, modifier: 3, result: 6)]))
+//    }
+//}

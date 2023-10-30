@@ -26,7 +26,7 @@ struct PresetRow: View {
         HStack {
             
             // Name
-            Text(preset.presetName)
+            Text(preset.wrappedPresetName)
                 .font(.title2.weight(.semibold))
                 .lineLimit(2)
                 .minimumScaleFactor(0.3)
@@ -34,12 +34,12 @@ struct PresetRow: View {
             Spacer()
             
             // Dice settings
-            ForEach(preset.dice) { die in
+            ForEach(preset.wrappedDice) { die in
                 HStack(spacing: 0) {
                     VStack {
                         
                         // Number of sides
-                        NumberOfSidesHexagon(numberOfSides: die.numberOfSides.rawValue, type: .rollHistoryRow, rollValue: die.result)
+                        NumberOfSidesHexagon(numberOfSides: die.numberOfSides.rawValue, type: .rollHistoryRow, rollValue: Int(die.result))
                             .frame(height: 25)
                         
                         // Roll value + modifier
