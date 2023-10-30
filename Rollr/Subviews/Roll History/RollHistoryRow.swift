@@ -79,13 +79,6 @@ struct RollHistoryRow: View {
                             .font(.footnote.bold())
                             .lineLimit(1)
                     }
-                }.onAppear {
-                    print("result: \(die.result)")
-                    print("die id: \(die.objectID)")
-                    guard let lastId = roll.wrappedDice.last?.objectID else { print("No last id"); return }
-                    print("lst id: \(lastId)")
-                    print("is equal: \(die.objectID.isEqual(roll.wrappedDice.last?.objectID))")
-                    print()
                 }
                 
                 // Add a divider unless we're on the last die
