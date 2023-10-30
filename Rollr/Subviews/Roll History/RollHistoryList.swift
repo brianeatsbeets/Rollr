@@ -23,7 +23,7 @@ struct RollHistoryList: View {
     
     // Fetch request
     
-    @FetchRequest(sortDescriptors: []) var rolls: FetchedResults<Roll>
+    @FetchRequest(sortDescriptors: [SortDescriptor(\.dateRolled, order: .reverse)]) var rolls: FetchedResults<Roll>
     
     // Binding
     

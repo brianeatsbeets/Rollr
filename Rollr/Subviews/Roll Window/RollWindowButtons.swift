@@ -22,7 +22,7 @@ struct RollWindowButtons: View {
     
     // Fetch request
     
-    @FetchRequest(sortDescriptors: [], predicate: NSPredicate(format: "NOT presetName == ''")) var presets: FetchedResults<Roll>
+    @FetchRequest(sortDescriptors: [SortDescriptor(\.presetName)], predicate: NSPredicate(format: "NOT presetName == ''")) var presets: FetchedResults<Roll>
     
     // State
     
@@ -128,6 +128,7 @@ struct RollWindowButtons: View {
         // Create a new preset and reset the dice results
 //        var newPreset = Roll(dice: currentRoll.dice)
         let newPreset = Roll(context: moc)
+        newPreset.dateRolled = Date.now
         newPreset.wrappedDice = currentRoll.dieEntityDice(context: moc)
         newPreset.resetDiceResults()
         
@@ -154,6 +155,7 @@ struct RollWindowButtons: View {
         // Create a new Roll and randomize the dice results
         //var newRoll = Roll(dice: currentRoll.dice, presetName: currentRoll.presetName)
         let newRoll = Roll(context: moc)
+        newRoll.dateRolled = Date.now
         newRoll.wrappedDice = currentRoll.dieEntityDice(context: moc)
         newRoll.presetName = currentRoll.presetName
         newRoll.randomizeDiceResults()

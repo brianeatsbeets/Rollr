@@ -36,10 +36,11 @@ struct DiceOptions: View {
                 Button {
                     
                     // Append the selected die to the dice array
-                    let newDie = Die(context: moc)
-                    newDie.numberOfSides = sides
+                    //let newDie = Die(context: moc)
+                    //newDie.numberOfSides = sides
                     //currentRoll.wrappedDice.append(newDie)
-                    currentRoll.dice.append(LocalDie(dieEntity: newDie))
+                    var newDie = LocalDie(numberOfSides: sides)
+                    currentRoll.dice.append(newDie)
                     
                     // Reset each die result
 //                    currentRoll.dice.indices.forEach {
@@ -48,9 +49,10 @@ struct DiceOptions: View {
                     currentRoll.resetDiceResults()
                     
                     // Re-create the roll settings with the existing die
-                    let newRoll = Roll(context: moc)
-                    newRoll.wrappedDice = currentRoll.dieEntityDice(context: moc)
-                    currentRoll = LocalRoll(rollEntity: newRoll)
+                    //let newRoll = Roll(context: moc)
+                    //newRoll.wrappedDice = currentRoll.dieEntityDice(context: moc)
+                    var newRoll = LocalRoll(dice: currentRoll.dice)
+                    currentRoll = newRoll
                     
                 } label: {
                     NumberOfSidesHexagon(numberOfSides: sides.rawValue, type: .button)
