@@ -58,18 +58,11 @@ struct RollHistoryHeader: View {
                 Button("Cancel", role: .cancel) { }
                 Button("Clear History", role: .destructive) {
                     
-                    // Create fetch request
-                    let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Roll")
-
-                    // Create batch delete request
-                    let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
-
-                    do {
-                        try moc.execute(batchDeleteRequest)
-
-                    } catch {
-                        print("Error removing roll history: \(error.localizedDescription)")
-                    }
+                    // Clear roll history
+                    deleteRolls()
+                    
+                    // Reset the current roll
+                    currentRoll = LocalRoll()
                     
 //                    do {
 //                        try moc.delete(model: Roll.self)
@@ -86,6 +79,36 @@ struct RollHistoryHeader: View {
             }, message: {
                 Text("All roll history will be permenantly deleted.")
             })
+        }
+    }
+    
+    // Remove all rolls from core data
+    func deleteRolls() {
+        
+        // Create fetch request
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Roll")
+
+        // Create batch delete request
+        let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+        
+        // Provide the deleted objects' ids upon removal
+        batchDeleteRequest.resultType = .resultTypeObjectIDs
+
+        do {
+            
+            // Execute the batch delete
+            let batchDelete = try moc.execute(batchDeleteRequest) as? NSBatchDeleteResult
+            
+            // Get the resulting array of object ids
+            guard let deletedObjectIds = batchDelete?.result as? [NSManagedObjectID] else { return }
+            
+            // Create a dictionary with the deleted object ids
+            let deletedObjects: [AnyHashable: Any] = [NSDeletedObjectsKey: deletedObjectIds]
+
+            // Merge the delete changes into the managed object context
+            NSManagedObjectContext.mergeChanges(fromRemoteContextSave: deletedObjects, into: [moc])
+        } catch {
+            print("Error removing roll history: \(error.localizedDescription)")
         }
     }
 }

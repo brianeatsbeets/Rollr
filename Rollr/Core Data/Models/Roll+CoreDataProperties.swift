@@ -23,14 +23,7 @@ extension Roll {
     // Convenience computed properties
     
     public var wrappedDateRolled: Date {
-        //dateRolled ?? Date.now
-        if let date = dateRolled {
-            print("Valid date found")
-            return date
-        } else {
-            print("Date invalid")
-            return Date.now
-        }
+        dateRolled ?? Date.now
     }
     
     public var wrappedPresetName: String {

@@ -8,6 +8,6 @@
     <entity name="Roll" representedClassName="Roll" syncable="YES">
         <attribute name="dateRolled" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="presetName" optional="YES" attributeType="String"/>
-        <relationship name="dice" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Die"/>
+        <relationship name="dice" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Die"/>
     </entity>
 </model>
