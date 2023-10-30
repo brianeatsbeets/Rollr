@@ -57,7 +57,7 @@ struct RollHistoryHeader: View {
                 Button("Clear History", role: .destructive) {
                     
                     // Clear roll history
-                    deleteAllRolls()
+                    DataController.deleteEntityRecords(entityName: "Roll", predicate: NSPredicate(format: "isPreset = %d", false), moc: moc)
                     
                     // Reset the current roll
                     currentRoll = LocalRoll()
@@ -68,37 +68,7 @@ struct RollHistoryHeader: View {
         }
     }
     
-    // Remove all rolls from core data
-    func deleteAllRolls() {
-        
-        // Create fetch request
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Roll")
-        let predicate = NSPredicate(format: "isPreset = %d", false)
-        fetchRequest.predicate = predicate
-
-        // Create batch delete request
-        let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
-        
-        // Provide the deleted objects' ids upon removal
-        batchDeleteRequest.resultType = .resultTypeObjectIDs
-
-        do {
-            
-            // Execute the batch delete
-            let batchDelete = try moc.execute(batchDeleteRequest) as? NSBatchDeleteResult
-            
-            // Get the resulting array of object ids
-            guard let deletedObjectIds = batchDelete?.result as? [NSManagedObjectID] else { return }
-            
-            // Create a dictionary with the deleted object ids
-            let deletedObjects: [AnyHashable: Any] = [NSDeletedObjectsKey: deletedObjectIds]
-
-            // Merge the delete changes into the managed object context
-            NSManagedObjectContext.mergeChanges(fromRemoteContextSave: deletedObjects, into: [moc])
-        } catch {
-            print("Error removing roll history: \(error.localizedDescription)")
-        }
-    }
+    
 }
 
 //#Preview {
