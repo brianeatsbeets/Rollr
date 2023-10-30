@@ -53,6 +53,7 @@
 		E1A78A902AEAF3DB008C9713 /* Die+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Die+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E1A78A952AEFED3F008C9713 /* LocalRoll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalRoll.swift; sourceTree = "<group>"; };
 		E1A78A972AEFED72008C9713 /* LocalDie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalDie.swift; sourceTree = "<group>"; };
+		E1A78A992AF04A75008C9713 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		E1B5674D2AE06F3D00343FB9 /* Rollr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Rollr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1B567502AE06F3D00343FB9 /* RollrApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RollrApp.swift; sourceTree = "<group>"; };
 		E1B567522AE06F3D00343FB9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -188,6 +189,7 @@
 		E1B5674F2AE06F3D00343FB9 /* Rollr */ = {
 			isa = PBXGroup;
 			children = (
+				E1A78A992AF04A75008C9713 /* Info.plist */,
 				E1B567502AE06F3D00343FB9 /* RollrApp.swift */,
 				E1A78A7E2AEAEE69008C9713 /* Core Data */,
 				E15100AD2AE1CD8300C7EDC7 /* Main Views */,
@@ -455,6 +457,7 @@
 				DEVELOPMENT_TEAM = XUYSV472G3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Rollr/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -485,6 +488,7 @@
 				DEVELOPMENT_TEAM = XUYSV472G3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Rollr/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
