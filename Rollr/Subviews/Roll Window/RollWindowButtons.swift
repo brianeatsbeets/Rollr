@@ -19,6 +19,7 @@ struct RollWindowButtons: View {
     // Environment
     
     @Environment(\.managedObjectContext) var moc
+    @EnvironmentObject var currentRoll: LocalRoll
     
     // Fetch request
     
@@ -29,10 +30,6 @@ struct RollWindowButtons: View {
     @State var showingPresetNameAlert = false
     @State var newPresetName = ""
     @State var showingPresets = false
-    
-    // Binding
-    
-    @Binding var currentRoll: LocalRoll
     
     // MARK: - Body view
     
@@ -88,7 +85,7 @@ struct RollWindowButtons: View {
             
             // Roll reset button
             Button {
-                currentRoll = LocalRoll()
+                currentRoll.reset()
             } label: {
                 Text("Clear")
                     .font(.headline)
@@ -110,10 +107,10 @@ struct RollWindowButtons: View {
         // Existing presets list
         .sheet(isPresented: $showingPresets) {
             NavigationView {
-                PresetsList(currentRoll: $currentRoll, presets: presets) { selectedPreset in
+                PresetsList(presets: presets) { selectedPreset in
                     
                     // Set the current roll to a new roll with the selected preset values
-                    currentRoll = LocalRoll(rollEntity: selectedPreset)
+                    currentRoll.adoptPreset(preset: selectedPreset)
                 }
             }
         }
@@ -139,10 +136,12 @@ struct RollWindowButtons: View {
         newPresetName = ""
         
         // Add the new preset to the presets list
-        try? moc.save()
+        if moc.hasChanges {
+            try? moc.save()
+        }
         
         // Set the new preset as the current roll
-        currentRoll = LocalRoll(rollEntity: newPreset)
+        currentRoll.adoptPreset(preset: newPreset)
     }
     
     // Determine a result for each die
@@ -157,10 +156,12 @@ struct RollWindowButtons: View {
         newRoll.randomizeDiceResults()
         
         // Append the new roll to the rolls array
-        try? moc.save()
+        if moc.hasChanges {
+            try? moc.save()
+        }
         
         // Set the new role as the current roll
-        currentRoll = LocalRoll(rollEntity: newRoll)
+        currentRoll.adoptRoll(rollEntity: newRoll)
     }
 }
 

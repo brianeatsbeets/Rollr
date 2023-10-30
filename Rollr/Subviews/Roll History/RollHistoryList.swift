@@ -20,15 +20,11 @@ struct RollHistoryList: View {
     
     @Environment(\.colorScheme) var theme
     @Environment(\.managedObjectContext) var moc
+    @EnvironmentObject var currentRoll: LocalRoll
     
     // Fetch request
     
     @FetchRequest(sortDescriptors: [SortDescriptor(\.dateRolled, order: .reverse)], predicate: NSPredicate(format: "isPreset = %d", false)) var rolls: FetchedResults<Roll>
-    
-    // Binding
-    
-    //@Binding var rolls: [Roll]
-    @Binding var currentRoll: LocalRoll
     
     // MARK: - Body view
     
@@ -38,7 +34,7 @@ struct RollHistoryList: View {
         VStack(spacing: 5) {
             
             // List header
-            RollHistoryHeader(currentRoll: $currentRoll)
+            RollHistoryHeader()
             
             // Main list
             List {

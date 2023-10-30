@@ -19,10 +19,7 @@ struct DiceOptions: View {
     // Environment
     
     @Environment(\.managedObjectContext) var moc
-    
-    // Binding
-    
-    @Binding var currentRoll: LocalRoll
+    @EnvironmentObject var currentRoll: LocalRoll
     
     // MARK: - Body view
     
@@ -36,15 +33,15 @@ struct DiceOptions: View {
                 Button {
                     
                     // Append the selected die to the dice array
-                    var newDie = LocalDie(numberOfSides: sides)
+                    let newDie = LocalDie(numberOfSides: sides)
                     currentRoll.dice.append(newDie)
                     
                     // Reset each die result
                     currentRoll.resetDiceResults()
                     
-                    // Re-create the roll settings with the existing die
-                    var newRoll = LocalRoll(dice: currentRoll.dice)
-                    currentRoll = newRoll
+                    // Reset the roll id and preset name
+                    currentRoll.id = UUID()
+                    currentRoll.presetName = ""
                     
                 } label: {
                     NumberOfSidesHexagon(numberOfSides: sides.rawValue, type: .button)

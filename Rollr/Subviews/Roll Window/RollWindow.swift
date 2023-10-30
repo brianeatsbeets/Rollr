@@ -19,15 +19,12 @@ struct RollWindow: View {
     // Environment
     
     @Environment(\.colorScheme) var theme
+    @EnvironmentObject var currentRoll: LocalRoll
     
     // State
     
     @State private var showingModifierView = false
     @State private var dieBeingModified: Die?
-    
-    // Binding
-    
-    @Binding var currentRoll: LocalRoll
     
     // MARK: - Body view
     
@@ -81,7 +78,7 @@ struct RollWindow: View {
                                 Spacer()
                                 
                                 // Dice and values
-                                RollWindowDiceValues(currentRoll: $currentRoll)
+                                RollWindowDiceValues()
                             
                                 Spacer()
                             }
@@ -107,7 +104,7 @@ struct RollWindow: View {
                     Spacer()
                     
                     // Bottom row buttons
-                    RollWindowButtons(currentRoll: $currentRoll)
+                    RollWindowButtons()
                 }
             )
     }

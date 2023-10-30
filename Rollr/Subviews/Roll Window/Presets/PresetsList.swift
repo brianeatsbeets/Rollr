@@ -21,15 +21,12 @@ struct PresetsList: View {
     
     @Environment(\.dismiss) var dismiss
     @Environment(\.managedObjectContext) var moc
+    @EnvironmentObject var currentRoll: LocalRoll
     
     // State
     
     @State private var editMode: EditMode = .inactive
     @State private var showingConfirmationAlert = false
-    
-    // Binding
-    
-    @Binding var currentRoll: LocalRoll
     
     // Basic
     
@@ -70,7 +67,7 @@ struct PresetsList: View {
                 
                 // Reset the current roll if a preset is active
                 if !currentRoll.presetName.isEmpty {
-                    currentRoll = LocalRoll()
+                    currentRoll.reset()
                 }
                 
                 // Dismiss the view
@@ -111,7 +108,7 @@ struct PresetsList: View {
             
             // Remove the active preset if it is deleted
             if presets[index].presetName == currentRoll.presetName {
-                currentRoll = LocalRoll()
+                currentRoll.reset()
             }
             
             //presets.remove(at: index)

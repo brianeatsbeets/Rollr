@@ -21,10 +21,6 @@ struct ContentView: View {
     @Environment(\.colorScheme) var theme
     @Environment(\.managedObjectContext) var moc
     
-    // State
-    
-    @State var currentRoll = LocalRoll()
-    
     // MARK: - Body view
     
     var body: some View {
@@ -34,18 +30,18 @@ struct ContentView: View {
             VStack(spacing: 0) {
                 
                 // Roll window
-                RollWindow(currentRoll: $currentRoll)
+                RollWindow()
                     .padding([.horizontal, .bottom])
                 
                 // Dice options
-                DiceOptions(currentRoll: $currentRoll)
+                DiceOptions()
                     .padding(.horizontal)
                 
                 Divider()
                     .padding()
                 
                 // Roll history list
-                RollHistoryList(currentRoll: $currentRoll)
+                RollHistoryList()
             }
             .navigationTitle("Rollr")
             .navigationBarTitleDisplayMode(.inline)

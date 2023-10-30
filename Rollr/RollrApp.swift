@@ -20,6 +20,7 @@ struct RollrApp: App {
     // StateObject
     
     @StateObject private var dataController = DataController()
+    @StateObject private var currentRoll = LocalRoll()
     
     // MARK: - Body view
     
@@ -30,6 +31,9 @@ struct RollrApp: App {
             
                 // Inject the persistent container's view context into the environment's managed object context
                 .environment(\.managedObjectContext, dataController.container.viewContext)
+            
+                // Inject the current roll object into the environment
+                .environmentObject(currentRoll)
             
                 // Set font design
                 .fontDesign(.rounded)

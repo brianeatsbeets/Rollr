@@ -16,9 +16,9 @@ struct RollWindowDiceValues: View {
     
     // MARK: - Properties
     
-    // Binding
+    // Environment
     
-    @Binding var currentRoll: LocalRoll
+    @EnvironmentObject var currentRoll: LocalRoll
     
     // Basic
     

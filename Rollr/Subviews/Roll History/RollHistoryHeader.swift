@@ -20,14 +20,11 @@ struct RollHistoryHeader: View {
     // Environment
     
     @Environment(\.managedObjectContext) var moc
+    @EnvironmentObject var currentRoll: LocalRoll
     
     // State
     
     @State private var showingClearHistoryConfirmation = false
-    
-    // Binding
-    
-    @Binding var currentRoll: LocalRoll
     
     // MARK: - Body view
     
@@ -60,15 +57,13 @@ struct RollHistoryHeader: View {
                     DataController.deleteEntityRecords(entityName: "Roll", predicate: NSPredicate(format: "isPreset = %d", false), moc: moc)
                     
                     // Reset the current roll
-                    currentRoll = LocalRoll()
+                    currentRoll.reset()
                 }
             }, message: {
                 Text("All roll history will be permenantly deleted.")
             })
         }
     }
-    
-    
 }
 
 //#Preview {
