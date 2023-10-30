@@ -69,20 +69,8 @@ struct PresetsList: View {
                 // Remove all presets
                 //presets.removeAll()
                 
-                // Create fetch request for presets
-                let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Roll")
-                let predicate = NSPredicate(format: "NOT presetName == ''")
-                fetchRequest.predicate = predicate
-
-                // Create batch delete request
-                let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
-
-                do {
-                    try moc.execute(batchDeleteRequest)
-
-                } catch {
-                    print("Error removing presets: \(error.localizedDescription)")
-                }
+                // Remove all presets
+                deleteAllPresets()
                 
                 // Reset the current roll if a preset is active
                 if !currentRoll.presetName.isEmpty {
@@ -138,6 +126,38 @@ struct PresetsList: View {
         // Dismiss if there are no presets left
         if presets.isEmpty {
             dismiss()
+        }
+    }
+    
+    // Remove all presets form core data
+    func deleteAllPresets() {
+        
+        // Create fetch request for presets
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Roll")
+        let predicate = NSPredicate(format: "isPreset = %d", true)
+        fetchRequest.predicate = predicate
+
+        // Create batch delete request
+        let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+
+        // Provide the deleted objects' ids upon removal
+        batchDeleteRequest.resultType = .resultTypeObjectIDs
+
+        do {
+            
+            // Execute the batch delete
+            let batchDelete = try moc.execute(batchDeleteRequest) as? NSBatchDeleteResult
+            
+            // Get the resulting array of object ids
+            guard let deletedObjectIds = batchDelete?.result as? [NSManagedObjectID] else { return }
+            
+            // Create a dictionary with the deleted object ids
+            let deletedObjects: [AnyHashable: Any] = [NSDeletedObjectsKey: deletedObjectIds]
+
+            // Merge the delete changes into the managed object context
+            NSManagedObjectContext.mergeChanges(fromRemoteContextSave: deletedObjects, into: [moc])
+        } catch {
+            print("Error removing roll history: \(error.localizedDescription)")
         }
     }
 }

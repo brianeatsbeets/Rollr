@@ -59,7 +59,7 @@ struct RollHistoryHeader: View {
                 Button("Clear History", role: .destructive) {
                     
                     // Clear roll history
-                    deleteRolls()
+                    deleteAllRolls()
                     
                     // Reset the current roll
                     currentRoll = LocalRoll()
@@ -83,10 +83,12 @@ struct RollHistoryHeader: View {
     }
     
     // Remove all rolls from core data
-    func deleteRolls() {
+    func deleteAllRolls() {
         
         // Create fetch request
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Roll")
+        let predicate = NSPredicate(format: "isPreset = %d", false)
+        fetchRequest.predicate = predicate
 
         // Create batch delete request
         let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)

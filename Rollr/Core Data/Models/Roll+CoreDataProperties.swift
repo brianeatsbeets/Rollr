@@ -19,6 +19,7 @@ extension Roll {
     @NSManaged public var dateRolled: Date?
     @NSManaged public var presetName: String?
     @NSManaged public var dice: NSSet?
+    @NSManaged public var isPreset: Bool
     
     // Convenience computed properties
     
