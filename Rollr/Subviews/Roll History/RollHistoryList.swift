@@ -38,7 +38,7 @@ struct RollHistoryList: View {
             
             // Main list
             List {
-                ForEach(rolls.sorted { $0.wrappedDateRolled > $1.wrappedDateRolled }) { roll in
+                ForEach(rolls) { roll in
                     
                     // Individual row
                     RollHistoryRow(roll: roll)
