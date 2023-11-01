@@ -110,7 +110,7 @@ struct RollWindowButtons: View {
                 PresetsList(presets: presets) { selectedPreset in
                     
                     // Set the current roll to a new roll with the selected preset values
-                    currentRoll.adoptPreset(preset: selectedPreset)
+                    currentRoll.adoptRoll(rollEntity: selectedPreset)
                 }
             }
         }
@@ -141,7 +141,7 @@ struct RollWindowButtons: View {
         }
         
         // Set the new preset as the current roll
-        currentRoll.adoptPreset(preset: newPreset)
+        currentRoll.adoptRoll(rollEntity: newPreset)
     }
     
     // Determine a result for each die

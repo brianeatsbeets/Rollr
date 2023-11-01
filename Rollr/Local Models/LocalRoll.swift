@@ -48,17 +48,6 @@ class LocalRoll: Identifiable, ObservableObject {
         presetName = ""
     }
     
-    // Update roll properties to match provided preset
-    func adoptPreset(preset: Roll) {
-        id = UUID()
-        presetName = preset.wrappedPresetName
-        dice = []
-        
-        for die in preset.wrappedDice {
-            dice.append(LocalDie(dieEntity: die))
-        }
-    }
-    
     // Update roll properties to match provided roll
     func adoptRoll(rollEntity: Roll) {
         id = UUID()
