@@ -24,7 +24,7 @@ struct RollHistoryList: View {
     
     // Fetch request
     
-    @FetchRequest(sortDescriptors: [SortDescriptor(\.dateRolled, order: .reverse)], predicate: NSPredicate(format: "isPreset = %d", false)) var rolls: FetchedResults<Roll>
+    @FetchRequest(sortDescriptors: [SortDescriptor(\.dateRolled, order: .reverse)], predicate: NSPredicate(format: "isPreset = %d", false), animation: .default) var rolls: FetchedResults<Roll>
     
     // MARK: - Body view
     
