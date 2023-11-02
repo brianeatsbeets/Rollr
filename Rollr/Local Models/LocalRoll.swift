@@ -66,6 +66,13 @@ class LocalRoll: Identifiable, ObservableObject {
         }
     }
     
+    // Simulate a roll for each die
+    func randomizeDiceResults() {
+        dice.indices.forEach {
+            dice[$0].result = Int.random(in: 1...dice[$0].numberOfSides.rawValue)
+        }
+    }
+    
     // Return the dice array as an array of Die (instead of LocalDie)
     func dieEntityDice(context: NSManagedObjectContext) -> [Die] {
         var newDice = [Die]()

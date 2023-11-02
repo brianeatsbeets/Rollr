@@ -25,6 +25,7 @@ struct RollWindow: View {
     
     @State private var showingModifierView = false
     @State private var dieBeingModified: Die?
+    @State private var rollIsAnimating = false
     
     // MARK: - Body view
     
@@ -78,7 +79,7 @@ struct RollWindow: View {
                                 Spacer()
                                 
                                 // Dice and values
-                                RollWindowDiceValues()
+                                RollWindowDiceValues(rollIsAnimating: $rollIsAnimating)
                             
                                 Spacer()
                             }
@@ -93,7 +94,7 @@ struct RollWindow: View {
                                     .padding(.leading, 10)
                                 
                                 // Value
-                                Text(currentRoll.rollTotal != 0 ? currentRoll.grandTotal.description : "-")
+                                Text(rollIsAnimating ? "-" : (currentRoll.rollTotal != 0 ? currentRoll.grandTotal.description : "-"))
                                     .font(.title2.bold())
                                     .minimumScaleFactor(0.5)
                             }
@@ -104,7 +105,7 @@ struct RollWindow: View {
                     Spacer()
                     
                     // Bottom row buttons
-                    RollWindowButtons()
+                    RollWindowButtons(rollIsAnimating: $rollIsAnimating)
                 }
             )
     }

@@ -27,9 +27,13 @@ struct RollWindowButtons: View {
     
     // State
     
-    @State var showingPresetNameAlert = false
-    @State var newPresetName = ""
-    @State var showingPresets = false
+    @State private var showingPresetNameAlert = false
+    @State private var newPresetName = ""
+    @State private var showingPresets = false
+    
+    // Binding
+    
+    @Binding var rollIsAnimating: Bool
     
     // MARK: - Body view
     
@@ -63,7 +67,9 @@ struct RollWindowButtons: View {
             
             // Roll button
             Button {
-                rollDice()
+                Task {
+                    await rollDice()
+                }
             } label: {
                 Text(currentRoll.presetName.isEmpty ? "Roll" : currentRoll.presetName)
                     .font(.headline.leading(.tight))
@@ -78,7 +84,7 @@ struct RollWindowButtons: View {
                             .fill(.tint)
                     )
             }
-            .disabled(currentRoll.dice.isEmpty)
+            .disabled(rollIsAnimating || currentRoll.dice.isEmpty)
             .padding(.bottom)
             
             Spacer()
@@ -145,7 +151,10 @@ struct RollWindowButtons: View {
     }
     
     // Determine a result for each die
-    func rollDice() {
+    func rollDice() async {
+        
+        // Animate pre-roll
+        await playRollingAnimation()
         
         // Create a new Roll and randomize the dice results
         let newRoll = Roll(context: moc)
@@ -162,6 +171,29 @@ struct RollWindowButtons: View {
         
         // Set the new role as the current roll
         currentRoll.adoptRoll(rollEntity: newRoll)
+    }
+    
+    // Animate the roll results before presenting the final results
+    func playRollingAnimation() async {
+        
+        // Set animation state to true
+        rollIsAnimating = true
+        
+        // Display a random possible result on every timer fire
+        let timer = Timer.publish(every: 0.1, on: .main, in: .common)
+            .autoconnect()
+            .sink { _ in
+                currentRoll.randomizeDiceResults()
+            }
+        
+        // Wait for one second
+        try? await Task.sleep(nanoseconds: 1_000_000_000)
+        
+        // Set animation state to false
+        rollIsAnimating = false
+        
+        // Cancel the timer
+        timer.cancel()
     }
 }
 

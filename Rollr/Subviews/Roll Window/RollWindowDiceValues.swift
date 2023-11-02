@@ -20,6 +20,10 @@ struct RollWindowDiceValues: View {
     
     @EnvironmentObject var currentRoll: LocalRoll
     
+    // Binding
+    
+    @Binding var rollIsAnimating: Bool
+    
     // Basic
     
     let modifierOptions = [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5]
@@ -54,12 +58,19 @@ struct RollWindowDiceValues: View {
                     
                     // Roll value
                     Group {
-                        RollValueShape(die: $die)
+                        
+                        // Display as text view if we're animating the roll OR the result was not a min/max value
+                        if rollIsAnimating || (!rollIsAnimating && (die.result != 1 && die.result != die.numberOfSides.rawValue)) {
+                            Text(die.result.description)
+                                .font(.title3)
+                        } else {
+                            RollValueShape(die: $die, rollIsAnimating: $rollIsAnimating)
+                        }
                     }
                     .frame(maxHeight: .infinity)
                     
                     // Total (roll + modifier) value
-                    Text(die.result > 0 ? die.total.description : "-")
+                    Text(rollIsAnimating ? "-" : (die.result > 0 ? die.total.description : "-"))
                         .font(.title3.bold())
                         .minimumScaleFactor(0.5)
                         .frame(maxHeight: .infinity)

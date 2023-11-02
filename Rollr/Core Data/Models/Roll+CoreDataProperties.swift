@@ -84,14 +84,6 @@ extension Roll {
     
     // Set each die roll result to zero
     func resetDiceResults() {
-        
-//        let currentDice = wrappedDice
-//        currentDice.indices.forEach {
-//            currentDice[$0].result = 0
-//        }
-//        
-//        dice = NSSet(array: currentDice)
-        
         let newDice = wrappedDice
         newDice.indices.forEach {
             newDice[$0].result = 0
@@ -101,10 +93,6 @@ extension Roll {
 
     // Simulate a roll for each die
     func randomizeDiceResults() {
-//        wrappedDice.indices.forEach {
-//            wrappedDice[$0].result = Int16(Int.random(in: 1...wrappedDice[$0].numberOfSides.rawValue))
-//        }
-        
         let newDice = wrappedDice
         newDice.indices.forEach {
             newDice[$0].result = Int16(Int.random(in: 1...newDice[$0].numberOfSides.rawValue))

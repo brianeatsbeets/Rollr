@@ -16,9 +16,16 @@ struct RollValueShape: View {
     
     // MARK: - Properties
     
+    // State
+    
+    @State private var rotationAngle = 0.0
+    @State private var scaleAmount = 1.0
+    @State private var offset = 0.0
+    
     // Binding
     
     @Binding var die: LocalDie
+    @Binding var rollIsAnimating: Bool
     
     // Basic
     
@@ -28,11 +35,9 @@ struct RollValueShape: View {
     var backgroundSymbol: String {
         if die.result == 1 {
             return "square.fill"
-        } else if die.result == die.numberOfSides.rawValue {
+        } else {
             return "burst.fill"
         }
-        
-        return "triangle.fill"
     }
     var scaleEffect: CGFloat {
         if die.result == die.numberOfSides.rawValue {
@@ -41,28 +46,12 @@ struct RollValueShape: View {
             return 0.85
         }
     }
-    var fontWeight: Font.Weight {
-        if die.result == 1 || die.result == die.numberOfSides.rawValue {
-            return .semibold
-        } else {
-            return .regular
-        }
-    }
-    var fontColor: Color {
-        if die.result == 1 || die.result == die.numberOfSides.rawValue {
-            return .white
-        } else {
-            return .primary
-        }
-    }
     var shapeColor: Color {
         if die.result == 1 {
             return .red
-        } else if die.result == die.numberOfSides.rawValue {
+        } else {
             return .green
         }
-        
-        return .clear
     }
     
     // MARK: - Body view
@@ -80,12 +69,90 @@ struct RollValueShape: View {
                 // Roll value
                 Text(rollResult)
                     .font(.title3)
-                    .fontWeight(fontWeight)
+                    .fontWeight(.semibold)
                     .lineLimit(1)
                     .minimumScaleFactor(0.1)
-                    .foregroundStyle(fontColor)
+                    .foregroundStyle(.white)
                     .padding(.horizontal, 5)
             )
+            .rotationEffect(.degrees(rotationAngle))
+            .scaleEffect(scaleAmount)
+            .offset(x: offset)
+            .onAppear {
+                
+                // Max roll result
+                
+                if die.result == die.numberOfSides.rawValue {
+                    
+                    // Spin + shrink animation
+                    DispatchQueue.main.asyncAfter(deadline: .now()) {
+                        withAnimation(.easeInOut(duration: 0.4)) {
+                            rotationAngle = 360
+                            scaleAmount = 0.5
+                        }
+                    }
+                    
+                    // Expand animation
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+                        withAnimation(.easeIn(duration: 0.1)) {
+                            scaleAmount = 1.3
+                        }
+                    }
+                    
+                    // Revert to normal size animation
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        withAnimation(.easeOut(duration: 0.2)) {
+                            scaleAmount = 1.0
+                        }
+                    }
+                    
+                } else {
+                    // Min roll result
+                    
+                    scaleAmount = 0.1
+                    
+                    // Spin + shrink animation
+                    DispatchQueue.main.asyncAfter(deadline: .now()) {
+                        withAnimation(.easeIn(duration: 0.2)) {
+                            scaleAmount = 1.0
+                        }
+                    }
+                    
+                    // Expand animation
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+                        withAnimation(.linear(duration: 0.05)) {
+                            offset = -3
+                        }
+                    }
+                    
+                    // Expand animation
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                        withAnimation(.linear(duration: 0.05)) {
+                            offset = 3
+                        }
+                    }
+                    
+                    // Expand animation
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
+                        withAnimation(.linear(duration: 0.05)) {
+                            offset = -3
+                        }
+                    }
+                    // Expand animation
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+                        withAnimation(.linear(duration: 0.05)) {
+                            offset = 3
+                        }
+                    }
+                    
+                    // Expand animation
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.45) {
+                        withAnimation(.linear(duration: 0.05)) {
+                            offset = 0
+                        }
+                    }
+                }
+            }
     }
 }
 
