@@ -48,6 +48,11 @@ struct RollHistoryList: View {
             .listStyle(.plain)
             .background(Color(uiColor: .secondarySystemBackground))
             .scrollContentBackground(theme == .dark ? .hidden : .automatic)
+            
+            // Prevent list from bleeding into safe area while in landscape mode
+            .mask {
+                Rectangle().edgesIgnoringSafeArea(.bottom)
+            }
         }
     }
     
