@@ -25,9 +25,12 @@ struct RollWindow: View {
     
     @State private var showingModifierView = false
     @State private var dieBeingModified: Die?
-    @State private var rollIsAnimating = false
     @State private var chooseYourDiceOffset = 0.0
     @State private var diceValueOffsets: [CGFloat] = [-150, -150, -150, -150, -150]
+    
+    // Binding
+    
+    @Binding var rollAnimationIsActive: Bool
     
     // MARK: - Body view
     
@@ -36,6 +39,7 @@ struct RollWindow: View {
         // Background
         RoundedRectangle(cornerRadius: 10)
             .fill(theme == .light ? Color.white : Color(uiColor: .secondarySystemBackground))
+            //.frame(minHeight: 300)
             .overlay(
         
                 // Roll window content
@@ -49,7 +53,7 @@ struct RollWindow: View {
                                 Spacer()
                                 
                                 Text("Choose your dice!")
-                                    .font(.title)
+                                    .font(.title.weight(.semibold))
                                 
                                 Spacer()
                             }
@@ -71,30 +75,28 @@ struct RollWindow: View {
                                 HStack {
                                     
                                     // Row labels
-                                    //if !currentRoll.dice.isEmpty {
-                                        VStack(alignment: .leading) {
-                                            Text("Dice:")
-                                                .frame(maxHeight: .infinity)
-                                            
-                                            Text("Modifier:")
-                                                .frame(maxHeight: .infinity)
-                                            
-                                            Text("Roll:")
-                                                .frame(maxHeight: .infinity)
-                                            
-                                            Text("Total:")
-                                                .bold()
-                                                .frame(maxHeight: .infinity)
-                                        }
-                                        .font(.title3.weight(.medium))
-                                        .padding(.leading, 10)
-                                        .layoutPriority(1)
-                                    //}
+                                    VStack(alignment: .leading) {
+                                        Text("Dice:")
+                                            .frame(maxHeight: .infinity)
+                                        
+                                        Text("Modifier:")
+                                            .frame(maxHeight: .infinity)
+                                        
+                                        Text("Roll:")
+                                            .frame(maxHeight: .infinity)
+                                        
+                                        Text("Total:")
+                                            .bold()
+                                            .frame(maxHeight: .infinity)
+                                    }
+                                    .font(.title3.weight(.medium))
+                                    .padding(.leading, 10)
+                                    .layoutPriority(1)
                                     
                                     Spacer()
                                     
                                     // Dice and values
-                                    RollWindowDiceValues(rollIsAnimating: $rollIsAnimating, diceValueOffsets: $diceValueOffsets)
+                                    RollWindowDiceValues(rollAnimationIsActive: $rollAnimationIsActive, diceValueOffsets: $diceValueOffsets)
                                     
                                     Spacer()
                                 }
@@ -109,7 +111,7 @@ struct RollWindow: View {
                                         .padding(.leading, 10)
                                     
                                     // Value
-                                    Text(rollIsAnimating ? "-" : (currentRoll.rollTotal != 0 ? currentRoll.grandTotal.description : "-"))
+                                    Text(rollAnimationIsActive ? "-" : (currentRoll.rollTotal != 0 ? currentRoll.grandTotal.description : "-"))
                                         .font(.title2.bold())
                                         .minimumScaleFactor(0.5)
                                 }
@@ -120,7 +122,7 @@ struct RollWindow: View {
                     Spacer()
                     
                     // Bottom row buttons
-                    RollWindowButtons(rollIsAnimating: $rollIsAnimating, diceValueOffsets: $diceValueOffsets)
+                    RollWindowButtons(rollAnimationIsActive: $rollAnimationIsActive, diceValueOffsets: $diceValueOffsets)
                 }
             )
         

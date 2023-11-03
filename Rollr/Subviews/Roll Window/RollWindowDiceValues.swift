@@ -22,7 +22,7 @@ struct RollWindowDiceValues: View {
     
     // Binding
     
-    @Binding var rollIsAnimating: Bool
+    @Binding var rollAnimationIsActive: Bool
     @Binding var diceValueOffsets: [CGFloat]
     
     // Basic
@@ -64,17 +64,17 @@ struct RollWindowDiceValues: View {
                     Group {
                         
                         // Display as text view if we're animating the roll OR the result was not a min/max value
-                        if rollIsAnimating || (!rollIsAnimating && (die.result != 1 && die.result != die.numberOfSides.rawValue)) {
+                        if rollAnimationIsActive || (!rollAnimationIsActive && (die.result != 1 && die.result != die.numberOfSides.rawValue)) {
                             Text(die.result > 0 ? die.result.description : "-")
                                 .font(.title3)
                         } else {
-                            RollValueShape(die: $die, rollIsAnimating: $rollIsAnimating)
+                            RollValueShape(die: $die)
                         }
                     }
                     .frame(maxHeight: .infinity)
                     
                     // Total (roll + modifier) value
-                    Text(rollIsAnimating ? "-" : (die.result > 0 ? die.total.description : "-"))
+                    Text(rollAnimationIsActive ? "-" : (die.result > 0 ? die.total.description : "-"))
                         .font(.title3.bold())
                         .minimumScaleFactor(0.5)
                         .frame(maxHeight: .infinity)

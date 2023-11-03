@@ -27,6 +27,8 @@ struct ContentView: View {
     // Using @State instead of @AppStorage because it maintains animations
     @State private var rollHistoryPosition: RollHistoryLandscapePosition
     
+    @State private var rollAnimationIsActive = false
+    
     // Basic
     
     // Detect if the device screen has a notch (i.e. is a "frameless" version of the phone)
@@ -68,11 +70,11 @@ struct ContentView: View {
                 VStack {
                     
                     // Roll window
-                    RollWindow()
+                    RollWindow(rollAnimationIsActive: $rollAnimationIsActive)
                         .padding([.horizontal])
                     
                     // Dice options
-                    DiceOptions()
+                    DiceOptions(rollAnimationIsActive: $rollAnimationIsActive)
                         .padding(.horizontal)
                         .padding(.bottom, !hasNotch && verticalSizeClass == .compact ? 10 : 0)
                 }

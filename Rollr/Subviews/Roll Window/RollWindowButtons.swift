@@ -33,7 +33,7 @@ struct RollWindowButtons: View {
     
     // Binding
     
-    @Binding var rollIsAnimating: Bool
+    @Binding var rollAnimationIsActive: Bool
     @Binding var diceValueOffsets: [CGFloat]
     
     // MARK: - Body view
@@ -58,13 +58,13 @@ struct RollWindowButtons: View {
                 }
                 .disabled(presets.isEmpty)
             } label: {
-                Image(systemName: "list.dash")
-                    .imageScale(.large)
+                Text("Presets")
+                    .font(.headline)
             }
-            .buttonStyle(BorderedProminentButtonStyle())
-            .padding([.bottom, .leading])
-            
-            Spacer()
+            .buttonStyle(BorderedButtonStyle())
+            .padding(.leading)
+            .disabled(rollAnimationIsActive)
+            .frame(maxWidth: .infinity, alignment: .leading)
             
             // Roll button
             Button {
@@ -85,10 +85,8 @@ struct RollWindowButtons: View {
                             .fill(.tint)
                     )
             }
-            .disabled(rollIsAnimating || currentRoll.dice.isEmpty)
-            .padding(.bottom)
-            
-            Spacer()
+            .disabled(rollAnimationIsActive || currentRoll.dice.isEmpty)
+            .frame(maxWidth: .infinity)
             
             // Roll reset button
             Button {
@@ -102,10 +100,12 @@ struct RollWindowButtons: View {
                 Text("Clear")
                     .font(.headline)
             }
-            .buttonStyle(BorderedProminentButtonStyle())
-            .disabled(currentRoll.dice.isEmpty)
-            .padding([.bottom, .trailing])
+            .buttonStyle(BorderedButtonStyle())
+            .disabled(rollAnimationIsActive || currentRoll.dice.isEmpty)
+            .padding(.trailing)
+            .frame(maxWidth: .infinity, alignment: .trailing)
         }
+        .padding(.bottom)
         
         // New preset name alert with textfield
         .alert("Preset Name", isPresented: $showingPresetNameAlert) {
@@ -183,7 +183,7 @@ struct RollWindowButtons: View {
     func playRollingAnimation() async {
         
         // Set animation state to true
-        rollIsAnimating = true
+        rollAnimationIsActive = true
         
         // Display a random possible result on every timer fire
         let timer = Timer.publish(every: 0.09, on: .main, in: .common)
@@ -196,7 +196,7 @@ struct RollWindowButtons: View {
         try? await Task.sleep(nanoseconds: 800_000_000)
         
         // Set animation state to false
-        rollIsAnimating = false
+        rollAnimationIsActive = false
         
         // Cancel the timer
         timer.cancel()

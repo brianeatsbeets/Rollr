@@ -21,6 +21,10 @@ struct DiceOptions: View {
     @Environment(\.managedObjectContext) var moc
     @EnvironmentObject var currentRoll: LocalRoll
     
+    // Binding
+    
+    @Binding var rollAnimationIsActive: Bool
+    
     // MARK: - Body view
     
     var body: some View {
@@ -45,7 +49,7 @@ struct DiceOptions: View {
                 } label: {
                     NumberOfSidesHexagon(numberOfSides: sides.rawValue, type: .button)
                 }
-                .disabled(currentRoll.dice.count >= 5)
+                .disabled(rollAnimationIsActive || currentRoll.dice.count >= 5)
             }
         }
     }

@@ -25,7 +25,6 @@ struct RollValueShape: View {
     // Binding
     
     @Binding var die: LocalDie
-    @Binding var rollIsAnimating: Bool
     
     // Basic
     
