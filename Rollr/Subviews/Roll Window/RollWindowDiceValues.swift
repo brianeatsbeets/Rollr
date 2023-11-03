@@ -20,11 +20,10 @@ struct RollWindowDiceValues: View {
     
     @EnvironmentObject var currentRoll: LocalRoll
     
-    @State private var offsets: [CGFloat] = [-150, -150, -150, -150, -150]
-    
     // Binding
     
     @Binding var rollIsAnimating: Bool
+    @Binding var diceValueOffsets: [CGFloat]
     
     // Basic
     
@@ -66,7 +65,7 @@ struct RollWindowDiceValues: View {
                         
                         // Display as text view if we're animating the roll OR the result was not a min/max value
                         if rollIsAnimating || (!rollIsAnimating && (die.result != 1 && die.result != die.numberOfSides.rawValue)) {
-                            Text(die.result.description)
+                            Text(die.result > 0 ? die.result.description : "-")
                                 .font(.title3)
                         } else {
                             RollValueShape(die: $die, rollIsAnimating: $rollIsAnimating)
@@ -81,13 +80,12 @@ struct RollWindowDiceValues: View {
                         .frame(maxHeight: .infinity)
                 }
                 .frame(maxWidth: .infinity)
-                .offset(y: offsets[dieIndex ?? 0])
+                .offset(y: diceValueOffsets[dieIndex ?? 0])
+                
+                // Animate appearing from above
+                .animation(.easeOut(duration: 0.2), value: diceValueOffsets)
                 .onAppear {
-                    
-                    // Animate appearing from above
-                    withAnimation(.easeOut(duration: 0.2)) {
-                        offsets[dieIndex ?? 0] = 0
-                    }
+                    diceValueOffsets[dieIndex ?? 0] = 0
                 }
                 
                 // When a die's modifier changes...
@@ -101,6 +99,9 @@ struct RollWindowDiceValues: View {
                 }
             }
         }
+        
+        // Animate when the current dice array is updated
+        .animation(.default, value: currentRoll.dice.count)
     }
 }
 

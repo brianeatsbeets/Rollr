@@ -26,6 +26,8 @@ struct RollWindow: View {
     @State private var showingModifierView = false
     @State private var dieBeingModified: Die?
     @State private var rollIsAnimating = false
+    @State private var chooseYourDiceOffset = 0.0
+    @State private var diceValueOffsets: [CGFloat] = [-150, -150, -150, -150, -150]
     
     // MARK: - Body view
     
@@ -40,72 +42,85 @@ struct RollWindow: View {
                 VStack {
                     ZStack {
                         
-                        // Awaiting roll text
-                        VStack {
-                            Spacer()
+                        if currentRoll.dice.isEmpty {
                             
-                            Text("Choose your dice!")
-                                .font(.title)
-                            
-                            Spacer()
-                        }
-                        .conditionalHidden(!currentRoll.dice.isEmpty)
-                            
-                        // Dice info and labels
-                        VStack {
-                            HStack {
+                            // Awaiting roll text
+                            VStack {
+                                Spacer()
                                 
-                                // Row labels
-                                if !currentRoll.dice.isEmpty {
-                                    VStack(alignment: .leading) {
-                                        Text("Dice:")
-                                            .frame(maxHeight: .infinity)
-                                        
-                                        Text("Modifier:")
-                                            .frame(maxHeight: .infinity)
-                                        
-                                        Text("Roll:")
-                                            .frame(maxHeight: .infinity)
-                                        
-                                        Text("Total:")
-                                            .bold()
-                                            .frame(maxHeight: .infinity)
-                                    }
-                                    .font(.title3.weight(.medium))
-                                    .padding(.leading, 10)
-                                    .layoutPriority(1)
+                                Text("Choose your dice!")
+                                    .font(.title)
+                                
+                                Spacer()
+                            }
+                            .offset(y: chooseYourDiceOffset)
+                            
+                            // Animate up and down on a loop
+                            .animation(.easeInOut(duration: 1.5).repeatForever(autoreverses: true), value: chooseYourDiceOffset)
+                            .onAppear {
+                                chooseYourDiceOffset = 10
+                            }
+                            .onDisappear {
+                                chooseYourDiceOffset = 0
+                            }
+                            
+                        } else {
+                            
+                            // Dice info and labels
+                            VStack {
+                                HStack {
+                                    
+                                    // Row labels
+                                    //if !currentRoll.dice.isEmpty {
+                                        VStack(alignment: .leading) {
+                                            Text("Dice:")
+                                                .frame(maxHeight: .infinity)
+                                            
+                                            Text("Modifier:")
+                                                .frame(maxHeight: .infinity)
+                                            
+                                            Text("Roll:")
+                                                .frame(maxHeight: .infinity)
+                                            
+                                            Text("Total:")
+                                                .bold()
+                                                .frame(maxHeight: .infinity)
+                                        }
+                                        .font(.title3.weight(.medium))
+                                        .padding(.leading, 10)
+                                        .layoutPriority(1)
+                                    //}
+                                    
+                                    Spacer()
+                                    
+                                    // Dice and values
+                                    RollWindowDiceValues(rollIsAnimating: $rollIsAnimating, diceValueOffsets: $diceValueOffsets)
+                                    
+                                    Spacer()
                                 }
+                                .padding([.top, .trailing], 10)
                                 
-                                Spacer()
-                                
-                                // Dice and values
-                                RollWindowDiceValues(rollIsAnimating: $rollIsAnimating)
-                            
-                                Spacer()
-                            }
-                            .padding([.top, .trailing], 10)
-                            
-                            // Grand total
-                            HStack {
-                                
-                                // Label
-                                Text("Grand total:")
-                                    .font(.title3.weight(.medium))
-                                    .padding(.leading, 10)
-                                
-                                // Value
-                                Text(rollIsAnimating ? "-" : (currentRoll.rollTotal != 0 ? currentRoll.grandTotal.description : "-"))
-                                    .font(.title2.bold())
-                                    .minimumScaleFactor(0.5)
+                                // Grand total
+                                HStack {
+                                    
+                                    // Label
+                                    Text("Grand total:")
+                                        .font(.title3.weight(.medium))
+                                        .padding(.leading, 10)
+                                    
+                                    // Value
+                                    Text(rollIsAnimating ? "-" : (currentRoll.rollTotal != 0 ? currentRoll.grandTotal.description : "-"))
+                                        .font(.title2.bold())
+                                        .minimumScaleFactor(0.5)
+                                }
                             }
                         }
-                        .conditionalHidden(currentRoll.dice.isEmpty)
                     }
                     
                     Spacer()
                     
                     // Bottom row buttons
-                    RollWindowButtons(rollIsAnimating: $rollIsAnimating)
+                    RollWindowButtons(rollIsAnimating: $rollIsAnimating, diceValueOffsets: $diceValueOffsets)
                 }
             )
         

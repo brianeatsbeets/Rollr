@@ -36,12 +36,7 @@ struct DiceOptions: View {
                     let newDie = LocalDie(numberOfSides: sides)
                     
                     // Animate adding new die
-                    withAnimation {
-                        currentRoll.dice.append(newDie)
-                    }
-                    
-                    // Reset each die result
-                    currentRoll.resetDiceResults()
+                    currentRoll.dice.append(newDie)
                     
                     // Reset the roll id and preset name
                     currentRoll.id = UUID()

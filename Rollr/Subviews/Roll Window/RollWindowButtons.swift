@@ -34,6 +34,7 @@ struct RollWindowButtons: View {
     // Binding
     
     @Binding var rollIsAnimating: Bool
+    @Binding var diceValueOffsets: [CGFloat]
     
     // MARK: - Body view
     
@@ -91,7 +92,12 @@ struct RollWindowButtons: View {
             
             // Roll reset button
             Button {
-                currentRoll.reset()
+                withAnimation {
+                    currentRoll.reset()
+                }
+                
+                // Reset RollWindowDiceValues view offsets
+                diceValueOffsets = [-150, -150, -150, -150, -150]
             } label: {
                 Text("Clear")
                     .font(.headline)
