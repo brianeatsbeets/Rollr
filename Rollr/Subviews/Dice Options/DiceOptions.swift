@@ -34,7 +34,11 @@ struct DiceOptions: View {
                     
                     // Append the selected die to the dice array
                     let newDie = LocalDie(numberOfSides: sides)
-                    currentRoll.dice.append(newDie)
+                    
+                    // Animate adding new die
+                    withAnimation {
+                        currentRoll.dice.append(newDie)
+                    }
                     
                     // Reset each die result
                     currentRoll.resetDiceResults()

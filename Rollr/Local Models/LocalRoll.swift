@@ -67,9 +67,22 @@ class LocalRoll: Identifiable, ObservableObject {
     }
     
     // Simulate a roll for each die
-    func randomizeDiceResults() {
+    func randomizeDiceResults(animating: Bool = false) {
         dice.indices.forEach {
-            dice[$0].result = Int.random(in: 1...dice[$0].numberOfSides.rawValue)
+            
+            // Calculate a new random result for the specified die
+            var newValue = Int.random(in: 1...dice[$0].numberOfSides.rawValue)
+            
+            // If we're playing the rolling animation, display random a result that doesn't match the previous one
+            if animating {
+                let oldValue = dice[$0].result
+                
+                while newValue == oldValue {
+                    newValue = Int.random(in: 1...dice[$0].numberOfSides.rawValue)
+                }
+            }
+            
+            dice[$0].result = newValue
         }
     }
     

@@ -180,10 +180,10 @@ struct RollWindowButtons: View {
         rollIsAnimating = true
         
         // Display a random possible result on every timer fire
-        let timer = Timer.publish(every: 0.1, on: .main, in: .common)
+        let timer = Timer.publish(every: 0.09, on: .main, in: .common)
             .autoconnect()
             .sink { _ in
-                currentRoll.randomizeDiceResults()
+                currentRoll.randomizeDiceResults(animating: true)
             }
         
         // Wait for one second

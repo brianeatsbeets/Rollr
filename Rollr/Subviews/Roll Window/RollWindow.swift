@@ -108,6 +108,9 @@ struct RollWindow: View {
                     RollWindowButtons(rollIsAnimating: $rollIsAnimating)
                 }
             )
+        
+            // Clip new die "fall from above" animation
+            .clipped()
     }
 }
 

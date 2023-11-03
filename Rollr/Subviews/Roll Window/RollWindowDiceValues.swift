@@ -20,6 +20,8 @@ struct RollWindowDiceValues: View {
     
     @EnvironmentObject var currentRoll: LocalRoll
     
+    @State private var offsets: [CGFloat] = [-150, -150, -150, -150, -150]
+    
     // Binding
     
     @Binding var rollIsAnimating: Bool
@@ -35,6 +37,9 @@ struct RollWindowDiceValues: View {
         // Main stack
         HStack {
             ForEach($currentRoll.dice, id: \.id) { $die in
+                
+                // Store die index for animation parameters
+                let dieIndex = currentRoll.dice.firstIndex(where: { $0.id == die.id })
                 
                 // Individual die and values
                 VStack {
@@ -76,6 +81,14 @@ struct RollWindowDiceValues: View {
                         .frame(maxHeight: .infinity)
                 }
                 .frame(maxWidth: .infinity)
+                .offset(y: offsets[dieIndex ?? 0])
+                .onAppear {
+                    
+                    // Animate appearing from above
+                    withAnimation(.easeOut(duration: 0.2)) {
+                        offsets[dieIndex ?? 0] = 0
+                    }
+                }
                 
                 // When a die's modifier changes...
                 .onChange(of: die.modifier) { _ in
