@@ -27,6 +27,17 @@ struct ContentView: View {
     // Using @State instead of @AppStorage because it maintains animations
     @State private var rollHistoryPosition: RollHistoryLandscapePosition
     
+    // Basic
+    
+    // Detect if the device screen has a notch (i.e. is a "frameless" version of the phone)
+    var hasNotch: Bool {
+        let scenes = UIApplication.shared.connectedScenes
+        let windowScene = scenes.first as? UIWindowScene
+        guard let window = windowScene?.windows.first else { return false }
+        
+        return window.safeAreaInsets.bottom > 0
+    }
+    
     // MARK: - Initializers
     
     init() {
@@ -52,7 +63,6 @@ struct ContentView: View {
                         
                     // Roll history list
                     RollHistoryList()
-                        //.animation(.default, value: rollHistoryPosition)
                 }
                  
                 VStack {
@@ -64,7 +74,7 @@ struct ContentView: View {
                     // Dice options
                     DiceOptions()
                         .padding(.horizontal)
-                        //.padding(.bottom, verticalSizeClass == .regular ? 0 : 20)
+                        .padding(.bottom, !hasNotch && verticalSizeClass == .compact ? 10 : 0)
                 }
                 
                 // Only display if in portrait mode

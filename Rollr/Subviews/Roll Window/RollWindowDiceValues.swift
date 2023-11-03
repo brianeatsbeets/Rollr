@@ -100,7 +100,7 @@ struct RollWindowDiceValues: View {
             }
         }
         
-        // Animate when the current dice array is updated
+        // Animate when the current dice are updated
         .animation(.default, value: currentRoll.dice.count)
     }
 }
