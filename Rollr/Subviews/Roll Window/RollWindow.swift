@@ -21,17 +21,12 @@ struct RollWindow: View {
     @Environment(\.colorScheme) var theme
     @Environment(\.verticalSizeClass) var verticalSizeClass
     @EnvironmentObject var currentRoll: LocalRoll
+    @EnvironmentObject var animationStateManager: AnimationStateManager
     
     // State
     
     @State private var showingModifierView = false
     @State private var dieBeingModified: Die?
-    @State private var chooseYourDiceOffset = 0.0
-    @State private var diceValueOffsets: [CGFloat] = [-150, -150, -150, -150, -150]
-    
-    // Binding
-    
-    @Binding var rollAnimationIsActive: Bool
     
     // MARK: - Body view
     
@@ -58,15 +53,15 @@ struct RollWindow: View {
                                 
                                 Spacer()
                             }
-                            .offset(y: chooseYourDiceOffset)
+                            .offset(y: animationStateManager.chooseYourDiceOffset)
                             
                             // Animate up and down on a loop
-                            .animation(.easeInOut(duration: 1.5).repeatForever(autoreverses: true), value: chooseYourDiceOffset)
+                            .animation(.easeInOut(duration: 1.5).repeatForever(autoreverses: true), value: animationStateManager.chooseYourDiceOffset)
                             .onAppear {
-                                chooseYourDiceOffset = 10
+                                animationStateManager.chooseYourDiceOffset = 10
                             }
                             .onDisappear {
-                                chooseYourDiceOffset = 0
+                                animationStateManager.chooseYourDiceOffset = 0
                             }
                             
                         } else {
@@ -97,7 +92,7 @@ struct RollWindow: View {
                                     Spacer()
                                     
                                     // Dice and values
-                                    RollWindowDiceValues(rollAnimationIsActive: $rollAnimationIsActive, diceValueOffsets: $diceValueOffsets)
+                                    RollWindowDiceValues()
                                     
                                     Spacer()
                                 }
@@ -112,7 +107,7 @@ struct RollWindow: View {
                                         .padding(.leading, 10)
                                     
                                     // Value
-                                    Text(rollAnimationIsActive ? "-" : (currentRoll.rollTotal != 0 ? currentRoll.grandTotal.description : "-"))
+                                    Text(animationStateManager.rollAnimationIsActive ? "-" : (currentRoll.rollTotal != 0 ? currentRoll.grandTotal.description : "-"))
                                         .font(.title2.bold())
                                         .minimumScaleFactor(0.5)
                                 }
@@ -123,7 +118,7 @@ struct RollWindow: View {
                     Spacer()
                     
                     // Bottom row buttons
-                    RollWindowButtons(rollAnimationIsActive: $rollAnimationIsActive, diceValueOffsets: $diceValueOffsets)
+                    RollWindowButtons()
                 }
             )
         

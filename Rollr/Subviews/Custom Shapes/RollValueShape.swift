@@ -17,7 +17,7 @@ struct RollValueShape: View {
     // MARK: - Properties
     
     @Environment(\.verticalSizeClass) var verticalSizeClass
-    @EnvironmentObject var orientationChecker: OrientationChecker
+    @EnvironmentObject var animationStateManager: AnimationStateManager
     
     // State
     
@@ -84,7 +84,7 @@ struct RollValueShape: View {
                 
                 // Don't animate the max/min images during an orientation change
                 // (the view gets redrawn during orientation changes due to the conditional layout based on orientation in ContentView)
-                if !orientationChecker.orientationDidChange {
+                if !animationStateManager.orientationDidChange {
                     
                     // Max roll result
                     
@@ -161,7 +161,7 @@ struct RollValueShape: View {
                 }
             }
             .onChange(of: verticalSizeClass) { newValue in
-                orientationChecker.orientationDidChange = true
+                animationStateManager.orientationDidChange = true
             }
     }
 }

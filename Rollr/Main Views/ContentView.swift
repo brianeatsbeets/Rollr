@@ -21,13 +21,12 @@ struct ContentView: View {
     @Environment(\.colorScheme) var theme
     @Environment(\.verticalSizeClass) var verticalSizeClass
     @Environment(\.managedObjectContext) var moc
+    @EnvironmentObject var animationStateManager: AnimationStateManager
     
     // State
     
     // Using @State instead of @AppStorage because it maintains animations
     @State private var rollHistoryPosition: RollHistoryLandscapePosition
-    
-    @State private var rollAnimationIsActive = false
     
     // Basic
     
@@ -70,11 +69,11 @@ struct ContentView: View {
                 VStack {
                     
                     // Roll window
-                    RollWindow(rollAnimationIsActive: $rollAnimationIsActive)
+                    RollWindow()
                         .padding([.horizontal])
                     
                     // Dice options
-                    DiceOptions(rollAnimationIsActive: $rollAnimationIsActive)
+                    DiceOptions()
                         .padding(.horizontal)
                         .padding(.bottom, !hasNotch && verticalSizeClass == .compact ? 10 : 0)
                 }

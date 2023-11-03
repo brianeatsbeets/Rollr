@@ -19,11 +19,7 @@ struct RollWindowDiceValues: View {
     // Environment
     
     @EnvironmentObject var currentRoll: LocalRoll
-    
-    // Binding
-    
-    @Binding var rollAnimationIsActive: Bool
-    @Binding var diceValueOffsets: [CGFloat]
+    @EnvironmentObject var animationStateManager: AnimationStateManager
     
     // Basic
     
@@ -64,7 +60,7 @@ struct RollWindowDiceValues: View {
                     Group {
                         
                         // Display as text view if we're animating the roll OR the result was not a min/max value
-                        if rollAnimationIsActive || (!rollAnimationIsActive && (die.result != 1 && die.result != die.numberOfSides.rawValue)) {
+                        if animationStateManager.rollAnimationIsActive || (!animationStateManager.rollAnimationIsActive && (die.result != 1 && die.result != die.numberOfSides.rawValue)) {
                             Text(die.result > 0 ? die.result.description : "-")
                                 .font(.title3)
                         } else {
@@ -74,18 +70,18 @@ struct RollWindowDiceValues: View {
                     .frame(maxHeight: .infinity)
                     
                     // Total (roll + modifier) value
-                    Text(rollAnimationIsActive ? "-" : (die.result > 0 ? die.total.description : "-"))
+                    Text(animationStateManager.rollAnimationIsActive ? "-" : (die.result > 0 ? die.total.description : "-"))
                         .font(.title3.bold())
                         .minimumScaleFactor(0.5)
                         .frame(maxHeight: .infinity)
                 }
                 .frame(maxWidth: .infinity)
-                .offset(y: diceValueOffsets[dieIndex ?? 0])
+                .offset(y: animationStateManager.diceValueOffsets[dieIndex ?? 0])
                 
                 // Animate appearing from above
-                .animation(.easeOut(duration: 0.2), value: diceValueOffsets)
+                .animation(.easeOut(duration: 0.2), value: animationStateManager.diceValueOffsets)
                 .onAppear {
-                    diceValueOffsets[dieIndex ?? 0] = 0
+                    animationStateManager.diceValueOffsets[dieIndex ?? 0] = 0
                 }
                 
                 // When a die's modifier changes...

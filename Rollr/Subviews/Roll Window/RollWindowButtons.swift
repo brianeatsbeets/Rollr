@@ -20,7 +20,7 @@ struct RollWindowButtons: View {
     
     @Environment(\.managedObjectContext) var moc
     @EnvironmentObject var currentRoll: LocalRoll
-    @EnvironmentObject var orientationChecker: OrientationChecker
+    @EnvironmentObject var animationStateManager: AnimationStateManager
     
     // Fetch request
     
@@ -31,11 +31,6 @@ struct RollWindowButtons: View {
     @State private var showingPresetNameAlert = false
     @State private var newPresetName = ""
     @State private var showingPresets = false
-    
-    // Binding
-    
-    @Binding var rollAnimationIsActive: Bool
-    @Binding var diceValueOffsets: [CGFloat]
     
     // MARK: - Body view
     
@@ -64,7 +59,7 @@ struct RollWindowButtons: View {
             }
             .buttonStyle(BorderedButtonStyle())
             .padding(.leading)
-            .disabled(rollAnimationIsActive)
+            .disabled(animationStateManager.rollAnimationIsActive)
             .frame(maxWidth: .infinity, alignment: .leading)
             
             // Roll button
@@ -73,7 +68,7 @@ struct RollWindowButtons: View {
                     await rollDice()
                 }
                 
-                orientationChecker.orientationDidChange = false
+                animationStateManager.orientationDidChange = false
             } label: {
                 Text(currentRoll.presetName.isEmpty ? "Roll" : currentRoll.presetName)
                     .font(.headline.leading(.tight))
@@ -88,7 +83,7 @@ struct RollWindowButtons: View {
                             .fill(.tint)
                     )
             }
-            .disabled(rollAnimationIsActive || currentRoll.dice.isEmpty)
+            .disabled(animationStateManager.rollAnimationIsActive || currentRoll.dice.isEmpty)
             .frame(maxWidth: .infinity)
             
             // Roll reset button
@@ -98,13 +93,13 @@ struct RollWindowButtons: View {
                 }
                 
                 // Reset RollWindowDiceValues view offsets
-                diceValueOffsets = [-150, -150, -150, -150, -150]
+                animationStateManager.diceValueOffsets = [-150, -150, -150, -150, -150]
             } label: {
                 Text("Clear")
                     .font(.headline)
             }
             .buttonStyle(BorderedButtonStyle())
-            .disabled(rollAnimationIsActive || currentRoll.dice.isEmpty)
+            .disabled(animationStateManager.rollAnimationIsActive || currentRoll.dice.isEmpty)
             .padding(.trailing)
             .frame(maxWidth: .infinity, alignment: .trailing)
         }
@@ -186,7 +181,7 @@ struct RollWindowButtons: View {
     func playRollingAnimation() async {
         
         // Set animation state to true
-        rollAnimationIsActive = true
+        animationStateManager.rollAnimationIsActive = true
         
         // Display a random possible result on every timer fire
         let timer = Timer.publish(every: 0.09, on: .main, in: .common)
@@ -199,7 +194,7 @@ struct RollWindowButtons: View {
         try? await Task.sleep(nanoseconds: 800_000_000)
         
         // Set animation state to false
-        rollAnimationIsActive = false
+        animationStateManager.rollAnimationIsActive = false
         
         // Cancel the timer
         timer.cancel()
