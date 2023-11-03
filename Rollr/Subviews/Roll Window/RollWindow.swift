@@ -19,6 +19,7 @@ struct RollWindow: View {
     // Environment
     
     @Environment(\.colorScheme) var theme
+    @Environment(\.verticalSizeClass) var verticalSizeClass
     @EnvironmentObject var currentRoll: LocalRoll
     
     // State
@@ -39,7 +40,7 @@ struct RollWindow: View {
         // Background
         RoundedRectangle(cornerRadius: 10)
             .fill(theme == .light ? Color.white : Color(uiColor: .secondarySystemBackground))
-            //.frame(minHeight: 300)
+            .frame(minHeight: verticalSizeClass == .regular ? 300 : 0)
             .overlay(
         
                 // Roll window content
