@@ -21,6 +21,7 @@ struct RollrApp: App {
     
     @StateObject private var dataController = DataController()
     @StateObject private var currentRoll = LocalRoll()
+    @StateObject private var orientationChecker = OrientationChecker()
     
     // MARK: - Body view
     
@@ -35,8 +36,15 @@ struct RollrApp: App {
                 // Inject the current roll object into the environment
                 .environmentObject(currentRoll)
             
+                // Inject the orientation checker object into the environment
+                .environmentObject(orientationChecker)
+            
                 // Set font design
                 .fontDesign(.rounded)
         }
     }
+}
+
+class OrientationChecker: ObservableObject {
+    var orientationDidChange = false
 }

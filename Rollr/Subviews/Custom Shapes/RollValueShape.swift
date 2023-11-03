@@ -16,6 +16,9 @@ struct RollValueShape: View {
     
     // MARK: - Properties
     
+    @Environment(\.verticalSizeClass) var verticalSizeClass
+    @EnvironmentObject var orientationChecker: OrientationChecker
+    
     // State
     
     @State private var rotationAngle = 0.0
@@ -79,78 +82,86 @@ struct RollValueShape: View {
             .offset(x: offset)
             .onAppear {
                 
-                // Max roll result
-                
-                if die.result == die.numberOfSides.rawValue {
+                // Don't animate the max/min images during an orientation change
+                // (the view gets redrawn during orientation changes due to the conditional layout based on orientation in ContentView)
+                if !orientationChecker.orientationDidChange {
                     
-                    // Spin + shrink animation
-                    DispatchQueue.main.asyncAfter(deadline: .now()) {
-                        withAnimation(.easeInOut(duration: 0.4)) {
-                            rotationAngle = 360
-                            scaleAmount = 0.5
+                    // Max roll result
+                    
+                    if die.result == die.numberOfSides.rawValue {
+                        
+                        // Spin + shrink animation
+                        DispatchQueue.main.asyncAfter(deadline: .now()) {
+                            withAnimation(.easeInOut(duration: 0.4)) {
+                                rotationAngle = 360
+                                scaleAmount = 0.5
+                            }
                         }
-                    }
-                    
-                    // Expand animation
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
-                        withAnimation(.easeIn(duration: 0.1)) {
-                            scaleAmount = 1.3
+                        
+                        // Expand animation
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+                            withAnimation(.easeIn(duration: 0.1)) {
+                                scaleAmount = 1.3
+                            }
                         }
-                    }
-                    
-                    // Revert to normal size animation
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                        withAnimation(.easeOut(duration: 0.2)) {
-                            scaleAmount = 1.0
+                        
+                        // Revert to normal size animation
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                            withAnimation(.easeOut(duration: 0.2)) {
+                                scaleAmount = 1.0
+                            }
                         }
-                    }
-                    
-                } else {
-                    // Min roll result
-                    
-                    scaleAmount = 0.1
-                    
-                    // Spin + shrink animation
-                    DispatchQueue.main.asyncAfter(deadline: .now()) {
-                        withAnimation(.easeIn(duration: 0.2)) {
-                            scaleAmount = 1.0
+                        
+                    } else {
+                        // Min roll result
+                        
+                        scaleAmount = 0.1
+                        
+                        // Spin + shrink animation
+                        DispatchQueue.main.asyncAfter(deadline: .now()) {
+                            withAnimation(.easeIn(duration: 0.2)) {
+                                scaleAmount = 1.0
+                            }
                         }
-                    }
-                    
-                    // Expand animation
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
-                        withAnimation(.linear(duration: 0.05)) {
-                            offset = -3
+                        
+                        // Expand animation
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+                            withAnimation(.linear(duration: 0.05)) {
+                                offset = -3
+                            }
                         }
-                    }
-                    
-                    // Expand animation
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                        withAnimation(.linear(duration: 0.05)) {
-                            offset = 3
+                        
+                        // Expand animation
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                            withAnimation(.linear(duration: 0.05)) {
+                                offset = 3
+                            }
                         }
-                    }
-                    
-                    // Expand animation
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
-                        withAnimation(.linear(duration: 0.05)) {
-                            offset = -3
+                        
+                        // Expand animation
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
+                            withAnimation(.linear(duration: 0.05)) {
+                                offset = -3
+                            }
                         }
-                    }
-                    // Expand animation
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
-                        withAnimation(.linear(duration: 0.05)) {
-                            offset = 3
+                        // Expand animation
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+                            withAnimation(.linear(duration: 0.05)) {
+                                offset = 3
+                            }
                         }
-                    }
-                    
-                    // Expand animation
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.45) {
-                        withAnimation(.linear(duration: 0.05)) {
-                            offset = 0
+                        
+                        // Expand animation
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.45) {
+                            withAnimation(.linear(duration: 0.05)) {
+                                offset = 0
+                            }
                         }
                     }
                 }
+            }
+            .onChange(of: verticalSizeClass) { newValue in
+                orientationChecker.orientationDidChange = true
             }
     }
 }

@@ -20,6 +20,7 @@ struct RollWindowButtons: View {
     
     @Environment(\.managedObjectContext) var moc
     @EnvironmentObject var currentRoll: LocalRoll
+    @EnvironmentObject var orientationChecker: OrientationChecker
     
     // Fetch request
     
@@ -71,6 +72,8 @@ struct RollWindowButtons: View {
                 Task {
                     await rollDice()
                 }
+                
+                orientationChecker.orientationDidChange = false
             } label: {
                 Text(currentRoll.presetName.isEmpty ? "Roll" : currentRoll.presetName)
                     .font(.headline.leading(.tight))
