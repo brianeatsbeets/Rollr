@@ -187,7 +187,7 @@ struct RollWindowButtons: View {
             }
         
         // Wait for one second
-        try? await Task.sleep(nanoseconds: 1_000_000_000)
+        try? await Task.sleep(nanoseconds: 800_000_000)
         
         // Set animation state to false
         rollIsAnimating = false
