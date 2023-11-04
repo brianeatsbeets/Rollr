@@ -73,7 +73,25 @@ struct RollWindowDiceValues: View {
                     Text(animationStateManager.rollAnimationIsActive ? "-" : (die.result > 0 ? die.total.description : "-"))
                         .font(.title3.bold())
                         .minimumScaleFactor(0.5)
+                        .scaleEffect(animationStateManager.rollResultsScale)
                         .frame(maxHeight: .infinity)
+                        .onChange(of: animationStateManager.rollAnimationIsActive) { newValue in
+                            
+                            // Only animate after roll animation has finished
+                            if newValue == false {
+                                DispatchQueue.main.asyncAfter(deadline: .now()) {
+                                    withAnimation(.easeOut(duration: 0.2)) {
+                                        animationStateManager.rollResultsScale = 1.2
+                                    }
+                                }
+                                
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                                    withAnimation(.easeOut(duration: 0.1)) {
+                                        animationStateManager.rollResultsScale = 1.0
+                                    }
+                                }
+                            }
+                        }
                 }
                 .frame(maxWidth: .infinity)
                 .offset(y: animationStateManager.diceValueOffsets[dieIndex ?? 0])

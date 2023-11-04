@@ -108,6 +108,24 @@ struct RollWindow: View {
                                     Text(animationStateManager.rollAnimationIsActive ? "-" : (currentRoll.rollTotal != 0 ? currentRoll.grandTotal.description : "-"))
                                         .font(.title2.bold())
                                         .minimumScaleFactor(0.5)
+                                        .scaleEffect(animationStateManager.rollResultsScale)
+                                        .onChange(of: animationStateManager.rollAnimationIsActive) { newValue in
+                                            
+                                            // Only animate after roll animation has finished
+                                            if newValue == false {
+                                                DispatchQueue.main.asyncAfter(deadline: .now()) {
+                                                    withAnimation(.easeOut(duration: 0.2)) {
+                                                        animationStateManager.rollResultsScale = 1.2
+                                                    }
+                                                }
+                                                
+                                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                                                    withAnimation(.easeOut(duration: 0.1)) {
+                                                        animationStateManager.rollResultsScale = 1.0
+                                                    }
+                                                }
+                                            }
+                                        }
                                 }
                             }
                         }
