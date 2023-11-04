@@ -78,6 +78,7 @@ struct RollWindowButtons: View {
                     .lineSpacing(-1)
                     .frame(height: 33)
                     .padding(.horizontal, 20)
+                    .frame(maxWidth: .infinity)
                     .background(
                         RoundedRectangle(cornerRadius: 5)
                             .fill(.tint)
