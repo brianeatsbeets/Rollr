@@ -27,6 +27,7 @@ struct RollWindow: View {
     
     @State private var showingModifierView = false
     @State private var dieBeingModified: Die?
+    @State private var chooseYourDiceOffset = 0.0
     
     // MARK: - Body view
     
@@ -53,15 +54,12 @@ struct RollWindow: View {
                                 
                                 Spacer()
                             }
-                            .offset(y: animationStateManager.chooseYourDiceOffset)
+                            .offset(y: chooseYourDiceOffset)
                             
                             // Animate up and down on a loop
-                            .animation(.easeInOut(duration: 1.5).repeatForever(autoreverses: true), value: animationStateManager.chooseYourDiceOffset)
+                            .animation(.easeInOut(duration: 1.5).repeatForever(autoreverses: true), value: chooseYourDiceOffset)
                             .onAppear {
-                                animationStateManager.chooseYourDiceOffset = 10
-                            }
-                            .onDisappear {
-                                animationStateManager.chooseYourDiceOffset = 0
+                                chooseYourDiceOffset = 10
                             }
                             
                         } else {
