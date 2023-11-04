@@ -61,6 +61,9 @@ struct RollWindow: View {
                             .onAppear {
                                 chooseYourDiceOffset = 10
                             }
+                            .onDisappear {
+                                chooseYourDiceOffset = 0
+                            }
                             
                         } else {
                             
