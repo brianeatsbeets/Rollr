@@ -184,21 +184,16 @@ struct RollWindowButtons: View {
         // Set animation state to true
         animationStateManager.rollAnimationIsActive = true
         
-        // Display a random possible result on every timer fire
-        let timer = Timer.publish(every: 0.09, on: .main, in: .common)
-            .autoconnect()
-            .sink { _ in
-                currentRoll.randomizeDiceResults(animating: true)
-            }
+        var increment: Double = 20_000_000
         
-        // Wait for one second
-        try? await Task.sleep(nanoseconds: 800_000_000)
+        while increment < 160_000_000 {
+            increment = increment * 1.18
+            currentRoll.randomizeDiceResults(animating: true)
+            try? await Task.sleep(nanoseconds: UInt64(increment))
+        }
         
         // Set animation state to false
         animationStateManager.rollAnimationIsActive = false
-        
-        // Cancel the timer
-        timer.cancel()
     }
 }
 
