@@ -43,7 +43,7 @@ struct RollHistoryList: View {
                     // Individual row
                     RollHistoryRow(roll: roll)
                 }
-                .onDelete(perform: deleteRolls)
+                .listRowInsets(EdgeInsets(top: 5, leading: 20, bottom: 5, trailing: 0))
             }
             .listStyle(.plain)
             .background(Color(uiColor: .secondarySystemBackground))

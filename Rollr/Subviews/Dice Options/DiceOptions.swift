@@ -43,10 +43,12 @@ struct DiceOptions: View {
                     currentRoll.id = UUID()
                     currentRoll.presetName = ""
                     
+                    // Add a die value offset for animating die creation
+                    animationStateManager.diceValueOffsets.append(-150)
+                    
                 } label: {
                     NumberOfSidesHexagon(numberOfSides: sides.rawValue, type: .button)
                 }
-                .disabled(animationStateManager.rollAnimationIsActive || currentRoll.dice.count >= 5)
             }
         }
     }

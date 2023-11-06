@@ -68,28 +68,33 @@ struct RollHistoryRow: View {
                 Spacer()
                 
                 // Roll values
-                ForEach(roll.wrappedDice) { die in
-                    VStack {
-                        
-                        // Number of sides
-                        NumberOfSidesHexagon(numberOfSides: die.numberOfSides.rawValue, type: .rollHistoryRow, rollValue: Int(die.result))
-                            .frame(height: 25)
-                        
-                        // Roll value + modifier
-                        Text(die.totalExpressionFormatted)
-                            .font(.footnote)
-                            .lineLimit(1)
-                            .minimumScaleFactor(0.5)
-                        
-                        // Roll total
-                        Text(die.total.description)
-                            .font(.footnote.bold())
-                            .lineLimit(1)
-                    }
-                    
-                    // Add a divider unless we're on the last die
-                    if !die.objectID.isEqual(roll.wrappedDice.last?.objectID) {
-                        Divider()
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack {
+                        ForEach(roll.wrappedDice) { die in
+                            VStack {
+                                
+                                // Number of sides
+                                NumberOfSidesHexagon(numberOfSides: die.numberOfSides.rawValue, type: .rollHistoryRow, rollValue: Int(die.result))
+                                    .frame(height: 25)
+                                
+                                // Roll value + modifier
+                                Text(die.totalExpressionFormatted)
+                                    .font(.footnote)
+                                    .lineLimit(1)
+                                    .minimumScaleFactor(0.5)
+                                
+                                // Roll total
+                                Text(die.total.description)
+                                    .font(.footnote.bold())
+                                    .lineLimit(1)
+                            }
+                            .frame(width: 25)
+                            
+                            // Add a divider unless we're on the last die
+                            if !die.objectID.isEqual(roll.wrappedDice.last?.objectID) {
+                                Divider()
+                            }
+                        }
                     }
                 }
             }

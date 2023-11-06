@@ -96,10 +96,8 @@ struct RollWindow: View {
                                     
                                     // Dice and values
                                     RollWindowDiceValues()
-                                    
-                                    Spacer()
                                 }
-                                .padding([.top, .trailing], 10)
+                                .padding(.top, 10)
                                 
                                 // Grand total
                                 HStack {

@@ -94,7 +94,7 @@ struct RollWindowButtons: View {
                 }
                 
                 // Reset RollWindowDiceValues view offsets
-                animationStateManager.diceValueOffsets = [-150, -150, -150, -150, -150]
+                animationStateManager.diceValueOffsets.removeAll()
             } label: {
                 Text("Clear")
                     .font(.headline)

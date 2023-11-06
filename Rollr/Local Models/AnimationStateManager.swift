@@ -22,8 +22,8 @@ class AnimationStateManager: ObservableObject {
     // Tracked to prevent max/min roll result images from re-animating after changing device orientation (view gets re-drawn due to using AdaptiveStack)
     var orientationDidChange = false
     
-    // Stored offsets of RollWindowDiceValues that don't get reset when the view gets re-drawn after changing device orientation
-    @Published var diceValueOffsets: [CGFloat] = [-150, -150, -150, -150, -150]
+    // Stored animation offsets of RollWindowDiceValues
+    @Published var diceValueOffsets = [CGFloat]()
     
     // Stored scale factor of grand total value and roll result values
     @Published var rollResultsScale = 0.1
