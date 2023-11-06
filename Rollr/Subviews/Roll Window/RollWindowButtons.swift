@@ -184,8 +184,10 @@ struct RollWindowButtons: View {
         // Set animation state to true
         animationStateManager.rollAnimationIsActive = true
         
+        // Set initial increment value
         var increment: Double = 20_000_000
         
+        // Randomize dice results, and then wait the increment time period
         while increment < 160_000_000 {
             increment = increment * 1.18
             currentRoll.randomizeDiceResults(animating: true)

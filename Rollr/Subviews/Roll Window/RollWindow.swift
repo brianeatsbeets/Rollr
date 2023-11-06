@@ -56,10 +56,12 @@ struct RollWindow: View {
                             }
                             .offset(y: chooseYourDiceOffset)
                             
-                            // Animate up and down on a loop
-                            .animation(.easeInOut(duration: 1.5).repeatForever(autoreverses: true), value: chooseYourDiceOffset)
                             .onAppear {
-                                chooseYourDiceOffset = 10
+                                
+                                // Animate up and down on a loop
+                                withAnimation(.easeInOut(duration: 1.5).repeatForever(autoreverses: true)) {
+                                    chooseYourDiceOffset = 10
+                                }
                             }
                             .onDisappear {
                                 chooseYourDiceOffset = 0

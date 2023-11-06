@@ -29,39 +29,46 @@ struct RollHistoryRow: View {
     var body: some View {
         
         // Main stack
-        HStack {
-                
-            // Roll properties
-            VStack(alignment: .leading) {
-                
-                // Date
-                Text(roll.wrappedDateRolled.formatted(date: .numeric, time: .omitted))
-                    .font(.caption)
-                
-                // Time
-                Text(roll.wrappedDateRolled.formatted(date: .omitted, time: .standard))
-                    .font(.caption.bold())
-                
-                // Preset name (if applicable)
+        VStack(spacing: 3) {
+            
+            // Preset name
+            HStack {
                 if !roll.wrappedPresetName.isEmpty {
                     Text(roll.wrappedPresetName)
-                        .font(.footnote.bold().leading(.tight))
-                        .lineSpacing(-1)
-                        .lineLimit(3)
+                        .font(.headline.bold())
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.5)
                 }
                 
-                // Grand total
-                Text("GTotal: \(roll.grandTotal)")
-                    .font(.footnote.bold())
+                Spacer()
             }
-            .lineLimit(1)
-            .minimumScaleFactor(0.7)
             
-            Spacer()
-            
-            // Roll values
-            ForEach(roll.wrappedDice) { die in
-                HStack(spacing: 0) {
+            // Roll info and results
+            HStack(spacing: 5) {
+                
+                // Roll info
+                VStack(alignment: .leading) {
+                    
+                    // Date
+                    Text(roll.wrappedDateRolled.formatted(date: .numeric, time: .omitted))
+                        .font(.caption)
+                    
+                    // Time
+                    Text(roll.wrappedDateRolled.formatted(date: .omitted, time: .standard))
+                        .font(.caption.bold())
+                    
+                    // Grand total
+                    Text("GTotal: \(roll.grandTotal)")
+                        .font(.footnote.bold())
+                }
+                .lineLimit(1)
+                .minimumScaleFactor(0.7)
+                .frame(minWidth: 60)
+                
+                Spacer()
+                
+                // Roll values
+                ForEach(roll.wrappedDice) { die in
                     VStack {
                         
                         // Number of sides
@@ -79,11 +86,11 @@ struct RollHistoryRow: View {
                             .font(.footnote.bold())
                             .lineLimit(1)
                     }
-                }
-                
-                // Add a divider unless we're on the last die
-                if !die.objectID.isEqual(roll.wrappedDice.last?.objectID) {
-                    Divider()
+                    
+                    // Add a divider unless we're on the last die
+                    if !die.objectID.isEqual(roll.wrappedDice.last?.objectID) {
+                        Divider()
+                    }
                 }
             }
         }
