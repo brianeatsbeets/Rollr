@@ -120,6 +120,14 @@ struct RollWindowButtons: View {
             NavigationView {
                 PresetsList(presets: presets) { selectedPreset in
                     
+                    // Clear die value offsets
+                    animationStateManager.diceValueOffsets.removeAll()
+                    
+                    // Add a die value offset for each die
+                    for _ in selectedPreset.wrappedDice {
+                        animationStateManager.diceValueOffsets.append(-150)
+                    }
+                    
                     // Set the current roll to a new roll with the selected preset values
                     currentRoll.adoptRoll(rollEntity: selectedPreset)
                 }

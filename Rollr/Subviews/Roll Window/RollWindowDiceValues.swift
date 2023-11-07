@@ -23,7 +23,7 @@ struct RollWindowDiceValues: View {
     
     // Basic
     
-    let modifierOptions = [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    let modifierOptions = Array(-20...20)
     
     // MARK: - Body view
     
@@ -46,7 +46,7 @@ struct RollWindowDiceValues: View {
                             NumberOfSidesHexagon(numberOfSides: die.numberOfSides.rawValue, type: .rollWindow)
                                 .frame(maxHeight: .infinity)
                             
-                            // Modifier
+                            // Modifier - Supports custom label but doesn't scroll to selection
                             Menu {
                                 Picker("Modifier", selection: $die.modifier) {
                                     ForEach(modifierOptions, id: \.self) { value in
@@ -58,6 +58,18 @@ struct RollWindowDiceValues: View {
                                     .scaleEffect(0.9)
                             }
                             .frame(maxHeight: .infinity)
+                            
+//                            // Modifier - Scrolls to selection but doesn't support custom label
+//                            Picker(selection: $die.modifier, content: {
+//                                ForEach(modifierOptions, id: \.self) { value in
+//                                    Text(value > 0 ? "+\(value)" : String(value))
+//                                }
+//                            }, label: {
+//                                ModifierCircle(die: $die)
+//                                    .scaleEffect(0.9)
+//                            })
+//                            .pickerStyle(.menu)
+//                            .frame(maxHeight: .infinity)
                             
                             // Roll value
                             Group {
