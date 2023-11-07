@@ -63,7 +63,7 @@ struct ContentView: View {
                 if rollHistoryPosition == .left && verticalSizeClass == .compact {
                         
                     // Roll history list
-                    RollHistoryList()
+                    ListContainer()
                 }
                  
                 VStack {
@@ -88,7 +88,7 @@ struct ContentView: View {
                 if rollHistoryPosition == .right || verticalSizeClass == .regular {
                     
                     // Roll history list
-                    RollHistoryList()
+                    ListContainer()
                         //.animation(.default, value: rollHistoryPosition)
                 }
             }
@@ -129,7 +129,7 @@ struct ContentView: View {
     
     // MARK: - Enums
     
-    // This enum represents which side RollHistoryList resides on while in landscape mode
+    // This enum represents which side ListContainer resides on while in landscape mode
     enum RollHistoryLandscapePosition: Int {
         case left
         case right

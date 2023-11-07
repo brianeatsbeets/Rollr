@@ -88,7 +88,7 @@ struct RollHistoryRow: View {
                                     .font(.footnote.bold())
                                     .lineLimit(1)
                             }
-                            .frame(width: 25)
+                            .frame(width: 30)
                             
                             // Add a divider unless we're on the last die
                             if !die.objectID.isEqual(roll.wrappedDice.last?.objectID) {
@@ -97,6 +97,8 @@ struct RollHistoryRow: View {
                         }
                     }
                 }
+                // Don't allow the view to scroll unless it the size of the content exceeds the size of the container
+                .scrollBounceBehavior(.basedOnSize, axes: .horizontal)
             }
         }
     }

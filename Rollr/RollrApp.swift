@@ -41,6 +41,11 @@ struct RollrApp: App {
             
                 // Set font design
                 .fontDesign(.rounded)
+                
+                // Adjust group-styled list top padding
+                .onAppear {
+                    UICollectionView.appearance().contentInset.top = -35
+                }
         }
     }
 }

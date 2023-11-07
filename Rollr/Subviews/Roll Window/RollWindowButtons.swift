@@ -22,10 +22,6 @@ struct RollWindowButtons: View {
     @EnvironmentObject var currentRoll: LocalRoll
     @EnvironmentObject var animationStateManager: AnimationStateManager
     
-    // Fetch request
-    
-    @FetchRequest(sortDescriptors: [SortDescriptor(\.presetName)], predicate: NSPredicate(format: "isPreset = %d", true)) var presets: FetchedResults<Roll>
-    
     // State
     
     @State private var showingPresetNameAlert = false
@@ -39,24 +35,14 @@ struct RollWindowButtons: View {
         // Main stack
         HStack {
             
-            // Presets button
-            Menu {
-                
-                // Create a new preset
-                Button("Save as preset") {
-                    showingPresetNameAlert = true
-                }
-                .disabled(currentRoll.dice.isEmpty)
-                
-                // Load an existing preset
-                Button("Load preset") {
-                    showingPresets = true
-                }
-                .disabled(presets.isEmpty)
+            // Save new preset button
+            Button {
+                showingPresetNameAlert = true
             } label: {
-                Text("Presets")
+                Text("Save")
                     .font(.headline)
             }
+            .disabled(currentRoll.dice.isEmpty)
             .buttonStyle(BorderedButtonStyle())
             .padding(.leading)
             .disabled(animationStateManager.rollAnimationIsActive)
@@ -113,25 +99,6 @@ struct RollWindowButtons: View {
             Button("Cancel", role: .cancel, action: {})
         } message: {
             Text("Enter a name for this preset.")
-        }
-        
-        // Existing presets list
-        .sheet(isPresented: $showingPresets) {
-            NavigationView {
-                PresetsList(presets: presets) { selectedPreset in
-                    
-                    // Clear die value offsets
-                    animationStateManager.diceValueOffsets.removeAll()
-                    
-                    // Add a die value offset for each die
-                    for _ in selectedPreset.wrappedDice {
-                        animationStateManager.diceValueOffsets.append(-150)
-                    }
-                    
-                    // Set the current roll to a new roll with the selected preset values
-                    currentRoll.adoptRoll(rollEntity: selectedPreset)
-                }
-            }
         }
     }
     
