@@ -75,10 +75,10 @@ struct RollWindow: View {
                                     
                                     // Row labels
                                     VStack(alignment: .leading) {
-                                        Text("Dice:")
+                                        Text("Sides:")
                                             .frame(maxHeight: .infinity)
                                         
-                                        Text("Modifier:")
+                                        Text("Mod:")
                                             .frame(maxHeight: .infinity)
                                         
                                         Text("Roll:")

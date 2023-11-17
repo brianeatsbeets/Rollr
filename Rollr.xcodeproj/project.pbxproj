@@ -15,6 +15,7 @@
 		E15100A82AE1CB3E00C7EDC7 /* RollWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15100A72AE1CB3E00C7EDC7 /* RollWindow.swift */; };
 		E15100AA2AE1CC3100C7EDC7 /* ListContainerHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15100A92AE1CC3100C7EDC7 /* ListContainerHeader.swift */; };
 		E15100B12AE3F5BF00C7EDC7 /* Die.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15100B02AE3F5BF00C7EDC7 /* Die.swift */; };
+		E1689F9A2AFA62D9002E72D2 /* EditDieModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1689F992AFA62D9002E72D2 /* EditDieModifier.swift */; };
 		E1753D992AF593C1008C55BD /* AnimationStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1753D982AF593C1008C55BD /* AnimationStateManager.swift */; };
 		E1A78A812AEAEEC2008C9713 /* Rollr.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E1A78A7F2AEAEEC2008C9713 /* Rollr.xcdatamodeld */; };
 		E1A78A832AEAF09F008C9713 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A78A822AEAF09F008C9713 /* DataController.swift */; };
@@ -46,6 +47,7 @@
 		E15100A72AE1CB3E00C7EDC7 /* RollWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RollWindow.swift; sourceTree = "<group>"; };
 		E15100A92AE1CC3100C7EDC7 /* ListContainerHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListContainerHeader.swift; sourceTree = "<group>"; };
 		E15100B02AE3F5BF00C7EDC7 /* Die.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Die.swift; sourceTree = "<group>"; };
+		E1689F992AFA62D9002E72D2 /* EditDieModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditDieModifier.swift; sourceTree = "<group>"; };
 		E1753D982AF593C1008C55BD /* AnimationStateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationStateManager.swift; sourceTree = "<group>"; };
 		E1A78A802AEAEEC2008C9713 /* Rollr.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Rollr.xcdatamodel; sourceTree = "<group>"; };
 		E1A78A822AEAF09F008C9713 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
@@ -120,6 +122,7 @@
 			children = (
 				E15100A72AE1CB3E00C7EDC7 /* RollWindow.swift */,
 				E1BC3F8C2AEAC6C6002EF023 /* RollWindowDiceValues.swift */,
+				E1689F992AFA62D9002E72D2 /* EditDieModifier.swift */,
 				E1BC3F8E2AEAC84B002EF023 /* RollWindowButtons.swift */,
 			);
 			path = "Roll Window";
@@ -302,6 +305,7 @@
 				E1C373082AE9ABCD00C4C05D /* View+ConditionalHidden.swift in Sources */,
 				E1A78A812AEAEEC2008C9713 /* Rollr.xcdatamodeld in Sources */,
 				E1A78A832AEAF09F008C9713 /* DataController.swift in Sources */,
+				E1689F9A2AFA62D9002E72D2 /* EditDieModifier.swift in Sources */,
 				E15100AA2AE1CC3100C7EDC7 /* ListContainerHeader.swift in Sources */,
 				E1A78A9B2AF29348008C9713 /* AdaptiveStack.swift in Sources */,
 				E15100A02AE1C0EA00C7EDC7 /* NumberOfSidesHexagon.swift in Sources */,

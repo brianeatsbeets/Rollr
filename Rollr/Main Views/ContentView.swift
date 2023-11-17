@@ -55,71 +55,75 @@ struct ContentView: View {
     
     var body: some View {
         NavigationStack {
-                
-            // Main stack
-            AdaptiveStack(spacing: 0) {
-                
-                // Set roll window in right position
-                if rollHistoryPosition == .left && verticalSizeClass == .compact {
-                        
-                    // Roll history list
-                    ListContainer()
-                }
-                 
-                VStack {
-                    
-                    // Roll window
-                    RollWindow()
-                        .padding([.horizontal])
-                    
-                    // Dice options
-                    DiceOptions()
-                        .padding(.horizontal)
-                        .padding(.bottom, !hasNotch && verticalSizeClass == .compact ? 10 : 0)
-                }
-                
-                // Only display if in portrait mode
-                if verticalSizeClass == .regular {
-                    Divider()
-                        .padding()
-                }
-                
-                // Set roll window in left/top position
-                if rollHistoryPosition == .right || verticalSizeClass == .regular {
-                    
-                    // Roll history list
-                    ListContainer()
-                        //.animation(.default, value: rollHistoryPosition)
-                }
-            }
-            .navigationTitle("Rollr")
-            .navigationBarTitleDisplayMode(.inline)
-            .background(theme == .light ? Color(uiColor: .secondarySystemBackground) : Color(uiColor: UIColor.systemGroupedBackground))
-            .toolbar {
-                Button {
-                    
-                    withAnimation {
-                        
-                        // Toggle the roll history position
-                        if rollHistoryPosition == .left {
-                            rollHistoryPosition = .right
-                        } else {
-                            rollHistoryPosition = .left
-                        }
-                    }
-                } label: {
-                    Text("Swap sides")
-                }
-                .buttonStyle(BorderedProminentButtonStyle())
-                .scaleEffect(0.8)
-                
-                // Hide when in portrait mode
-                .conditionalHidden(verticalSizeClass == .regular)
-            }
             
-            // Update the roll history position in user defaults
-            .onChange(of: rollHistoryPosition) { newValue in
-                UserDefaults.standard.set(newValue.rawValue, forKey: "rollHistoryPosition")
+            // Used to apply modifier that prevents keyboard from shifting view up
+            GeometryReader { _ in
+                
+                // Main stack
+                AdaptiveStack(spacing: 0) {
+                    
+                    // Set roll window in right position
+                    if rollHistoryPosition == .left && verticalSizeClass == .compact {
+                        
+                        // Roll history list
+                        ListContainer()
+                    }
+                    
+                    VStack {
+                        
+                        // Roll window
+                        RollWindow()
+                            .padding([.horizontal])
+                        
+                        // Dice options
+                        DiceOptions()
+                            .padding(.horizontal)
+                            .padding(.bottom, !hasNotch && verticalSizeClass == .compact ? 10 : 0)
+                    }
+                    
+                    // Only display if in portrait mode
+                    if verticalSizeClass == .regular {
+                        Divider()
+                            .padding()
+                    }
+                    
+                    // Set roll window in left/top position
+                    if rollHistoryPosition == .right || verticalSizeClass == .regular {
+                        
+                        // Roll history list
+                        ListContainer()
+                        //.animation(.default, value: rollHistoryPosition)
+                    }
+                }
+                .navigationTitle("Rollr")
+                .navigationBarTitleDisplayMode(.inline)
+                .background(theme == .light ? Color(uiColor: .secondarySystemBackground) : Color(uiColor: UIColor.systemGroupedBackground))
+                .toolbar {
+                    Button {
+                        
+                        withAnimation {
+                            
+                            // Toggle the roll history position
+                            if rollHistoryPosition == .left {
+                                rollHistoryPosition = .right
+                            } else {
+                                rollHistoryPosition = .left
+                            }
+                        }
+                    } label: {
+                        Text("Swap sides")
+                    }
+                    .buttonStyle(BorderedProminentButtonStyle())
+                    .scaleEffect(0.8)
+                    
+                    // Hide when in portrait mode
+                    .conditionalHidden(verticalSizeClass == .regular)
+                }
+                
+                // Update the roll history position in user defaults
+                .onChange(of: rollHistoryPosition) { newValue in
+                    UserDefaults.standard.set(newValue.rawValue, forKey: "rollHistoryPosition")
+                }
             }
             
             // Prevents layout from squishing when entering a new preset name

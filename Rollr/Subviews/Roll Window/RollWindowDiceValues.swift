@@ -21,6 +21,12 @@ struct RollWindowDiceValues: View {
     @EnvironmentObject var currentRoll: LocalRoll
     @EnvironmentObject var animationStateManager: AnimationStateManager
     
+    // State
+    
+    @State private var showingModifierSelector = false
+    @State private var selectedDie: LocalDie?
+    @State private var selectedDieIndex = 0
+    
     // Basic
     
     let modifierOptions = Array(-20...20)
@@ -46,30 +52,14 @@ struct RollWindowDiceValues: View {
                             NumberOfSidesHexagon(numberOfSides: die.numberOfSides.rawValue, type: .rollWindow)
                                 .frame(maxHeight: .infinity)
                             
-                            // Modifier - Supports custom label but doesn't scroll to selection
-                            Menu {
-                                Picker("Modifier", selection: $die.modifier) {
-                                    ForEach(modifierOptions, id: \.self) { value in
-                                        Text(value > 0 ? "+\(value)" : String(value))
-                                    }
-                                }
+                            // Modifier - Button that displays sheet
+                            Button {
+                                selectedDie = die
+                                selectedDieIndex = dieIndex ?? 0
                             } label: {
                                 ModifierCircle(die: $die)
                                     .scaleEffect(0.9)
                             }
-                            .frame(maxHeight: .infinity)
-                            
-//                            // Modifier - Scrolls to selection but doesn't support custom label
-//                            Picker(selection: $die.modifier, content: {
-//                                ForEach(modifierOptions, id: \.self) { value in
-//                                    Text(value > 0 ? "+\(value)" : String(value))
-//                                }
-//                            }, label: {
-//                                ModifierCircle(die: $die)
-//                                    .scaleEffect(0.9)
-//                            })
-//                            .pickerStyle(.menu)
-//                            .frame(maxHeight: .infinity)
                             
                             // Roll value
                             Group {
@@ -146,6 +136,15 @@ struct RollWindowDiceValues: View {
             // Don't allow the view to scroll unless it the size of the content exceeds the size of the container
             .scrollBounceBehavior(.basedOnSize, axes: .horizontal)
         }
+        
+        // Present EditDieModifier view
+        .sheet(item: $selectedDie) { die in
+            EditDieModifier(dieIndex: selectedDieIndex) { newValue in
+                currentRoll.dice[selectedDieIndex].modifier = newValue
+            }
+            .presentationDetents([.height(150)])
+        }
+        
     }
 }
 
