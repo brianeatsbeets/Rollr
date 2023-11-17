@@ -29,41 +29,44 @@ struct RollHistoryRow: View {
     var body: some View {
         
         // Main stack
-        VStack(spacing: 3) {
+        VStack(alignment: .leading, spacing: 3) {
             
             // Preset name
+            if !roll.wrappedPresetName.isEmpty {
+                Text(roll.wrappedPresetName)
+                    .font(.headline)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.5)
+            }
+            
+            // Timestamp
             HStack {
-                if !roll.wrappedPresetName.isEmpty {
-                    Text(roll.wrappedPresetName)
-                        .font(.headline.bold())
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.5)
-                }
+                
+                // Date
+                Text(roll.wrappedDateRolled.formatted(date: .numeric, time: .omitted))
+                    .font(.caption)
+                
+                // Time
+                Text(roll.wrappedDateRolled.formatted(date: .omitted, time: .standard))
+                    .font(.caption.bold())
                 
                 Spacer()
             }
             
-            // Roll info and results
+            // Grand total and results
             HStack(spacing: 5) {
                 
-                // Roll info
-                VStack(alignment: .leading) {
-                    
-                    // Date
-                    Text(roll.wrappedDateRolled.formatted(date: .numeric, time: .omitted))
-                        .font(.caption)
-                    
-                    // Time
-                    Text(roll.wrappedDateRolled.formatted(date: .omitted, time: .standard))
-                        .font(.caption.bold())
-                    
-                    // Grand total
-                    Text("GTotal: \(roll.grandTotal)")
+                // Grand total
+                VStack {
+                    Text("Grand\nTotal")
+                        .lineLimit(2)
                         .font(.footnote.bold())
+                        .multilineTextAlignment(.center)
+                    Text(roll.grandTotal.description)
+                        .font(.headline)
                 }
-                .lineLimit(1)
                 .minimumScaleFactor(0.7)
-                .frame(minWidth: 60)
+                .frame(minWidth: 40)
                 
                 Spacer()
                 
