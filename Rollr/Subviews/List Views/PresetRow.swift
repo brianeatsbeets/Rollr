@@ -17,38 +17,48 @@ struct PresetRow: View {
     // MARK: - Properties
     
     let preset: Roll
+    var onScrollViewTap: (Roll) -> Void
     
     // MARK: - Body view
     
     var body: some View {
         
         // Main stack
-        HStack {
+        VStack(alignment: .leading, spacing: 5) {
             
             // Name
             Text(preset.wrappedPresetName)
-                .font(.title2.weight(.semibold))
-                .lineLimit(2)
+                .font(.headline)
+                .lineLimit(1)
                 .minimumScaleFactor(0.3)
             
-            Spacer()
-            
             // Dice settings
-            ForEach(preset.wrappedDice) { die in
-                HStack(spacing: 0) {
-                    VStack {
-                        
-                        // Number of sides
-                        NumberOfSidesHexagon(numberOfSides: die.numberOfSides.rawValue, type: .rollHistoryRow, rollValue: Int(die.result))
-                            .frame(height: 25)
-                        
-                        // Roll value + modifier
-                        Text(die.modifierFormatted)
-                            .font(.footnote)
-                            .lineLimit(1)
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack {
+                    ForEach(preset.wrappedDice) { die in
+                        VStack {
+                            
+                            // Number of sides
+                            NumberOfSidesHexagon(numberOfSides: die.numberOfSides.rawValue, type: .rollHistoryRow, rollValue: Int(die.result))
+                                .frame(height: 25)
+                            
+                            // Roll value + modifier
+                            Text(die.modifierFormatted)
+                                .font(.footnote)
+                                .lineLimit(1)
+                        }
                     }
                 }
+                //.contentShape(Rectangle())
             }
+            
+            // Perform action for selecting a preset when the scrollview is tapped
+            .onTapGesture {
+                onScrollViewTap(preset)
+            }
+
+            // Don't allow the view to scroll unless it the size of the content exceeds the size of the container
+            .scrollBounceBehavior(.basedOnSize, axes: .horizontal)
         }
     }
 }

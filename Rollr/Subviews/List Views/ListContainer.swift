@@ -64,7 +64,9 @@ struct ListContainer: View {
                         Button {
                             presetSelected(preset: preset)
                         } label: {
-                            PresetRow(preset: preset)
+                            PresetRow(preset: preset) { selectedPreset in
+                                presetSelected(preset: selectedPreset)
+                            }
                         }
                         .foregroundStyle(.primary)
                     }
