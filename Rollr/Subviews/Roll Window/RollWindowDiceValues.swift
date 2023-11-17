@@ -40,7 +40,7 @@ struct RollWindowDiceValues: View {
                 
                 // Main stack
                 HStack(spacing: 0) {
-                    ForEach($currentRoll.dice, id: \.id) { $die in
+                    ForEach(currentRoll.dice, id: \.id) { die in
                         
                         // Store die index for animation parameters
                         let dieIndex = currentRoll.dice.firstIndex(where: { $0.id == die.id })
@@ -57,7 +57,7 @@ struct RollWindowDiceValues: View {
                                 selectedDie = die
                                 selectedDieIndex = dieIndex ?? 0
                             } label: {
-                                ModifierCircle(die: $die)
+                                ModifierCircle(die: die)
                                     .scaleEffect(0.9)
                             }
                             
@@ -69,7 +69,7 @@ struct RollWindowDiceValues: View {
                                     Text(die.result > 0 ? die.result.description : "-")
                                         .font(.title3)
                                 } else {
-                                    RollValueShape(die: $die)
+                                    RollValueShape(die: die)
                                 }
                             }
                             .frame(maxHeight: .infinity)

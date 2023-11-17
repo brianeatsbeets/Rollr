@@ -16,9 +16,7 @@ struct ModifierCircle: View {
     
     // MARK: - Properties
     
-    // Binding
-    
-    @Binding var die: LocalDie
+    var die: LocalDie
     
     // MARK: - Body view
     

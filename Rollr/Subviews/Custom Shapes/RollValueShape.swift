@@ -25,11 +25,9 @@ struct RollValueShape: View {
     @State private var scaleAmount = 1.0
     @State private var offset = 0.0
     
-    // Binding
-    
-    @Binding var die: LocalDie
-    
     // Basic
+    
+    var die: LocalDie
     
     var rollResult: String {
         die.result > 0 ? die.result.description : "-"

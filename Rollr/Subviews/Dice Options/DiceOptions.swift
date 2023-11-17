@@ -33,6 +33,9 @@ struct DiceOptions: View {
                 // Individual die option
                 Button {
                     
+                    // Add a die value offset for animating die creation
+                    animationStateManager.diceValueOffsets.append(-150)
+                    
                     // Append the selected die to the dice array
                     let newDie = LocalDie(numberOfSides: sides)
                     
@@ -42,9 +45,6 @@ struct DiceOptions: View {
                     // Reset the roll id and preset name
                     currentRoll.id = UUID()
                     currentRoll.presetName = ""
-                    
-                    // Add a die value offset for animating die creation
-                    animationStateManager.diceValueOffsets.append(-150)
                     
                 } label: {
                     NumberOfSidesHexagon(numberOfSides: sides.rawValue, type: .button)
