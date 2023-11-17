@@ -26,5 +26,5 @@ class AnimationStateManager: ObservableObject {
     @Published var diceValueOffsets = [CGFloat]()
     
     // Stored scale factor of grand total value and roll result values
-    @Published var rollResultsScale = 0.1
+    @Published var rollResultsScale = 1.0
 }

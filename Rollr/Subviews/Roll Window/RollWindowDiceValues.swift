@@ -84,6 +84,9 @@ struct RollWindowDiceValues: View {
                                     
                                     // Only animate after roll animation has finished
                                     if newValue == false {
+                                        
+                                        animationStateManager.rollResultsScale = 0.1
+                                        
                                         DispatchQueue.main.asyncAfter(deadline: .now()) {
                                             withAnimation(.easeOut(duration: 0.2)) {
                                                 animationStateManager.rollResultsScale = 1.2
