@@ -49,7 +49,6 @@ struct PresetRow: View {
                         }
                     }
                 }
-                //.contentShape(Rectangle())
             }
             
             // Perform action for selecting a preset when the scrollview is tapped
@@ -57,7 +56,7 @@ struct PresetRow: View {
                 onScrollViewTap(preset)
             }
 
-            // Don't allow the view to scroll unless it the size of the content exceeds the size of the container
+            // Don't allow the view to scroll unless the size of the content exceeds the size of the container
             .scrollBounceBehavior(.basedOnSize, axes: .horizontal)
         }
     }

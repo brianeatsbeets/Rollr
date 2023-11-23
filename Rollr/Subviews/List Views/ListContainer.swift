@@ -7,6 +7,7 @@
 
 // MARK: - Imported libraries
 
+import CoreData
 import SwiftUI
 
 // MARK: - Main struct
@@ -69,8 +70,14 @@ struct ListContainer: View {
                             }
                         }
                         .foregroundStyle(.primary)
+                        
+                        // Prevent deleting of a preset from a full swipe (require button tap after reveal)
+                        .swipeActions(allowsFullSwipe: false) {
+                            Button("Delete", role: .destructive) {
+                                deleteSelectedPreset(preset: preset)
+                            }
+                        }
                     }
-                    .onDelete(perform: deletePresets)
                 }
             }
             
@@ -100,27 +107,16 @@ struct ListContainer: View {
         currentRoll.adoptRoll(rollEntity: preset)
     }
     
-    // Delete the specifed rolls
-    func deleteRolls(_ indexSet: IndexSet) {
-        for index in indexSet {
-            let roll = rolls[index]
-            moc.delete(roll)
+    // Delete the selected preset
+    func deleteSelectedPreset(preset: FetchedResults<Roll>.Element) {
+        
+        // Remove the active preset if it matches the one we're deleting
+        if preset.presetName == currentRoll.presetName {
+            currentRoll.reset()
         }
-    }
-    
-    // Delete the specified presets
-    func deletePresets(_ indexSet: IndexSet) {
-        for index in indexSet {
-            
-            // Remove the active preset if it is deleted
-            if presets[index].presetName == currentRoll.presetName {
-                currentRoll.reset()
-            }
-            
-            //presets.remove(at: index)
-            let preset = presets[index]
-            moc.delete(preset)
-        }
+        
+        moc.delete(preset as NSManagedObject)
+        try? moc.save()
     }
 }
 
