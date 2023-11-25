@@ -20,6 +20,7 @@ class LocalRoll: Identifiable, ObservableObject {
     var id = UUID()
     var dateRolled = Date.now
     @Published var dice: [LocalDie]
+    @Published var presetId: String
     @Published var presetName: String
 
     var rollTotal: Int {
@@ -37,6 +38,7 @@ class LocalRoll: Identifiable, ObservableObject {
     // Empty roll
     init() {
         self.dice = [LocalDie]()
+        self.presetId = ""
         self.presetName = ""
     }
     
@@ -45,6 +47,7 @@ class LocalRoll: Identifiable, ObservableObject {
         id = UUID()
         dateRolled = Date.now
         dice = []
+        presetId = ""
         presetName = ""
     }
     

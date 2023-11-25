@@ -128,6 +128,7 @@ struct RollWindowButtons: View {
         
         // Set the new preset as the current roll
         currentRoll.adoptRoll(rollEntity: newPreset)
+        currentRoll.presetId = newPreset.objectID.description
     }
     
     // Determine a result for each die

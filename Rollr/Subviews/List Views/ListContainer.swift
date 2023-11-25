@@ -105,13 +105,14 @@ struct ListContainer: View {
         
         // Set the current roll to a new roll with the selected preset values
         currentRoll.adoptRoll(rollEntity: preset)
+        currentRoll.presetId = preset.objectID.description
     }
     
     // Delete the selected preset
     func deleteSelectedPreset(preset: FetchedResults<Roll>.Element) {
         
         // Remove the active preset if it matches the one we're deleting
-        if preset.presetName == currentRoll.presetName {
+        if preset.objectID.description == currentRoll.presetId {
             currentRoll.reset()
         }
         

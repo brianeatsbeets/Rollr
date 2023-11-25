@@ -31,26 +31,29 @@ struct RollHistoryRow: View {
         // Main stack
         VStack(alignment: .leading, spacing: 3) {
             
-            // Preset name
-            if !roll.wrappedPresetName.isEmpty {
-                Text(roll.wrappedPresetName)
-                    .font(.headline)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.5)
-            }
-            
-            // Timestamp
-            HStack {
+            VStack(alignment: .leading, spacing: 0) {
                 
-                // Date
-                Text(roll.wrappedDateRolled.formatted(date: .numeric, time: .omitted))
-                    .font(.caption)
+                // Preset name
+                if !roll.wrappedPresetName.isEmpty {
+                    Text(roll.wrappedPresetName)
+                        .font(.headline)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.5)
+                }
                 
-                // Time
-                Text(roll.wrappedDateRolled.formatted(date: .omitted, time: .standard))
-                    .font(.caption.bold())
-                
-                Spacer()
+                // Timestamp
+                HStack {
+                    
+                    // Date
+                    Text(roll.wrappedDateRolled.formatted(date: .numeric, time: .omitted))
+                        .font(.caption)
+                    
+                    // Time
+                    Text(roll.wrappedDateRolled.formatted(date: .omitted, time: .standard))
+                        .font(.caption.bold())
+                    
+                    Spacer()
+                }
             }
             
             // Grand total and results

@@ -31,13 +31,6 @@ extension Roll {
         presetName ?? ""
     }
     
-//    public var wrappedDice: [Die] {
-//        let set = dice as? Set<Die> ?? []
-//        return set.sorted {
-//            $0.numberOfSides.rawValue < $1.numberOfSides.rawValue
-//        }
-//    }
-    
     public var wrappedDice: [Die] {
         get {
             let set = dice as? Set<Die> ?? []
