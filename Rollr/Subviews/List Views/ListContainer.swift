@@ -31,7 +31,7 @@ struct ListContainer: View {
     
     // State
     
-    @State private var pickerSelection: Int = 1
+    @AppStorage("listContainerPickerSelection") var pickerSelection: Int = 1
     
     // MARK: - Body view
     
