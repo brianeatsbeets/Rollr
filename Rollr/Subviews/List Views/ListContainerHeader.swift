@@ -21,6 +21,7 @@ struct ListContainerHeader: View {
     
     @Environment(\.managedObjectContext) var moc
     @EnvironmentObject var currentRoll: LocalRoll
+    @EnvironmentObject var animationStateManager: AnimationStateManager
     
     // State
     
@@ -54,8 +55,12 @@ struct ListContainerHeader: View {
                             // Clear roll history
                             DataController.deleteEntityRecords(entityName: "Roll", predicate: NSPredicate(format: "isPreset = %d", false), moc: moc)
                             
-                            // Reset the current roll
-                            currentRoll.reset()
+                            withAnimation {
+                                currentRoll.reset()
+                            }
+                            
+                            // Reset RollWindowDiceValues view offsets
+                            animationStateManager.diceValueOffsets.removeAll()
                         }
                     }, message: {
                         Text("All roll history data will be permenantly deleted.")
@@ -76,7 +81,12 @@ struct ListContainerHeader: View {
                             
                             // Reset the current roll if a preset is active
                             if !currentRoll.presetName.isEmpty {
-                                currentRoll.reset()
+                                withAnimation {
+                                    currentRoll.reset()
+                                }
+                                
+                                // Reset RollWindowDiceValues view offsets
+                                animationStateManager.diceValueOffsets.removeAll()
                             }
                         }
                         Button("Cancel", role: .cancel) {}
