@@ -92,7 +92,6 @@ struct ContentView: View {
                         
                         // Roll history list
                         ListContainer()
-                        //.animation(.default, value: rollHistoryPosition)
                     }
                 }
                 .navigationTitle("Rollr")
