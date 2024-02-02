@@ -12,7 +12,7 @@ import Foundation
 
 // MARK: - Main class
 
-// This class defines the LocalRoll model
+// This class defines the LocalRoll model, which is used to track the state of the current roll (not stored in Core Data)
 class LocalRoll: Identifiable, ObservableObject {
 
     // MARK: - Properties

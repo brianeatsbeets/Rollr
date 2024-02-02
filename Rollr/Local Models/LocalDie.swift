@@ -11,7 +11,7 @@ import Foundation
 
 // MARK: - Main struct
 
-// This struct defines the LocalDie model
+// This struct defines the LocalDie model, which is used to track the state of the dice in the current roll (not stored in Core Data)
 struct LocalDie: Identifiable {
 
     // MARK: - Properties

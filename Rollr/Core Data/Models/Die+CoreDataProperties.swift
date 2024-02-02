@@ -30,13 +30,14 @@ extension Die {
         }
     }
     
-    public var wrappedDateCreated: Date {
+    var wrappedDateCreated: Date {
         dateCreated ?? Date.now
     }
     
     var total: Int {
         Int(result + modifier)
     }
+    
     var modifierFormatted: String {
         if modifier >= 0 {
             return "+\(modifier)"
@@ -44,6 +45,7 @@ extension Die {
             return String(modifier)
         }
     }
+    
     var totalExpressionFormatted: String {
         if modifier > 0 {
             return "\(result)+\(modifier)"

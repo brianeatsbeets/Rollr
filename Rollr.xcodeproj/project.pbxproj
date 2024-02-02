@@ -14,6 +14,8 @@
 		E15100A22AE1C56500C7EDC7 /* RollHistoryRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15100A12AE1C56500C7EDC7 /* RollHistoryRow.swift */; };
 		E15100A82AE1CB3E00C7EDC7 /* RollWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15100A72AE1CB3E00C7EDC7 /* RollWindow.swift */; };
 		E15100AA2AE1CC3100C7EDC7 /* ListContainerHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15100A92AE1CC3100C7EDC7 /* ListContainerHeader.swift */; };
+		E15EEDD22B6D37B100BC8350 /* Session+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15EEDD02B6D37B100BC8350 /* Session+CoreDataClass.swift */; };
+		E15EEDD32B6D37B100BC8350 /* Session+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15EEDD12B6D37B100BC8350 /* Session+CoreDataProperties.swift */; };
 		E1689F9A2AFA62D9002E72D2 /* EditDieModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1689F992AFA62D9002E72D2 /* EditDieModifier.swift */; };
 		E1753D992AF593C1008C55BD /* AnimationStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1753D982AF593C1008C55BD /* AnimationStateManager.swift */; };
 		E1A78A812AEAEEC2008C9713 /* Rollr.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E1A78A7F2AEAEEC2008C9713 /* Rollr.xcdatamodeld */; };
@@ -44,6 +46,9 @@
 		E15100A12AE1C56500C7EDC7 /* RollHistoryRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RollHistoryRow.swift; sourceTree = "<group>"; };
 		E15100A72AE1CB3E00C7EDC7 /* RollWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RollWindow.swift; sourceTree = "<group>"; };
 		E15100A92AE1CC3100C7EDC7 /* ListContainerHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListContainerHeader.swift; sourceTree = "<group>"; };
+		E15EEDCF2B654E4600BC8350 /* Rollr v2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Rollr v2.xcdatamodel"; sourceTree = "<group>"; };
+		E15EEDD02B6D37B100BC8350 /* Session+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Session+CoreDataClass.swift"; sourceTree = "<group>"; };
+		E15EEDD12B6D37B100BC8350 /* Session+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Session+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E1689F992AFA62D9002E72D2 /* EditDieModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditDieModifier.swift; sourceTree = "<group>"; };
 		E1753D982AF593C1008C55BD /* AnimationStateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationStateManager.swift; sourceTree = "<group>"; };
 		E1A78A802AEAEEC2008C9713 /* Rollr.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Rollr.xcdatamodel; sourceTree = "<group>"; };
@@ -158,6 +163,8 @@
 				E1A78A8E2AEAF3DA008C9713 /* Roll+CoreDataProperties.swift */,
 				E1A78A8F2AEAF3DB008C9713 /* Die+CoreDataClass.swift */,
 				E1A78A902AEAF3DB008C9713 /* Die+CoreDataProperties.swift */,
+				E15EEDD02B6D37B100BC8350 /* Session+CoreDataClass.swift */,
+				E15EEDD12B6D37B100BC8350 /* Session+CoreDataProperties.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -288,8 +295,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E15EEDD32B6D37B100BC8350 /* Session+CoreDataProperties.swift in Sources */,
 				E15100A22AE1C56500C7EDC7 /* RollHistoryRow.swift in Sources */,
 				E1BC3F8F2AEAC84B002EF023 /* RollWindowButtons.swift in Sources */,
+				E15EEDD22B6D37B100BC8350 /* Session+CoreDataClass.swift in Sources */,
 				E1BC3F8D2AEAC6C6002EF023 /* RollWindowDiceValues.swift in Sources */,
 				E1B567532AE06F3D00343FB9 /* ContentView.swift in Sources */,
 				E1753D992AF593C1008C55BD /* AnimationStateManager.swift in Sources */,
@@ -533,9 +542,10 @@
 		E1A78A7F2AEAEEC2008C9713 /* Rollr.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				E15EEDCF2B654E4600BC8350 /* Rollr v2.xcdatamodel */,
 				E1A78A802AEAEEC2008C9713 /* Rollr.xcdatamodel */,
 			);
-			currentVersion = E1A78A802AEAEEC2008C9713 /* Rollr.xcdatamodel */;
+			currentVersion = E15EEDCF2B654E4600BC8350 /* Rollr v2.xcdatamodel */;
 			path = Rollr.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

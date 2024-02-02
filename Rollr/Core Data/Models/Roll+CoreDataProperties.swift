@@ -23,15 +23,15 @@ extension Roll {
     
     // Convenience computed properties
     
-    public var wrappedDateRolled: Date {
+    var wrappedDateRolled: Date {
         dateRolled ?? Date.now
     }
     
-    public var wrappedPresetName: String {
+    var wrappedPresetName: String {
         presetName ?? ""
     }
     
-    public var wrappedDice: [Die] {
+    var wrappedDice: [Die] {
         get {
             let set = dice as? Set<Die> ?? []
             return set.sorted {

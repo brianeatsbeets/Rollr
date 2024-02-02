@@ -98,25 +98,36 @@ struct ContentView: View {
                 .navigationBarTitleDisplayMode(.inline)
                 .background(theme == .light ? Color(uiColor: .secondarySystemBackground) : Color(uiColor: UIColor.systemGroupedBackground))
                 .toolbar {
-                    Button {
-                        
-                        withAnimation {
-                            
-                            // Toggle the roll history position
-                            if rollHistoryPosition == .left {
-                                rollHistoryPosition = .right
-                            } else {
-                                rollHistoryPosition = .left
-                            }
-                        }
-                    } label: {
-                        Text("Swap sides")
-                    }
-                    .buttonStyle(BorderedProminentButtonStyle())
-                    .scaleEffect(0.8)
                     
-                    // Hide when in portrait mode
-                    .conditionalHidden(verticalSizeClass == .regular)
+                    // Sawp sides button
+                    if verticalSizeClass != .regular {
+                        Button {
+                            
+                            withAnimation {
+                                
+                                // Toggle the roll history position
+                                if rollHistoryPosition == .left {
+                                    rollHistoryPosition = .right
+                                } else {
+                                    rollHistoryPosition = .left
+                                }
+                            }
+                        } label: {
+                            Text("Swap sides")
+                        }
+                        .buttonStyle(BorderedProminentButtonStyle())
+                        .scaleEffect(0.8)
+                    }
+                    
+                    // Session button
+                    Menu("Sessions") {
+                        Button("New") {
+                            print("New session")
+                        }
+                        Button("Load") {
+                            print("Load session")
+                        }
+                    }
                 }
                 
                 // Update the roll history position in user defaults
