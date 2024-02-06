@@ -20,6 +20,7 @@ extension Roll {
     @NSManaged public var presetName: String?
     @NSManaged public var dice: NSSet?
     @NSManaged public var isPreset: Bool
+    @NSManaged public var session: Session?
     
     // Convenience computed properties
     
@@ -43,6 +44,10 @@ extension Roll {
             dice = NSSet(array: newValue)
         }
     }
+    
+//    var wrappedSession: Session {
+//        session ??
+//    }
     
     var rollTotal: Int {
         Int(wrappedDice.reduce(into: 0, { $0 += $1.result }))

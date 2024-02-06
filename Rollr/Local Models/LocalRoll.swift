@@ -106,7 +106,7 @@ class LocalRoll: Identifiable, ObservableObject {
     }
     
     static func maxRoll() -> LocalRoll {
-        var roll = LocalRoll()
+        let roll = LocalRoll()
         roll.dice = [LocalDie(numberOfSides: .oneHundred, modifier: 10, result: 100), LocalDie(numberOfSides: .oneHundred, modifier: 10, result: 100), LocalDie(numberOfSides: .oneHundred, modifier: 10, result: 100), LocalDie(numberOfSides: .oneHundred, modifier: 10, result: 100), LocalDie(numberOfSides: .oneHundred, modifier: 10, result: 100)]
         roll.presetName = "Maximum Possible Potential RollResult"
         return roll

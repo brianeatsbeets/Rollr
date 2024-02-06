@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Rollr.ipa</key>
+	<array>
+		<dict>
+			<key>architectures</key>
+			<array>
+				<string>arm64</string>
+			</array>
+			<key>buildNumber</key>
+			<string>1</string>
+			<key>certificate</key>
+			<dict>
+				<key>SHA1</key>
+				<string>23C600C7A060B051B5EFC4E933DF815AF8065E74</string>
+				<key>dateExpires</key>
+				<string>5/15/24</string>
+				<key>type</key>
+				<string>Cloud Managed Apple Distribution</string>
+			</dict>
+			<key>entitlements</key>
+			<dict>
+				<key>application-identifier</key>
+				<string>XUYSV472G3.com.brianaguirre.Rollr</string>
+				<key>com.apple.developer.team-identifier</key>
+				<string>XUYSV472G3</string>
+				<key>get-task-allow</key>
+				<false/>
+			</dict>
+			<key>name</key>
+			<string>Rollr.app</string>
+			<key>profile</key>
+			<dict>
+				<key>UUID</key>
+				<string>155cd7c7-2641-410f-ad72-d9e58f027d9e</string>
+				<key>dateExpires</key>
+				<string>5/15/24</string>
+				<key>name</key>
+				<string>iOS Team Ad Hoc Provisioning Profile: com.brianaguirre.Rollr</string>
+			</dict>
+			<key>team</key>
+			<dict>
+				<key>id</key>
+				<string>XUYSV472G3</string>
+				<key>name</key>
+				<string>Brian Aguirre</string>
+			</dict>
+			<key>versionNumber</key>
+			<string>1.0</string>
+		</dict>
+	</array>
+</dict>
+</plist>

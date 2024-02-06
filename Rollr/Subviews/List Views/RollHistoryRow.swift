@@ -52,6 +52,10 @@ struct RollHistoryRow: View {
                     Text(roll.wrappedDateRolled.formatted(date: .omitted, time: .standard))
                         .font(.caption.bold())
                     
+                    // Session name
+                    Text(roll.session?.wrappedName ?? "Nil session")
+                        .font(.caption.bold())
+                    
                     Spacer()
                 }
             }
