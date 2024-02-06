@@ -35,6 +35,9 @@ struct RollrApp: App {
             
                 // Inject the current roll object into the environment
                 .environmentObject(currentRoll)
+                
+                // Inject the current session object into the environment
+                .environmentObject(dataController.currentSession)
             
                 // Inject the animation state manager object into the environment
                 .environmentObject(animationStateManager)

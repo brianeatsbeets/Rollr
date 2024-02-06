@@ -21,6 +21,7 @@ struct ContentView: View {
     @Environment(\.colorScheme) var theme
     @Environment(\.verticalSizeClass) var verticalSizeClass
     @Environment(\.managedObjectContext) var moc
+    @EnvironmentObject var currentSession: Session
     @EnvironmentObject var animationStateManager: AnimationStateManager
     
     // State
@@ -94,7 +95,7 @@ struct ContentView: View {
                         ListContainer()
                     }
                 }
-                .navigationTitle("Rollr")
+                .navigationTitle(currentSession.wrappedName)
                 .navigationBarTitleDisplayMode(.inline)
                 .background(theme == .light ? Color(uiColor: .secondarySystemBackground) : Color(uiColor: UIColor.systemGroupedBackground))
                 .toolbar {

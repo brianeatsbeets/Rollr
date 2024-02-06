@@ -17,6 +17,7 @@ class DataController: ObservableObject {
     // MARK: - Properties
     
     let container = NSPersistentContainer(name: "Rollr")
+    @Published var currentSession: Session
     
     // MARK: - Initializers
     
@@ -29,42 +30,47 @@ class DataController: ObservableObject {
             }
         }
         
-        // Convert version 1.0 roll data, if necessary
-        if savedSessionExists() == false {
-            print("No existing sessions")
+        // Load the previous session
+        
+        // Fetch from user defaults
+        if let lastActiveSessionId = UserDefaults.standard.url(forKey: "lastActiveSessionId") {
+            
+            // Fetch the managed object id from the url
+            if let sessionId = container.viewContext.persistentStoreCoordinator?.managedObjectID(forURIRepresentation: lastActiveSessionId) as? NSManagedObjectID,
+               
+               // Fetch the session object from the managed object id
+               let session = container.viewContext.object(with: sessionId) as? Session {
+                print("Successfully loaded previous session")
+                currentSession = session
+            } else {
+                print("Couldn't get core data object from id")
+                
+                // Create a new session
+                currentSession = Session(context: container.viewContext)
+                currentSession.dateCreated = Date.now
+                currentSession.name = "New Session"
+                
+                try? container.viewContext.save()
+            }
+        }
+        else {
+            // If no previous session exists, create a new one
+            print("Last active session id is nil, or couldn't cast value as NSManagedObjectID")
+            
+            // Create a new session and add existing roll data to it
+            currentSession = Session(context: container.viewContext)
+            currentSession.dateCreated = Date.now
+            currentSession.name = "New Session"
+            
+            // For users who updated from v1.0, set the current session as each roll's session
             convertPreSessionData()
-        } else {
-            print("Session data exists")
         }
     }
     
     // MARK: - Functions
     
-    // Check if any session data exists
-    private func savedSessionExists() -> Bool {
-        
-        // Create fetch request
-        let request = Session.fetchRequest()
-        request.fetchLimit = 1
-        
-        // Attepmt to get result count
-        do {
-            let count = try container.viewContext.count(for: request)
-            return count == 0 ? false : true
-        } catch let error as NSError {
-            print("Error fetching session data: \(error.localizedDescription)")
-            return true
-        }
-    }
-    
-    // For users who had created Roll data on v1.0 of the app (before Roll had a session property), add existing rolls to a new session
-    // TODO: Set the new session as the active session
+    // For users who had created Roll data on v1.0 of the app (before Roll had a session property), add existing rolls to a the current session (which will be brand new)
     private func convertPreSessionData() {
-        
-        // Create a new session and add existing roll data to it
-        let newSession = Session(context: container.viewContext)
-        newSession.dateCreated = Date.now
-        newSession.name = "New Session"
         
         // Fetch existing rolls with no session value
         let fetchRequest = Roll.fetchRequest()
@@ -75,14 +81,17 @@ class DataController: ObservableObject {
             let rolls = try container.viewContext.fetch(fetchRequest)
             
             // Assign rolls to the new session
-            newSession.wrappedRolls = rolls
+            currentSession.wrappedRolls = rolls
+            
+            try? container.viewContext.save()
+            
+            UserDefaults.standard.set(currentSession.objectID.uriRepresentation(), forKey: "lastActiveSessionId")
+            print("Object id saved to user defaults: \(currentSession.objectID.uriRepresentation())")
             
             print("Successfully added existing rolls to new session")
         } catch {
             print("Error fetching rolls: \(error.localizedDescription)")
         }
-        
-        try? container.viewContext.save()
     }
     
     // Remove all records for a given entity from core data
