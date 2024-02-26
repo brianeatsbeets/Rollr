@@ -36,6 +36,7 @@ struct SessionsView: View {
                     Button {
                         //completion(session)
                         dataController.currentSession = session
+                        dismiss()
                     } label: {
                         HStack {
                             Text(session.wrappedName)
