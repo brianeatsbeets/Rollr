@@ -21,13 +21,15 @@ struct ContentView: View {
     @Environment(\.colorScheme) var theme
     @Environment(\.verticalSizeClass) var verticalSizeClass
     @Environment(\.managedObjectContext) var moc
-    @EnvironmentObject var currentSession: Session
+    //@EnvironmentObject var currentSession: Session
+    @EnvironmentObject var dataController: DataController
     @EnvironmentObject var animationStateManager: AnimationStateManager
     
     // State
     
     // Using @State instead of @AppStorage because it maintains animations
     @State private var rollHistoryPosition: RollHistoryLandscapePosition
+    @State private var showingSessions = false
     
     // Basic
     
@@ -95,7 +97,7 @@ struct ContentView: View {
                         ListContainer()
                     }
                 }
-                .navigationTitle(currentSession.wrappedName)
+                .navigationTitle(dataController.currentSession.wrappedName)
                 .navigationBarTitleDisplayMode(.inline)
                 .background(theme == .light ? Color(uiColor: .secondarySystemBackground) : Color(uiColor: UIColor.systemGroupedBackground))
                 .toolbar {
@@ -127,8 +129,17 @@ struct ContentView: View {
                         }
                         Button("Load") {
                             print("Load session")
+                            
+                            // Remove group-styled list top padding
+                            UICollectionView.appearance().contentInset.top = 0
+                            
+                            // Show sessions view
+                            showingSessions = true
                         }
                     }
+                }
+                .sheet(isPresented: $showingSessions) {
+                    SessionsView()
                 }
                 
                 // Update the roll history position in user defaults

@@ -20,7 +20,7 @@ struct EditDieModifier: View {
     // Environment
     
     @Environment(\.dismiss) var dismiss
-    @EnvironmentObject var currentRoll: LocalRoll
+    //@EnvironmentObject var currentRoll: LocalRoll
     
     // State
     

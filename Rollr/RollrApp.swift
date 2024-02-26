@@ -20,7 +20,7 @@ struct RollrApp: App {
     // StateObject
     
     @StateObject private var dataController = DataController()
-    @StateObject private var currentRoll = LocalRoll()
+    @StateObject private var currentRollViewModel = LocalRollViewModel(localRoll: LocalRoll())
     @StateObject private var animationStateManager = AnimationStateManager()
     
     // MARK: - Body view
@@ -33,22 +33,20 @@ struct RollrApp: App {
                 // Inject the persistent container's view context into the environment's managed object context
                 .environment(\.managedObjectContext, dataController.container.viewContext)
             
+                // Inject the data controller object into the environment
+                .environmentObject(dataController)
+            
                 // Inject the current roll object into the environment
-                .environmentObject(currentRoll)
+                .environmentObject(currentRollViewModel)
                 
                 // Inject the current session object into the environment
-                .environmentObject(dataController.currentSession)
+                //.environmentObject(dataController.currentSession)
             
                 // Inject the animation state manager object into the environment
                 .environmentObject(animationStateManager)
             
                 // Set font design
                 .fontDesign(.rounded)
-                
-                // Adjust group-styled list top padding
-                .onAppear {
-                    UICollectionView.appearance().contentInset.top = -35
-                }
         }
     }
 }

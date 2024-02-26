@@ -19,9 +19,10 @@ struct ListContainer: View {
     
     // Environment
     
-    @Environment(\.colorScheme) var theme
     @Environment(\.managedObjectContext) var moc
-    @EnvironmentObject var currentRoll: LocalRoll
+    //@EnvironmentObject var currentRoll: LocalRoll
+    @EnvironmentObject var dataController: DataController
+    @EnvironmentObject var currentRollViewModel: LocalRollViewModel
     @EnvironmentObject var animationStateManager: AnimationStateManager
     
     // Fetch request
@@ -90,6 +91,11 @@ struct ListContainer: View {
                 Rectangle().edgesIgnoringSafeArea(.bottom)
             }
         }
+        
+        // Adjust group-styled list top padding
+        .onAppear {
+            UICollectionView.appearance().contentInset.top = -35
+        }
     }
     
     // Use the selected preset
@@ -104,16 +110,16 @@ struct ListContainer: View {
         }
         
         // Set the current roll to a new roll with the selected preset values
-        currentRoll.adoptRoll(rollEntity: preset)
-        currentRoll.presetId = preset.objectID.description
+        currentRollViewModel.adoptRoll(rollEntity: preset)
+        currentRollViewModel.setPresetName(newPresetName: preset.objectID.description)
     }
     
     // Delete the selected preset
     func deleteSelectedPreset(preset: FetchedResults<Roll>.Element) {
         
         // Remove the active preset if it matches the one we're deleting
-        if preset.objectID.description == currentRoll.presetId {
-            currentRoll.reset()
+        if preset.objectID.description == currentRollViewModel.presetId {
+            currentRollViewModel.resetRoll()
         }
         
         moc.delete(preset as NSManagedObject)

@@ -19,7 +19,10 @@ struct RollWindowButtons: View {
     // Environment
     
     @Environment(\.managedObjectContext) var moc
-    @EnvironmentObject var currentRoll: LocalRoll
+    //@EnvironmentObject var currentRoll: LocalRoll
+    //@EnvironmentObject var currentSession: Session
+    @EnvironmentObject var currentRollViewModel: LocalRollViewModel
+    @EnvironmentObject var dataController: DataController
     @EnvironmentObject var animationStateManager: AnimationStateManager
     
     // State
@@ -42,7 +45,7 @@ struct RollWindowButtons: View {
                 Text("Save")
                     .font(.headline)
             }
-            .disabled(currentRoll.dice.isEmpty)
+            .disabled(currentRollViewModel.dice.isEmpty)
             .buttonStyle(BorderedButtonStyle())
             .padding(.leading)
             .disabled(animationStateManager.rollAnimationIsActive)
@@ -56,7 +59,7 @@ struct RollWindowButtons: View {
                 
                 animationStateManager.orientationDidChange = false
             } label: {
-                Text(currentRoll.presetName.isEmpty ? "Roll" : currentRoll.presetName)
+                Text(currentRollViewModel.presetName.isEmpty ? "Roll" : currentRollViewModel.presetName)
                     .font(.headline.leading(.tight))
                     .foregroundStyle(.white)
                     .minimumScaleFactor(0.7)
@@ -70,13 +73,13 @@ struct RollWindowButtons: View {
                             .fill(.tint)
                     )
             }
-            .disabled(animationStateManager.rollAnimationIsActive || currentRoll.dice.isEmpty)
+            .disabled(animationStateManager.rollAnimationIsActive || currentRollViewModel.dice.isEmpty)
             .frame(maxWidth: .infinity)
             
-            // Roll reset button
+            // Clear button
             Button {
                 withAnimation {
-                    currentRoll.reset()
+                    currentRollViewModel.resetRoll()
                 }
                 
                 // Reset RollWindowDiceValues view offsets
@@ -86,7 +89,7 @@ struct RollWindowButtons: View {
                     .font(.headline)
             }
             .buttonStyle(BorderedButtonStyle())
-            .disabled(animationStateManager.rollAnimationIsActive || currentRoll.dice.isEmpty)
+            .disabled(animationStateManager.rollAnimationIsActive || currentRollViewModel.dice.isEmpty)
             .padding(.trailing)
             .frame(maxWidth: .infinity, alignment: .trailing)
         }
@@ -111,7 +114,7 @@ struct RollWindowButtons: View {
         let newPreset = Roll(context: moc)
         newPreset.dateRolled = Date.now
         newPreset.isPreset = true
-        newPreset.wrappedDice = currentRoll.dieEntityDice(context: moc)
+        newPreset.wrappedDice = currentRollViewModel.dieEntityDice(context: moc)
         newPreset.resetDiceResults()
 
         // Prompt to enter a preset name
@@ -129,8 +132,8 @@ struct RollWindowButtons: View {
         }
         
         // Set the new preset as the current roll
-        currentRoll.adoptRoll(rollEntity: newPreset)
-        currentRoll.presetId = newPreset.objectID.description
+        currentRollViewModel.adoptRoll(rollEntity: newPreset)
+        currentRollViewModel.setPresetId(newPresetId: newPreset.objectID.description)
     }
     
     // Determine a result for each die
@@ -143,9 +146,12 @@ struct RollWindowButtons: View {
         let newRoll = Roll(context: moc)
         newRoll.dateRolled = Date.now
         newRoll.isPreset = false
-        newRoll.wrappedDice = currentRoll.dieEntityDice(context: moc)
-        newRoll.presetName = currentRoll.presetName
+        newRoll.wrappedDice = currentRollViewModel.dieEntityDice(context: moc)
+        newRoll.presetName = currentRollViewModel.presetName
         newRoll.randomizeDiceResults()
+        
+        // Set the roll's session as the current session
+        newRoll.session = dataController.currentSession
         
         // Append the new roll to the rolls array
         if moc.hasChanges {
@@ -153,7 +159,7 @@ struct RollWindowButtons: View {
         }
         
         // Set the new role as the current roll
-        currentRoll.adoptRoll(rollEntity: newRoll)
+        currentRollViewModel.adoptRoll(rollEntity: newRoll)
     }
     
     // Animate the roll results before presenting the final results
@@ -168,7 +174,7 @@ struct RollWindowButtons: View {
         // Randomize dice results, and then wait the increment time period
         while increment < 160_000_000 {
             increment = increment * 1.18
-            currentRoll.randomizeDiceResults(animating: true)
+            currentRollViewModel.randomizeDiceResults(animating: true)
             try? await Task.sleep(nanoseconds: UInt64(increment))
         }
         

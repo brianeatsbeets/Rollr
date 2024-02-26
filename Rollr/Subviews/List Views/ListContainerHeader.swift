@@ -20,7 +20,9 @@ struct ListContainerHeader: View {
     // Environment
     
     @Environment(\.managedObjectContext) var moc
-    @EnvironmentObject var currentRoll: LocalRoll
+    //@EnvironmentObject var currentRoll: LocalRoll
+    @EnvironmentObject var dataController: DataController
+    @EnvironmentObject var currentRollViewModel: LocalRollViewModel
     @EnvironmentObject var animationStateManager: AnimationStateManager
     
     // State
@@ -56,7 +58,7 @@ struct ListContainerHeader: View {
                             DataController.deleteEntityRecords(entityName: "Roll", predicate: NSPredicate(format: "isPreset = %d", false), moc: moc)
                             
                             withAnimation {
-                                currentRoll.reset()
+                                currentRollViewModel.resetRoll()
                             }
                             
                             // Reset RollWindowDiceValues view offsets
@@ -80,9 +82,9 @@ struct ListContainerHeader: View {
                             DataController.deleteEntityRecords(entityName: "Roll", predicate: NSPredicate(format: "isPreset = %d", true), moc: moc)
                             
                             // Reset the current roll if a preset is active
-                            if !currentRoll.presetName.isEmpty {
+                            if !currentRollViewModel.presetName.isEmpty {
                                 withAnimation {
-                                    currentRoll.reset()
+                                    currentRollViewModel.resetRoll()
                                 }
                                 
                                 // Reset RollWindowDiceValues view offsets

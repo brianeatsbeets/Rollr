@@ -19,7 +19,9 @@ struct DiceOptions: View {
     // Environment
     
     @Environment(\.managedObjectContext) var moc
-    @EnvironmentObject var currentRoll: LocalRoll
+    //@EnvironmentObject var currentRoll: LocalRoll
+    @EnvironmentObject var dataController: DataController
+    @EnvironmentObject var currentRollViewModel: LocalRollViewModel
     @EnvironmentObject var animationStateManager: AnimationStateManager
     
     // MARK: - Body view
@@ -40,11 +42,11 @@ struct DiceOptions: View {
                     let newDie = LocalDie(numberOfSides: sides)
                     
                     // Animate adding new die
-                    currentRoll.dice.append(newDie)
+                    currentRollViewModel.addDie(newDie)
                     
                     // Reset the roll id and preset name
-                    currentRoll.id = UUID()
-                    currentRoll.presetName = ""
+                    currentRollViewModel.setId(newId: UUID())
+                    currentRollViewModel.setPresetName(newPresetName: "")
                     
                 } label: {
                     NumberOfSidesHexagon(numberOfSides: sides.rawValue, type: .button)

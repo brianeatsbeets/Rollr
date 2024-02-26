@@ -1,91 +1,104 @@
 //
-//  LocalRoll.swift
+//  LocalRollViewModel.swift
 //  Rollr
 //
-//  Created by Aguirre, Brian P. on 10/30/23.
+//  Created by Aguirre, Brian P. on 2/11/24.
 //
 
-// MARK: - Imported libraries
-
 import CoreData
-import Foundation
 
-// MARK: - Main class
-
-// This class defines the LocalRoll model, which is used to track the state of the current roll (not stored in Core Data)
-class LocalRoll: Identifiable, ObservableObject {
-
-    // MARK: - Properties
-
-    var id = UUID()
-    var dateRolled = Date.now
-    @Published var dice: [LocalDie]
-    @Published var presetId: String
-    @Published var presetName: String
-
+class LocalRollViewModel: ObservableObject {
+    
+    @Published private var localRoll: LocalRoll
+    
+    var dice: [LocalDie] {
+        localRoll.dice
+    }
+    var presetId: String {
+        localRoll.presetId
+    }
+    var presetName: String {
+        localRoll.presetName
+    }
+    
     var rollTotal: Int {
-        dice.reduce(into: 0, { $0 += $1.result })
+        localRoll.dice.reduce(into: 0, { $0 += $1.result })
     }
     var modifierTotal: Int {
-        dice.reduce(into: 0, { $0 += $1.modifier })
+        localRoll.dice.reduce(into: 0, { $0 += $1.modifier })
     }
     var grandTotal: Int {
         rollTotal + modifierTotal
     }
-
-    // MARK: - Initializers
-
-    // Empty roll
-    init() {
-        self.dice = [LocalDie]()
-        self.presetId = ""
-        self.presetName = ""
+    
+    init(localRoll: LocalRoll) {
+        self.localRoll = localRoll
+    }
+    
+    func setId(newId: UUID) {
+        localRoll.id = newId
+    }
+    
+    func setPresetId(newPresetId: String) {
+        localRoll.presetId = newPresetId
+    }
+    
+    func setPresetName(newPresetName: String) {
+        localRoll.presetName = newPresetName
+    }
+    
+    func addDie(_ newDie: LocalDie) {
+        localRoll.dice.append(newDie)
+    }
+    
+    func setDieModifier(index: Int, newVlaue: Int) {
+        localRoll.dice[index].modifier = newVlaue
     }
     
     // Reset the current roll's properties
-    func reset() {
-        id = UUID()
-        dateRolled = Date.now
-        dice = []
-        presetId = ""
-        presetName = ""
+    func resetRoll() {
+        localRoll.id = UUID()
+        localRoll.dateRolled = Date.now
+        localRoll.dice = []
+        localRoll.presetId = ""
+        localRoll.presetName = ""
     }
     
     // Update roll properties to match provided roll
     func adoptRoll(rollEntity: Roll) {
-        id = UUID()
-        presetName = rollEntity.wrappedPresetName
-        dice = []
+        localRoll.id = UUID()
+        localRoll.presetName = rollEntity.wrappedPresetName
+        localRoll.dice = []
         
         for die in rollEntity.wrappedDice {
-            dice.append(LocalDie(dieEntity: die))
+            localRoll.dice.append(LocalDie(dieEntity: die))
         }
     }
 
     // Set each die roll result to zero
     func resetDiceResults() {
-        dice.indices.forEach {
-            dice[$0].result = 0
+        localRoll.dice.indices.forEach {
+            localRoll.dice[$0].result = 0
         }
     }
     
     // Simulate a roll for each die
     func randomizeDiceResults(animating: Bool = false) {
-        dice.indices.forEach {
+        localRoll.dice.indices.forEach {
             
             // Calculate a new random result for the specified die
-            var newValue = Int.random(in: 1...dice[$0].numberOfSides.rawValue)
+            var newValue = Int.random(in: 1...localRoll.dice[$0].numberOfSides.rawValue)
             
             // If we're playing the rolling animation, display random a result that doesn't match the previous one
             if animating {
-                let oldValue = dice[$0].result
+                let oldValue = localRoll.dice[$0].result
                 
                 while newValue == oldValue {
-                    newValue = Int.random(in: 1...dice[$0].numberOfSides.rawValue)
+                    newValue = Int.random(in: 1...localRoll.dice[$0].numberOfSides.rawValue)
                 }
             }
             
-            dice[$0].result = newValue
+            localRoll.dice[$0].result = newValue
         }
     }
     
@@ -93,7 +106,7 @@ class LocalRoll: Identifiable, ObservableObject {
     func dieEntityDice(context: NSManagedObjectContext) -> [Die] {
         var newDice = [Die]()
         
-        for die in dice {
+        for die in localRoll.dice {
             let newDie = Die(context: context)
             newDie.dateCreated = die.dateCreated
             newDie.numberOfSides = die.numberOfSides
@@ -106,7 +119,7 @@ class LocalRoll: Identifiable, ObservableObject {
     }
     
     static func maxRoll() -> LocalRoll {
-        let roll = LocalRoll()
+        var roll = LocalRoll()
         roll.dice = [LocalDie(numberOfSides: .oneHundred, modifier: 10, result: 100), LocalDie(numberOfSides: .oneHundred, modifier: 10, result: 100), LocalDie(numberOfSides: .oneHundred, modifier: 10, result: 100), LocalDie(numberOfSides: .oneHundred, modifier: 10, result: 100), LocalDie(numberOfSides: .oneHundred, modifier: 10, result: 100)]
         roll.presetName = "Maximum Possible Potential RollResult"
         return roll

@@ -18,7 +18,9 @@ struct RollWindowDiceValues: View {
     
     // Environment
     
-    @EnvironmentObject var currentRoll: LocalRoll
+    //@EnvironmentObject var currentRoll: LocalRoll
+    @EnvironmentObject var currentRollViewModel: LocalRollViewModel
+    @EnvironmentObject var dataController: DataController
     @EnvironmentObject var animationStateManager: AnimationStateManager
     
     // State
@@ -40,10 +42,10 @@ struct RollWindowDiceValues: View {
                 
                 // Main stack
                 HStack(spacing: 0) {
-                    ForEach(currentRoll.dice, id: \.id) { die in
+                    ForEach(currentRollViewModel.dice) { die in
                         
                         // Store die index for animation parameters
-                        let dieIndex = currentRoll.dice.firstIndex(where: { $0.id == die.id })
+                        let dieIndex = currentRollViewModel.dice.firstIndex(where: { $0.id == die.id })
                         
                         // Individual die and values
                         VStack {
@@ -68,6 +70,9 @@ struct RollWindowDiceValues: View {
                                 if animationStateManager.rollAnimationIsActive || (!animationStateManager.rollAnimationIsActive && (die.result != 1 && die.result != die.numberOfSides.rawValue)) {
                                     Text(die.result > 0 ? die.result.description : "-")
                                         .font(.title3)
+                                        .onAppear {
+                                            print(die.result)
+                                        }
                                 } else {
                                     RollValueShape(die: die)
                                 }
@@ -114,18 +119,18 @@ struct RollWindowDiceValues: View {
                         .onChange(of: die.modifier) { _ in
                             
                             // Remove the current preset name
-                            currentRoll.presetName = ""
+                            currentRollViewModel.setPresetName(newPresetName: "")
                             
                             // Reset the roll results
-                            currentRoll.resetDiceResults()
+                            currentRollViewModel.resetDiceResults()
                         }
                         
                         .id(dieIndex)
-                        .onChange(of: currentRoll.dice.count) { _ in
+                        .onChange(of: currentRollViewModel.dice.count) { _ in
                             
                             // When a new die is added, scroll to it
                             withAnimation {
-                                value.scrollTo(currentRoll.dice.count - 1)
+                                value.scrollTo(currentRollViewModel.dice.count - 1)
                             }
                         }
                     }
@@ -133,7 +138,7 @@ struct RollWindowDiceValues: View {
                 .padding(.leading, 5)
                 
                 // Animate when the current dice are updated
-                .animation(.default, value: currentRoll.dice.count)
+                .animation(.default, value: currentRollViewModel.dice.count)
             }
             
             // Don't allow the view to scroll unless it the size of the content exceeds the size of the container
@@ -143,7 +148,7 @@ struct RollWindowDiceValues: View {
         // Present EditDieModifier view
         .sheet(item: $selectedDie) { die in
             EditDieModifier(dieIndex: selectedDieIndex) { newValue in
-                currentRoll.dice[selectedDieIndex].modifier = newValue
+                currentRollViewModel.setDieModifier(index: selectedDieIndex, newVlaue: newValue)
             }
             .presentationDetents([.height(150)])
         }

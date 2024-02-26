@@ -10,6 +10,8 @@
 		E100E23C2AEACA9100E11932 /* PresetRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E100E23B2AEACA9100E11932 /* PresetRow.swift */; };
 		E1054CC42AE695E10047DAE2 /* ModifierCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1054CC32AE695E10047DAE2 /* ModifierCircle.swift */; };
 		E1054CC72AE6F3AC0047DAE2 /* RollValueShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1054CC62AE6F3AC0047DAE2 /* RollValueShape.swift */; };
+		E10F668C2B7811F400ECC9DF /* SessionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10F668B2B7811F400ECC9DF /* SessionsView.swift */; };
+		E10F668E2B79216900ECC9DF /* LocalRollViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10F668D2B79216900ECC9DF /* LocalRollViewModel.swift */; };
 		E15100A02AE1C0EA00C7EDC7 /* NumberOfSidesHexagon.swift in Sources */ = {isa = PBXBuildFile; fileRef = E151009F2AE1C0EA00C7EDC7 /* NumberOfSidesHexagon.swift */; };
 		E15100A22AE1C56500C7EDC7 /* RollHistoryRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15100A12AE1C56500C7EDC7 /* RollHistoryRow.swift */; };
 		E15100A82AE1CB3E00C7EDC7 /* RollWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15100A72AE1CB3E00C7EDC7 /* RollWindow.swift */; };
@@ -42,6 +44,8 @@
 		E100E23B2AEACA9100E11932 /* PresetRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetRow.swift; sourceTree = "<group>"; };
 		E1054CC32AE695E10047DAE2 /* ModifierCircle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifierCircle.swift; sourceTree = "<group>"; };
 		E1054CC62AE6F3AC0047DAE2 /* RollValueShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RollValueShape.swift; sourceTree = "<group>"; };
+		E10F668B2B7811F400ECC9DF /* SessionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionsView.swift; sourceTree = "<group>"; };
+		E10F668D2B79216900ECC9DF /* LocalRollViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalRollViewModel.swift; sourceTree = "<group>"; };
 		E151009F2AE1C0EA00C7EDC7 /* NumberOfSidesHexagon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberOfSidesHexagon.swift; sourceTree = "<group>"; };
 		E15100A12AE1C56500C7EDC7 /* RollHistoryRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RollHistoryRow.swift; sourceTree = "<group>"; };
 		E15100A72AE1CB3E00C7EDC7 /* RollWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RollWindow.swift; sourceTree = "<group>"; };
@@ -98,6 +102,7 @@
 			isa = PBXGroup;
 			children = (
 				E1A78A952AEFED3F008C9713 /* LocalRoll.swift */,
+				E10F668D2B79216900ECC9DF /* LocalRollViewModel.swift */,
 				E1A78A972AEFED72008C9713 /* LocalDie.swift */,
 				E1753D982AF593C1008C55BD /* AnimationStateManager.swift */,
 			);
@@ -142,6 +147,7 @@
 			isa = PBXGroup;
 			children = (
 				E1B567522AE06F3D00343FB9 /* ContentView.swift */,
+				E10F668B2B7811F400ECC9DF /* SessionsView.swift */,
 			);
 			path = "Main Views";
 			sourceTree = "<group>";
@@ -165,6 +171,7 @@
 				E1A78A902AEAF3DB008C9713 /* Die+CoreDataProperties.swift */,
 				E15EEDD02B6D37B100BC8350 /* Session+CoreDataClass.swift */,
 				E15EEDD12B6D37B100BC8350 /* Session+CoreDataProperties.swift */,
+				E151009D2AE1C0CD00C7EDC7 /* Local Models */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -192,7 +199,6 @@
 				E1B567502AE06F3D00343FB9 /* RollrApp.swift */,
 				E1A78A7E2AEAEE69008C9713 /* Core Data */,
 				E15100AD2AE1CD8300C7EDC7 /* Main Views */,
-				E151009D2AE1C0CD00C7EDC7 /* Local Models */,
 				E151009E2AE1C0DB00C7EDC7 /* Subviews */,
 				E1C373062AE9ABA700C4C05D /* Extensions */,
 				E1B567542AE06F3F00343FB9 /* Assets.xcassets */,
@@ -318,10 +324,12 @@
 				E1A78A922AEAF3DB008C9713 /* Roll+CoreDataProperties.swift in Sources */,
 				E1A78A942AEAF3DB008C9713 /* Die+CoreDataProperties.swift in Sources */,
 				E1A78A912AEAF3DB008C9713 /* Roll+CoreDataClass.swift in Sources */,
+				E10F668C2B7811F400ECC9DF /* SessionsView.swift in Sources */,
 				E1BC3F8B2AEAC4E3002EF023 /* ListContainer.swift in Sources */,
 				E1054CC72AE6F3AC0047DAE2 /* RollValueShape.swift in Sources */,
 				E1A78A962AEFED3F008C9713 /* LocalRoll.swift in Sources */,
 				E1BC3F892AEAC402002EF023 /* DiceOptions.swift in Sources */,
+				E10F668E2B79216900ECC9DF /* LocalRollViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

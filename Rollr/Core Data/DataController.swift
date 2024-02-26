@@ -17,6 +17,7 @@ class DataController: ObservableObject {
     // MARK: - Properties
     
     let container = NSPersistentContainer(name: "Rollr")
+    //@Published var currentRoll = LocalRoll()
     @Published var currentSession: Session
     
     // MARK: - Initializers
@@ -54,6 +55,7 @@ class DataController: ObservableObject {
             }
         }
         else {
+            
             // If no previous session exists, create a new one
             print("Last active session id is nil, or couldn't cast value as NSManagedObjectID")
             
@@ -69,7 +71,7 @@ class DataController: ObservableObject {
     
     // MARK: - Functions
     
-    // For users who had created Roll data on v1.0 of the app (before Roll had a session property), add existing rolls to a the current session (which will be brand new)
+    // For users who had created Roll data on v1.0 of the app (before Roll had a session property), add existing rolls to the current session (which will be brand new)
     private func convertPreSessionData() {
         
         // Fetch existing rolls with no session value

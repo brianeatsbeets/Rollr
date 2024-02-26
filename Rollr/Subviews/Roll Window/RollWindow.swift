@@ -20,7 +20,9 @@ struct RollWindow: View {
     
     @Environment(\.colorScheme) var theme
     @Environment(\.verticalSizeClass) var verticalSizeClass
-    @EnvironmentObject var currentRoll: LocalRoll
+    //@EnvironmentObject var currentRoll: LocalRoll
+    @EnvironmentObject var dataController: DataController
+    @EnvironmentObject var currentRollViewModel: LocalRollViewModel
     @EnvironmentObject var animationStateManager: AnimationStateManager
     
     // State
@@ -43,7 +45,7 @@ struct RollWindow: View {
                 VStack {
                     ZStack {
                         
-                        if currentRoll.dice.isEmpty {
+                        if currentRollViewModel.dice.isEmpty {
                             
                             // Awaiting roll text
                             VStack {
@@ -108,7 +110,7 @@ struct RollWindow: View {
                                         .padding(.leading, 10)
                                     
                                     // Value
-                                    Text(animationStateManager.rollAnimationIsActive ? "-" : (currentRoll.rollTotal != 0 ? currentRoll.grandTotal.description : "-"))
+                                    Text(animationStateManager.rollAnimationIsActive ? "-" : (currentRollViewModel.rollTotal != 0 ? currentRollViewModel.grandTotal.description : "-"))
                                         .font(.title2.bold())
                                         .minimumScaleFactor(0.5)
                                         .scaleEffect(animationStateManager.rollResultsScale)
