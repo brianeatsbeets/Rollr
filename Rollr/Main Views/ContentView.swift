@@ -30,6 +30,8 @@ struct ContentView: View {
     // Using @State instead of @AppStorage because it maintains animations
     @State private var rollHistoryPosition: RollHistoryLandscapePosition
     @State private var showingSessions = false
+    @State private var showingSessionNameAlert = false
+    @State private var newSessionName = ""
     
     // Basic
     
@@ -126,6 +128,8 @@ struct ContentView: View {
                     Menu("Sessions") {
                         Button("New") {
                             print("New session")
+                            
+                            showingSessionNameAlert = true
                         }
                         Button("Load") {
                             print("Load session")
@@ -142,6 +146,17 @@ struct ContentView: View {
                     SessionsView()
                 }
                 
+                // New session name alert with textfield
+                .alert("New Session", isPresented: $showingSessionNameAlert) {
+                    TextField("Session Name", text: $newSessionName)
+                    Button("OK", action: saveSession)
+                    Button("Cancel", role: .cancel, action: {
+                        newSessionName = ""
+                    })
+                } message: {
+                    Text("Enter a name for this session.")
+                }
+                
                 // Update the roll history position in user defaults
                 .onChange(of: rollHistoryPosition) { newValue in
                     UserDefaults.standard.set(newValue.rawValue, forKey: "rollHistoryPosition")
@@ -151,6 +166,35 @@ struct ContentView: View {
             // Prevents layout from squishing when entering a new preset name
             .ignoresSafeArea(.keyboard)
         }
+    }
+    
+    // MARK: - Functions
+    
+    // Save a new session
+    func saveSession() {
+        
+        // Create a new session
+        let newSession = Session(context: moc)
+
+        // Prompt to enter a session name
+        showingSessionNameAlert = true
+        
+        // Set session name
+        newSession.name = newSessionName
+        
+        // Set session created date
+        newSession.dateCreated = Date.now
+        
+        // Reset the new session name property to clear the text field when a new session is created
+        newSessionName = ""
+        
+        // Save changes
+        if moc.hasChanges {
+            try? moc.save()
+        }
+        
+        // Set the new session as the current session
+        dataController.currentSession = newSession
     }
     
     // MARK: - Enums

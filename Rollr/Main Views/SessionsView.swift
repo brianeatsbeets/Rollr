@@ -36,6 +36,8 @@ struct SessionsView: View {
                     Button {
                         //completion(session)
                         dataController.currentSession = session
+                        print("Current session roll count: \(dataController.currentSession.wrappedRolls.count)")
+                        dismiss()
                     } label: {
                         HStack {
                             Text(session.wrappedName)

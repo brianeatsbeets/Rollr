@@ -27,12 +27,18 @@ struct ListContainer: View {
     
     // Fetch request
     
-    @FetchRequest(sortDescriptors: [SortDescriptor(\.dateRolled, order: .reverse)], predicate: NSPredicate(format: "isPreset = %d", false), animation: .default) var rolls: FetchedResults<Roll>
+    //@FetchRequest(sortDescriptors: [SortDescriptor(\.dateRolled, order: .reverse)], predicate: NSPredicate(format: "isPreset = %d", false), animation: .default) var rolls: FetchedResults<Roll>
     @FetchRequest(sortDescriptors: [SortDescriptor(\.dateRolled, order: .reverse)], predicate: NSPredicate(format: "isPreset = %d", true), animation: .default) var presets: FetchedResults<Roll>
     
     // State
     
     @AppStorage("listContainerPickerSelection") var pickerSelection: Int = 1
+    
+    // Basic
+    
+    var rolls: [Roll] {
+        dataController.currentSession.wrappedRolls.filter { !$0.isPreset }
+    }
     
     // MARK: - Body view
     

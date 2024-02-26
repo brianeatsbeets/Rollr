@@ -96,7 +96,7 @@ struct RollWindowButtons: View {
         .padding(.bottom)
         
         // New preset name alert with textfield
-        .alert("Preset Name", isPresented: $showingPresetNameAlert) {
+        .alert("New Preset", isPresented: $showingPresetNameAlert) {
             TextField("Preset Name", text: $newPresetName)
             Button("OK", action: savePreset)
             Button("Cancel", role: .cancel, action: {
