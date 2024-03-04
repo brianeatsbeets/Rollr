@@ -39,16 +39,18 @@ struct SessionsView: View {
                         print("Current session roll count: \(dataController.currentSession.wrappedRolls.count)")
                         dismiss()
                     } label: {
-                        HStack {
+                        VStack(alignment: .leading) {
                             Text(session.wrappedName)
-                                .font(.title)
-                            Text(session.wrappedDateCreated.description)
-                                .font(.headline)
+                                .font(.title3)
+                            Text("Created: \(session.wrappedDateCreated.formatted())")
+                                .font(.caption)
                         }
                     }
+                    .buttonStyle(PlainButtonStyle())
                 }
             }
             .navigationTitle("Load Session")
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 
                 // Cancel button
